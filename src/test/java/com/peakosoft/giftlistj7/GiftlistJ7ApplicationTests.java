@@ -1,4 +1,4 @@
-package com.example.giftlistj7;
+package com.peakosoft.giftlistj7;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
