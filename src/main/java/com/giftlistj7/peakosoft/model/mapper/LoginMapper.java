@@ -1,4 +1,4 @@
-package com.giftlistj7.peakosoft.mapper;
+package com.giftlistj7.peakosoft.model.mapper;
 
 import com.giftlistj7.peakosoft.model.dto.LoginResponse;
 import org.springframework.stereotype.Component;
