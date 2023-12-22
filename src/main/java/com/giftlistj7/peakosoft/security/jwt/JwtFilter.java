@@ -3,6 +3,7 @@ package com.giftlistj7.peakosoft.security.jwt;
 
 import com.giftlistj7.peakosoft.service.UserServiceImpl;
 import jakarta.servlet.FilterChain;
+import com.giftlistj7.peakosoft.service.UserServiceImpl;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -24,6 +25,7 @@ import java.util.Collection;
 public class JwtFilter extends OncePerRequestFilter {
     private final JwtUtil jwtUtil;
     private final UserServiceImpl userService;
+
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,
