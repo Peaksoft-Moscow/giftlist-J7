@@ -1,4 +1,4 @@
-package com.giftlistj7.peakosoft.security.jwt;
+package com.giftlistj7.peakosoft.config.jwt;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

@@ -1,6 +1,6 @@
-package com.giftlistj7.peakosoft.security;
+package com.giftlistj7.peakosoft.config;
 
-import com.giftlistj7.peakosoft.security.jwt.JwtFilter;
+import com.giftlistj7.peakosoft.config.jwt.JwtFilter;
 import com.giftlistj7.peakosoft.service.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
