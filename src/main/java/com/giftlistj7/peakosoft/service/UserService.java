@@ -4,7 +4,7 @@ import com.giftlistj7.peakosoft.mapper.LoginMapper;
 import com.giftlistj7.peakosoft.model.dto.LoginRequest;
 import com.giftlistj7.peakosoft.model.dto.LoginResponse;
 import com.giftlistj7.peakosoft.model.entities.User;
-import com.giftlistj7.peakosoft.repository.UserRepository;
+import com.giftlistj7.peakosoft.config.UserRepository;
 import com.giftlistj7.peakosoft.security.jwt.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
