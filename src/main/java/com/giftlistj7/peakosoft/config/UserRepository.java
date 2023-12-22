@@ -1,4 +1,4 @@
-package com.giftlistj7.peakosoft.repository;
+package com.giftlistj7.peakosoft.config;
 
 import com.giftlistj7.peakosoft.model.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
