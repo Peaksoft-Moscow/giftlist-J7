@@ -1,4 +1,4 @@
-package com.giftlistj7.peakosoft.security;
+package com.giftlistj7.peakosoft.config;
 
 import com.giftlistj7.peakosoft.security.jwt.JwtFilter;
 import lombok.RequiredArgsConstructor;
