@@ -1,9 +1,8 @@
-package com.giftlistj7.peakosoft.security.jwt;
+package com.giftlistj7.peakosoft.config.jwt;
 
 
 import com.giftlistj7.peakosoft.service.UserServiceImpl;
 import jakarta.servlet.FilterChain;
-import com.giftlistj7.peakosoft.service.UserServiceImpl;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
