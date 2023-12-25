@@ -1,11 +1,9 @@
 package com.peakosoft.giftlistj7.model.entities;
 
-import java.time.LocalDate;
-
-public class Notification {
+public class MyHoliday {
     private Long id;
     private String image;
-    private LocalDate createDate;
-    private List<User> users;
+    private Holiday holiday;
     private Gift gift;
+    private User user;
 }
