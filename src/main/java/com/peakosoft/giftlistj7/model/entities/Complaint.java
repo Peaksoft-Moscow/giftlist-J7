@@ -17,6 +17,11 @@ public class Complaint {
     private Long id;
     private String image;
     private LocalDate createDate;
+
+    @ManyToOne(cascade = {CascadeType.ALL})
+    @JoinColumn(name = "user_id")
     private User user;
+
+    @ManyToOne(cascade = {CascadeType.ALL})
     private Gift gift;
 }

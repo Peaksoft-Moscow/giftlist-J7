@@ -1,10 +1,10 @@
 package com.peakosoft.giftlistj7.model.entities;
 
+import com.peakosoft.giftlistj7.model.enums.*;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import java.util.List;
 @Entity
 @Table(name = "users")
@@ -25,14 +25,28 @@ public class User {
     private String important;
     private String email;
     private Country country;
-    private ClotheSize clotheSize;
+    private ClothesSize clothesSize;
     private ShoesSize shoesSize;
     private SocialMedia socialMedia;
     private Role role;
+
+    @ManyToOne(cascade = {CascadeType.ALL})
+    @JoinColumn(name = "booking")
     private Booking booking;
+
+    @ManyToMany(cascade = {CascadeType.ALL})
+    @JoinTable(name = "users_notifications",
+    joinColumns = @JoinColumn(name = "user_id"),
+    inverseJoinColumns = @JoinColumn(name = "notification_id"))
     private List<Notification> notifications;
+
+    @OneToMany(cascade = {CascadeType.ALL},mappedBy = "user")
     private List<Complaint> complaints;
+
+    @OneToMany(cascade = {CascadeType.ALL},mappedBy = "user")
     private List<Gift> gifts;
+
+    @OneToMany(cascade = {CascadeType.ALL},mappedBy = "user")
     private List<MyHoliday> myHolidays;
 
 }
