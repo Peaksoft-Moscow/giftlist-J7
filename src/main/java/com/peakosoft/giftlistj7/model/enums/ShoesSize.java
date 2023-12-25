@@ -1,6 +1,5 @@
 package com.peakosoft.giftlistj7.model.enums;
 
-public enum ShoeSize {
-
+public enum ShoesSize {
 
 }

@@ -1,9 +1,9 @@
 package com.peakosoft.giftlistj7.model.enums;
 
-public enum School {
+public enum SchoolRequirements {
     PEN,
     PENCIL,
-    PENCILCASE,
+    PENCIL_CASE,
     BOARD,
-    COPYBOOK
+    COPY_BOOK
 }

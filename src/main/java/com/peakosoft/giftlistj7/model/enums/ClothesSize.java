@@ -1,6 +1,6 @@
 package com.peakosoft.giftlistj7.model.enums;
 
-public enum ClothingSize {
+public enum ClothesSize {
     XS,
     S,
     M,
