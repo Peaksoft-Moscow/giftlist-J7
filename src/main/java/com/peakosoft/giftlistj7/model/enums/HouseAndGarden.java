@@ -4,8 +4,7 @@ public enum HouseAndGarden {
     SHOWER,
     RAKE,
     CARPET,
+    CURTAINS,
     WARDROBE,
-    PLANTS,
-    CURTAINS
-
+    PLANT
 }

@@ -1,6 +1,6 @@
 package com.peakosoft.giftlistj7.model.enums;
 
-public enum ConditionStatus {
+public enum Condition {
     ALL,
     NEW,
     USED
