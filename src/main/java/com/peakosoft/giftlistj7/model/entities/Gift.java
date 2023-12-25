@@ -1,11 +1,16 @@
 package com.peakosoft.giftlistj7.model.entities;
 
+import com.peakosoft.giftlistj7.model.enums.BookingStatus;
+import com.peakosoft.giftlistj7.model.enums.Condition;
+import com.peakosoft.giftlistj7.model.enums.GiftStatus;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.List;
+
 @Entity
 @Table(name = "gifts")
 @Getter
@@ -24,8 +29,18 @@ public class Gift {
     private GiftStatus giftStatus;
     private BookingStatus bookingStatus;
     private Booking booking;
+
+    @ManyToOne(cascade = {CascadeType.ALL})
+    @JoinColumn(name = "user_id")
     private User user;
+
+    @ManyToOne(cascade = {CascadeType.ALL})
+    @JoinColumn(name = "category_id")
     private Category category;
-    List<Complaint> complaints;
-    List<MyHoliday> myHolidays;
+
+    @OneToMany(cascade ={CascadeType.ALL},mappedBy = "gift")
+    private List<Complaint> complaints;
+
+    @OneToMany(cascade = {CascadeType.ALL},mappedBy = "gift")
+    private List<MyHoliday> myHolidays;
 }

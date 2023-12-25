@@ -1,5 +1,6 @@
 package com.peakosoft.giftlistj7.model.entities;
 
+import com.peakosoft.giftlistj7.model.enums.BookingStatus;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,5 +22,8 @@ public class Booking {
     private String name;
     private LocalDate createDate;
     private BookingStatus bookingStatus;
-    private List<User> users;
+
+    @OneToMany(cascade = {CascadeType.ALL})
+    @JoinColumn(name = "users_id")
+    private List<User> user;
 }

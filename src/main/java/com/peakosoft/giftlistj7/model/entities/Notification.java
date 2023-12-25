@@ -19,6 +19,11 @@ public class Notification {
     private Long id;
     private String image;
     private LocalDate createDate;
+
+    @ManyToMany(cascade = CascadeType.ALL,mappedBy = "notifications")
     private List<User> users;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "gift_id")
     private Gift gift;
 }

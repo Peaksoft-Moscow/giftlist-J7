@@ -1,5 +1,6 @@
 package com.peakosoft.giftlistj7.model.entities;
 
+import com.peakosoft.giftlistj7.model.enums.*;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,5 +23,7 @@ public class Category {
     private SchoolRequirements schoolRequirements;
     private Transport transport;
     private Electronic electronic;
+
+    @OneToMany(cascade = {CascadeType.ALL},mappedBy = "category")
     private List<Gift> gifts;
 }
