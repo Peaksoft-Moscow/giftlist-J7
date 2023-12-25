@@ -28,6 +28,8 @@ public class Gift {
     private Condition condition;
     private GiftStatus giftStatus;
     private BookingStatus bookingStatus;
+
+    @OneToOne(cascade = CascadeType.ALL)
     private Booking booking;
 
     @ManyToOne(cascade = {CascadeType.ALL})

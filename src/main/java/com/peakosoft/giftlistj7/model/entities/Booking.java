@@ -22,7 +22,7 @@ public class Booking {
     private LocalDate createDate;
     private BookingStatus bookingStatus;
 
-    @OneToMany(cascade = {CascadeType.ALL})
+    @ManyToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "users_id")
-    private List<User> user;
+    private User user;
 }

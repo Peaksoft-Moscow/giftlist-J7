@@ -5,7 +5,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
 import java.util.List;
+
 @Entity
 @Table(name = "users")
 @Getter
@@ -30,23 +32,22 @@ public class User {
     private SocialMedia socialMedia;
     private Role role;
 
-    @ManyToOne(cascade = {CascadeType.ALL})
-    @JoinColumn(name = "booking")
-    private Booking booking;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    private List<Booking> booking;
 
     @ManyToMany(cascade = {CascadeType.ALL})
     @JoinTable(name = "users_notifications",
-    joinColumns = @JoinColumn(name = "user_id"),
-    inverseJoinColumns = @JoinColumn(name = "notification_id"))
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "notification_id"))
     private List<Notification> notifications;
 
-    @OneToMany(cascade = {CascadeType.ALL},mappedBy = "user")
+    @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "user")
     private List<Complaint> complaints;
 
-    @OneToMany(cascade = {CascadeType.ALL},mappedBy = "user")
+    @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "user")
     private List<Gift> gifts;
 
-    @OneToMany(cascade = {CascadeType.ALL},mappedBy = "user")
+    @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "user")
     private List<MyHoliday> myHolidays;
 
 }
