@@ -4,7 +4,7 @@ import com.peakosoft.giftlistj7.config.jwt.JwtUtil;
 import com.peakosoft.giftlistj7.model.dto.LoginRequest;
 import com.peakosoft.giftlistj7.model.dto.LoginResponse;
 import com.peakosoft.giftlistj7.model.dto.mapper.LoginMapper;
-import com.peakosoft.giftlistj7.model.dto.mapper.UserMapper;
+import com.peakosoft.giftlistj7.mapper.UserMapper;
 import com.peakosoft.giftlistj7.model.dto.AuthRequest;
 import com.peakosoft.giftlistj7.model.dto.AuthResponse;
 import com.peakosoft.giftlistj7.model.entities.User;
