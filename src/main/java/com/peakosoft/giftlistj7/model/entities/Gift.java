@@ -20,6 +20,7 @@ public class Gift {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String image;
     private String name;
     private String link;
     private String description;
