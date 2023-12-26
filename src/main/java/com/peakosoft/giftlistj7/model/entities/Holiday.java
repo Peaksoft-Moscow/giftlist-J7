@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Entity
 @Getter
 @Setter
@@ -18,9 +20,8 @@ public class Holiday {
     private String image;
     private String description;
 
-    @ManyToOne(cascade = {CascadeType.ALL})
-    @JoinColumn(name = "gift_id")
-    private Gift gift;
+    @OneToMany(cascade = {CascadeType.ALL},mappedBy = "myHoliday")
+    private List<Gift> gifts;
 
     @ManyToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "user_id")
