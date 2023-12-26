@@ -1,6 +1,5 @@
 package com.peakosoft.giftlistj7.model.dto;
 
-import com.peakosoft.giftlistj7.model.enums.BookingStatus;
 import lombok.Getter;
 import lombok.Setter;
 

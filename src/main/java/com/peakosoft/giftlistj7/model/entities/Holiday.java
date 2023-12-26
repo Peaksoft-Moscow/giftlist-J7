@@ -16,6 +16,7 @@ public class Holiday {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String holidayName;
     private String image;
     private String name;
     private String description;
