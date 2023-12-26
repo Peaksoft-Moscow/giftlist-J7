@@ -99,5 +99,4 @@ public class UserService {
         return loginMapper.mapToResponse(jwt, user.getRole().toString());
     }
 
-
 }
