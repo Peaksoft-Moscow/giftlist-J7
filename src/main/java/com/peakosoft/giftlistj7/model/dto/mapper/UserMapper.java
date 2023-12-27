@@ -1,4 +1,4 @@
-package com.peakosoft.giftlistj7.mapper;
+package com.peakosoft.giftlistj7.model.dto.mapper;
 
 import com.peakosoft.giftlistj7.model.dto.AuthRequest;
 import com.peakosoft.giftlistj7.model.dto.AuthResponse;

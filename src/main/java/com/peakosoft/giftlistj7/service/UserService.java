@@ -1,6 +1,6 @@
 package com.peakosoft.giftlistj7.service;
 
-import com.peakosoft.giftlistj7.mapper.UserMapper;
+import com.peakosoft.giftlistj7.model.dto.mapper.UserMapper;
 import com.peakosoft.giftlistj7.model.dto.AuthRequest;
 import com.peakosoft.giftlistj7.model.dto.AuthResponse;
 import com.peakosoft.giftlistj7.model.entities.User;
