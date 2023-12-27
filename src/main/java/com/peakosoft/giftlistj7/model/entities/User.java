@@ -50,6 +50,6 @@ public class User {
     private List<Gift> gifts;
 
     @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "user")
-    private List<MyHoliday> myHolidays;
+    private List<Holiday> myHolidays;
 
 }

@@ -1,10 +1,11 @@
-package com.peakosoft.mapper;
+package com.peakosoft.giftlistj7.model.dto.mapper;
 
-import com.peakosoft.model.dto.HolidayRequest;
-import com.peakosoft.model.dto.HolidayResponse;
-import com.peakosoft.model.entities.Holiday;
-import com.peakosoft.model.entities.User;
+
+import com.peakosoft.giftlistj7.model.dto.HolidayRequest;
+import com.peakosoft.giftlistj7.model.dto.HolidayResponse;
+import com.peakosoft.giftlistj7.model.entities.Holiday;
 import lombok.RequiredArgsConstructor;
+import com.peakosoft.giftlistj7.model.entities.User;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -18,7 +19,7 @@ public class HolidayMapper implements Mapper<HolidayRequest, Holiday, HolidayRes
         Holiday holiday = new Holiday();
         holiday.setName(holidayRequest.getName());
         holiday.setImage(holidayRequest.getImage());
-        holiday.setCreateDate(LocalDate.now());
+        holiday.setDate(LocalDate.now());
         return holiday;
     }
 

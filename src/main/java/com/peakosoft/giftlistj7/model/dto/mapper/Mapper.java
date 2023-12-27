@@ -1,4 +1,4 @@
-package com.peakosoft.mapper;
+package com.peakosoft.giftlistj7.model.dto.mapper;
 
 import org.springframework.stereotype.Component;
 

@@ -44,5 +44,5 @@ public class Gift {
     private List<Complaint> complaints;
 
     @OneToMany(cascade = {CascadeType.ALL},mappedBy = "gift")
-    private List<MyHoliday> myHolidays;
+    private List<Holiday> myHolidays;
 }

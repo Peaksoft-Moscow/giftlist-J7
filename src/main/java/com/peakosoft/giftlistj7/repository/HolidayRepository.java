@@ -1,0 +1,16 @@
+package com.peakosoft.giftlistj7.repository;
+
+import com.peakosoft.giftlistj7.model.entities.Holiday;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
+@Repository
+public interface HolidayRepository extends JpaRepository<Holiday, Long> {
+    @Query("SELECT h FROM Holiday h WHERE h.user.id = :userId")
+    List<Holiday> findAllHolidaysByUserId(@Param("userId") Long userId);
+
+}

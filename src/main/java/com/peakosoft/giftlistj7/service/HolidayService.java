@@ -1,12 +1,12 @@
-package com.peakosoft.service;
+package com.peakosoft.giftlistj7.service;
 
-import com.peakosoft.mapper.HolidayMapper;
-import com.peakosoft.model.dto.HolidayRequest;
-import com.peakosoft.model.dto.HolidayResponse;
-import com.peakosoft.model.entities.Holiday;
-import com.peakosoft.model.entities.User;
-import com.peakosoft.repository.HolidayRepository;
-import com.peakosoft.repository.UserRepository;
+import com.peakosoft.giftlistj7.model.dto.HolidayRequest;
+import com.peakosoft.giftlistj7.model.dto.HolidayResponse;
+import com.peakosoft.giftlistj7.model.dto.mapper.HolidayMapper;
+import com.peakosoft.giftlistj7.model.entities.Holiday;
+import com.peakosoft.giftlistj7.model.entities.User;
+import com.peakosoft.giftlistj7.repository.HolidayRepository;
+import com.peakosoft.giftlistj7.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,13 +26,13 @@ public class HolidayService {
 
     public HolidayResponse create(HolidayRequest request, String username) {
         Holiday holiday = holidayMapper.mapToEntity(request);
-        User user = userRepository.findByName(username).
+        User user = userRepository.findByEmail(username).
                 orElseThrow(() -> new EntityNotFoundException("not found bound username" + username));
-        holiday.setCreateDate(LocalDate.now());
+//        holiday.setCreateDate(LocalDate.now());
         holiday.setUser(user);
-        Holiday savedHoliday = holidayRepository.save(holiday);
+        holidayRepository.save(holiday);
         log.info("Success is create holiday");
-        return holidayMapper.mapToResponse(savedHoliday);
+        return holidayMapper.mapToResponse(holiday);
 
     }
 
@@ -49,19 +49,16 @@ public class HolidayService {
                 .orElseThrow(() -> new EntityNotFoundException("not found by id" + id));
         holiday.setName(request.getName());
         holiday.setImage(request.getImage());
-        holiday.setCreateDate(LocalDate.now());
+//        holiday.setCreateDate(LocalDate.now());
         holidayRepository.save(holiday);
         return holidayMapper.mapToResponse(holiday);
     }
 
     public List<HolidayResponse> findAll(String name) {
-        Holiday holiday = new Holiday();
-        User user = userRepository.findByName(name)
+        User user = userRepository.findByEmail(name)
                 .orElseThrow(() -> new EntityNotFoundException("not found bound username" + name));
-        holiday.setUser(user);
-        List<Holiday> holidays = holidayRepository.findAll();
-        holidays.add(holiday);
-        return holidays.stream().map(holidayMapper::mapToResponse).toList();
+        List<Holiday> myHoliday = holidayRepository.findAllHolidaysByUserId(user.getId());
+        return myHoliday.stream().map(holidayMapper::mapToResponse).toList();
     }
 
     public void removeById(Long id) {
