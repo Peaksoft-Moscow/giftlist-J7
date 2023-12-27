@@ -1,6 +1,6 @@
 package com.peakosoft.giftlistj7.service;
 
-import com.peakosoft.giftlistj7.mapper.WishListMapper;
+import com.peakosoft.giftlistj7.model.dto.mapper.WishListMapper;
 import com.peakosoft.giftlistj7.model.dto.WishListRequest;
 import com.peakosoft.giftlistj7.model.dto.WishListResponse;
 import com.peakosoft.giftlistj7.model.entities.Gift;
