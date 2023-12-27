@@ -30,7 +30,9 @@ public class User {
     private ClothesSize clothesSize;
     private ShoesSize shoesSize;
     private SocialMedia socialMedia;
+    @Enumerated(EnumType.STRING)
     private Role role;
+    private boolean subscribe;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private List<Booking> booking;
