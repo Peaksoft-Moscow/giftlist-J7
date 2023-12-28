@@ -1,4 +1,4 @@
-package com.giftlistj7.peakosoft.model.dto;
+package com.peakosoft.giftlistj7.model.dto;
 
 import lombok.Getter;
 import lombok.Setter;
