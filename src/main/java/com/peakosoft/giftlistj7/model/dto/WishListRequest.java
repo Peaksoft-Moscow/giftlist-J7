@@ -1,6 +1,5 @@
 package com.peakosoft.giftlistj7.model.dto;
 
-import com.peakosoft.giftlistj7.model.entities.MyHoliday;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,7 +11,7 @@ public class WishListRequest {
     private String image;
     private String name;
     private String link;
-    private MyHoliday myHoliday;
+    private String holidayName;
     private LocalDate dateOfHoliday;
     private String description;
 }

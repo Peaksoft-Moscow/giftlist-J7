@@ -22,8 +22,13 @@ public class Holiday {
 
     @OneToMany(cascade = {CascadeType.ALL},mappedBy = "myHoliday")
     private List<Gift> gifts;
+    private String name;
+
+    @OneToMany(cascade = {CascadeType.ALL})
+    private List<Gift> wishlist;
 
     @ManyToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "user_id")
     private User user;
+
 }

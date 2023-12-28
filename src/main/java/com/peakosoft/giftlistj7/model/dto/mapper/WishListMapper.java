@@ -13,7 +13,6 @@ public class WishListMapper {
         gift.setImage(wishListRequest.getImage());
         gift.setName(wishListRequest.getName());
         gift.setLink(wishListRequest.getLink());
-        gift.setMyHoliday(wishListRequest.getMyHoliday());
         gift.setDateOfHoliday(wishListRequest.getDateOfHoliday());
         gift.setDescription(wishListRequest.getDescription());
         return gift;
@@ -22,7 +21,7 @@ public class WishListMapper {
         return WishListResponse.builder()
                 .image(gift.getImage())
                 .nameOfGift(gift.getName())
-                .myHoliday(gift.getMyHoliday())
+                .myHoliday(gift.getHoliday().getName())
                 .createDate(gift.getAddDate())
                 .bookingStatus(gift.getBookingStatus())
                 .build();

@@ -52,6 +52,6 @@ public class Gift {
 
     @ManyToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "myHoliday_id")
-    private MyHoliday myHoliday;
+    private Holiday holiday;
 
 }
