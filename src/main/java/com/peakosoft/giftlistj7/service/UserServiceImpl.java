@@ -1,6 +1,6 @@
 package com.peakosoft.giftlistj7.service;
 
-import com.giftlistj7.peakosoft.config.UserRepository;
+import com.peakosoft.giftlistj7.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
