@@ -1,6 +1,6 @@
-package com.giftlistj7.peakosoft.model.mapper;
+package com.peakosoft.giftlistj7.model.dto.mapper;
 
-import com.giftlistj7.peakosoft.model.dto.LoginResponse;
+import com.peakosoft.giftlistj7.model.dto.LoginResponse;
 import org.springframework.stereotype.Component;
 
 @Component

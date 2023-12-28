@@ -1,7 +1,7 @@
-package com.giftlistj7.peakosoft.config.jwt;
+package com.peakosoft.giftlistj7.config.jwt;
 
 
-import com.giftlistj7.peakosoft.service.UserServiceImpl;
+import com.peakosoft.giftlistj7.service.UserServiceImpl;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -38,7 +38,7 @@ public class JwtFilter extends OncePerRequestFilter {
             if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
                 UserDetails user = userService.loadUserByUsername(username);
                 Collection<? extends GrantedAuthority> role = user.getAuthorities();
-                if (jwtUtil.tokenIsValidation(jwt, user)) {
+                if (jwtUtil.tokeIsValidation(jwt, user)) {
                     UsernamePasswordAuthenticationToken token =
                             new UsernamePasswordAuthenticationToken(user, null, role);
                     token.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));

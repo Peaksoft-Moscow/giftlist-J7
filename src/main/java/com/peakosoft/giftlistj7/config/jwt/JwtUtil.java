@@ -1,4 +1,5 @@
-package com.giftlistj7.peakosoft.config.jwt;
+package com.peakosoft.giftlistj7.config.jwt;
+
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -14,10 +15,11 @@ import java.util.function.Function;
 
 @Service
 public class JwtUtil {
-    @Value("${secret.key}")
+    @Value("java-7")
     private String secretKey;
-    private final Long TOKEN_EXPIRATION = 24 * 7 * 60 * 60 * 1000L;
-    public String creatToken(Map<String,Object> claims , String subject){
+    private final Long TOKEN_EXPIRATION = 24 * 7 * 60 * 60 * 1000L; // 7 days
+
+    public String createToken(Map<String,Object> claims,String subject){
         return Jwts.builder()
                 .setClaims(claims)
                 .setSubject(subject)
@@ -26,32 +28,36 @@ public class JwtUtil {
                 .signWith(SignatureAlgorithm.HS256,secretKey)
                 .compact();
     }
-    public String generateToken(UserDetails userDetails){
-        Map<String,Object> claims= new HashMap<>();
-        return creatToken(claims,userDetails.getUsername());
+
+    public String generateToke(UserDetails userDetails){
+        Map<String,Object> claims = new HashMap<>();
+        return createToken(claims,userDetails.getUsername());
     }
+
     private Claims getAllClaimsFromToken(String token){
         return Jwts.parser()
                 .setSigningKey(secretKey)
-                .parseClaimsJwt(token)
+                .parseClaimsJws(token)
                 .getBody();
     }
-    public <T> T getClaimsFromToken(String token , Function<Claims,T>function){
+
+    private <T> T getClaimsFromToken(String token, Function<Claims,T>function){
         final Claims claims = getAllClaimsFromToken(token);
         return function.apply(claims);
     }
-    public  Date getExpirationDateToken(String token){
+
+    public Date getExpirationDateToken(String token){
         return getClaimsFromToken(token,Claims::getExpiration);
     }
-    private  Boolean isTokenExpired(String token){
-        final  Date expiration = getExpirationDateToken(token);
+    private Boolean isTokenExpired(String token){
+        final Date expiration = getExpirationDateToken(token);
         return expiration.before(new Date());
     }
-    public  String getUsernameFromToken(String token){
-        return getClaimsFromToken(token, Claims::getSubject);
+    public String getUsernameFromToken(String token){
+        return getClaimsFromToken(token,Claims::getSubject);
     }
-    public  Boolean tokenIsValidation(String token, UserDetails userDetails){
-        final String username= getUsernameFromToken(token);
+    public Boolean tokeIsValidation(String token, UserDetails userDetails){
+        final String username = getUsernameFromToken(token);
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
 
