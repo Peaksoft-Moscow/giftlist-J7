@@ -1,4 +1,4 @@
-package com.giftlistj7;
+package com.peakosoft.giftlistj7;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
