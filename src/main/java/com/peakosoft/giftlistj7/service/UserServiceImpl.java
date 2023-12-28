@@ -1,4 +1,4 @@
-package com.giftlistj7.peakosoft.service;
+package com.peakosoft.giftlistj7.service;
 
 import com.giftlistj7.peakosoft.config.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +18,5 @@ public class UserServiceImpl implements UserDetailsService {
         System.out.println(username);
         return userRepository.findByEmail(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found by email: " + username));
-
     }
 }
