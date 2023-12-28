@@ -9,15 +9,15 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/WishLists")
+@RequestMapping("api/wish_lists")
 @RequiredArgsConstructor
 public class WishListController {
     private final WishListService wishListService;
     @PostMapping("/save")
-    public WishListResponse save(WishListRequest wishListRequest) {
+    public WishListResponse save(@RequestBody WishListRequest wishListRequest) {
         return wishListService.save(wishListRequest);
     }
-    @GetMapping()
+    @GetMapping
     public List<WishListResponse> findAllByUserId(Long id) {
         return wishListService.findAll(id);
     }
@@ -26,7 +26,8 @@ public class WishListController {
         return wishListService.update(id, wishListRequest);
     }
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable("id") Long id){
+    public String delete(@PathVariable("id") Long id){
         wishListService.delete(id);
+        return "Gift with id: "+id+" successfully deleted";
     }
 }
