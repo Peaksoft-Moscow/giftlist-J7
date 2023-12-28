@@ -1,5 +1,6 @@
 package com.peakosoft.giftlistj7.service;
 
+import com.peakosoft.giftlistj7.exception.EntityNotFoundException;
 import com.peakosoft.giftlistj7.model.dto.HolidayRequest;
 import com.peakosoft.giftlistj7.model.dto.HolidayResponse;
 import com.peakosoft.giftlistj7.model.dto.mapper.HolidayMapper;
@@ -7,7 +8,6 @@ import com.peakosoft.giftlistj7.model.entities.Holiday;
 import com.peakosoft.giftlistj7.model.entities.User;
 import com.peakosoft.giftlistj7.repository.HolidayRepository;
 import com.peakosoft.giftlistj7.repository.UserRepository;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -28,7 +28,13 @@ public class HolidayService {
         Holiday holiday = holidayMapper.mapToEntity(request);
         User user = userRepository.findByEmail(username).
                 orElseThrow(() -> new EntityNotFoundException("not found bound username" + username));
-//        holiday.setCreateDate(LocalDate.now());
+        List<Holiday> holidays = holidayRepository.findAll();
+        for (Holiday holiday1 : holidays) {
+            if (holiday1.getName().equals(holiday.getName())) {
+                throw new EntityNotFoundException("the user already has such a holiday");
+            }
+        }
+        holiday.setDate(LocalDate.now());
         holiday.setUser(user);
         holidayRepository.save(holiday);
         log.info("Success is create holiday");
@@ -49,7 +55,7 @@ public class HolidayService {
                 .orElseThrow(() -> new EntityNotFoundException("not found by id" + id));
         holiday.setName(request.getName());
         holiday.setImage(request.getImage());
-//        holiday.setCreateDate(LocalDate.now());
+        holiday.setDate(LocalDate.now());
         holidayRepository.save(holiday);
         return holidayMapper.mapToResponse(holiday);
     }
