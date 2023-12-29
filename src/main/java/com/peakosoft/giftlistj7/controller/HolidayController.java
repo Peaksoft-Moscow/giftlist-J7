@@ -21,7 +21,7 @@ import java.util.List;
 public class HolidayController {
     private final HolidayService holidayService;
 
-    @PostMapping("/sing-up")
+    @PostMapping("/save")
     public ResponseEntity<HolidayResponse> create(@RequestBody HolidayRequest holidayRequest, Principal principal) {
         HolidayResponse response = holidayService.create(holidayRequest, principal.getName());
         return new ResponseEntity<>(response, HttpStatus.CREATED);

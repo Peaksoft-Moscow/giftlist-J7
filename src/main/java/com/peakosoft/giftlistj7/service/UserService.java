@@ -1,5 +1,9 @@
 package com.peakosoft.giftlistj7.service;
 
+import com.peakosoft.giftlistj7.config.jwt.JwtUtil;
+import com.peakosoft.giftlistj7.model.dto.LoginRequest;
+import com.peakosoft.giftlistj7.model.dto.LoginResponse;
+import com.peakosoft.giftlistj7.model.dto.mapper.LoginMapper;
 import com.peakosoft.giftlistj7.model.dto.mapper.UserMapper;
 import com.peakosoft.giftlistj7.model.dto.AuthRequest;
 import com.peakosoft.giftlistj7.model.dto.AuthResponse;
@@ -7,6 +11,9 @@ import com.peakosoft.giftlistj7.model.entities.User;
 import com.peakosoft.giftlistj7.model.enums.Role;
 import com.peakosoft.giftlistj7.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +25,10 @@ public class UserService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
+    private final JwtUtil jwtUtil;
+    private final AuthenticationManager authenticationManager;
+    private final LoginMapper loginMapper;
+
 
     public AuthResponse registration(AuthRequest authRequest) {
         User user = userMapper.mapToEntity(authRequest);
@@ -25,7 +36,7 @@ public class UserService {
         if (user.getName().length() < 2 || user.getLastName().length() < 2) {
             throw new RuntimeException("Имя и фамилия должны содержать более двух символов!");
         }
-        if (!user.getEmail().contains("@")){
+        if (!user.getEmail().contains("@")) {
             throw new RuntimeException("Email пользователя должен содержать @!");
         }
         List<User> users = userRepository.findAll();
@@ -74,5 +85,19 @@ public class UserService {
         userRepository.save(user);
         return userMapper.mapToResponse(user);
     }
+
+
+    public LoginResponse login(LoginRequest request) {
+        try {
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
+        } catch (AuthenticationException e) {
+            throw new RuntimeException("Invalid email or password");
+        }
+        User user = userRepository.findByEmail(request.getEmail()).orElseThrow(() -> new RuntimeException("not found"));
+        String jwt = jwtUtil.generateToke(user);
+
+        return loginMapper.mapToResponse(jwt, user.getRole().toString());
+    }
+
 
 }
