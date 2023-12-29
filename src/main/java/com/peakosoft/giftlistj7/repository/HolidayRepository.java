@@ -13,6 +13,6 @@ import java.util.Optional;
 public interface HolidayRepository extends JpaRepository<Holiday, Long> {
     @Query("select holiday from Holiday holiday where holiday.user.id=:id")
     Optional<List<Holiday>> findAllHolidaysByUserId(@Param("id") Long id);
-    @Query("select Holiday from Holiday holiday where holiday.name=:name")
-    Holiday findByName(@Param("name") String name);
+    @Query("select holiday from Holiday holiday where holiday.name=:name")
+    Optional<Holiday> findByName(@Param("name") String name);
 }
