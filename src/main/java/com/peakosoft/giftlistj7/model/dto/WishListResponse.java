@@ -11,9 +11,10 @@ import java.time.LocalDate;
 @Setter
 @Builder
 public class WishListResponse {
+    private Long id;
     private String image;
     private String nameOfGift;
     private String myHoliday;
-    private LocalDate createDate;
+    private LocalDate dateOfHoliday;
     private BookingStatus bookingStatus;
 }

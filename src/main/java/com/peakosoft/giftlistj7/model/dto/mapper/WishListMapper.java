@@ -3,6 +3,7 @@ package com.peakosoft.giftlistj7.model.dto.mapper;
 import com.peakosoft.giftlistj7.model.dto.WishListRequest;
 import com.peakosoft.giftlistj7.model.dto.WishListResponse;
 import com.peakosoft.giftlistj7.model.entities.Gift;
+import com.peakosoft.giftlistj7.model.enums.GiftStatus;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -13,6 +14,7 @@ public class WishListMapper {
         gift.setImage(wishListRequest.getImage());
         gift.setName(wishListRequest.getName());
         gift.setLink(wishListRequest.getLink());
+        gift.setGiftStatus(GiftStatus.WISHLIST);
         gift.setDateOfHoliday(wishListRequest.getDateOfHoliday());
         gift.setDescription(wishListRequest.getDescription());
         return gift;
@@ -22,7 +24,7 @@ public class WishListMapper {
                 .image(gift.getImage())
                 .nameOfGift(gift.getName())
                 .myHoliday(gift.getHoliday().getName())
-                .createDate(gift.getAddDate())
+                .dateOfHoliday(gift.getDateOfHoliday())
                 .bookingStatus(gift.getBookingStatus())
                 .build();
     }
