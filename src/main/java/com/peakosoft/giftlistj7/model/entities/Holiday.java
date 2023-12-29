@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "Holiday")
@@ -19,9 +20,9 @@ public class Holiday {
     private String name;
     private String image;
     private LocalDate date;
-    @ManyToOne(cascade = {CascadeType.ALL})
+    @OneToMany(cascade = {CascadeType.ALL})
     @JoinColumn(name = "gift_id")
-    private Gift gift;
+    private List<Gift> wishLift;
 
     @ManyToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "user_id")

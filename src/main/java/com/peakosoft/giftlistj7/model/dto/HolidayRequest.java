@@ -10,6 +10,6 @@ import lombok.Setter;
 public class HolidayRequest {
     private String name;
     private String image;
-    private String ownerName;
+
 
 }

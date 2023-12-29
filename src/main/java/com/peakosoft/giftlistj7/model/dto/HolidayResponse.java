@@ -14,7 +14,6 @@ public class HolidayResponse {
     private String name;
     private LocalDate date;
     private String image;
-    private String ownerName;
     private LocalDate createDate;
 
 
