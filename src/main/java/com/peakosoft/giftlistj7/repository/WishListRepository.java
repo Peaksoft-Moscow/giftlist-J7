@@ -11,7 +11,7 @@ import java.util.Optional;
 
 @Repository
 public interface WishListRepository extends JpaRepository<Gift, Long> {
-    @Query("select gift from Gift gift where gift.user.id =: id")
+    @Query("SELECT gift FROM Gift gift WHERE gift.user.id=:id AND gift.giftStatus='WISHLIST'")
     Optional<List<Gift>> findAllByUserId(@Param("id") Long id);
 
 }

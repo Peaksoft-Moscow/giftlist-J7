@@ -1,5 +1,6 @@
 package com.peakosoft.giftlistj7.model.dto;
 
+import com.peakosoft.giftlistj7.model.enums.BookingStatus;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,4 +15,5 @@ public class WishListRequest {
     private String holidayName;
     private LocalDate dateOfHoliday;
     private String description;
+    private BookingStatus bookingStatus;
 }

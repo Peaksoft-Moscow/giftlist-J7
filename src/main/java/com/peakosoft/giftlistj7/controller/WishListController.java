@@ -20,12 +20,12 @@ public class WishListController {
         log.info(wishListRequest.getHolidayName());
         return wishListService.save(wishListRequest);
     }
-    @GetMapping
-    public List<WishListResponse> findAllByUserId(Long id) {
+    @GetMapping("/{id}")
+    public List<WishListResponse> findAllByUserId(@PathVariable("id") Long id) {
         return wishListService.findAll(id);
     }
     @GetMapping("/update/{id}")
-    public WishListResponse update(@PathVariable("id") Long id, WishListRequest wishListRequest) {
+    public WishListResponse update(@PathVariable("id") Long id,@RequestBody WishListRequest wishListRequest) {
         return wishListService.update(id, wishListRequest);
     }
     @DeleteMapping("/{id}")
