@@ -31,6 +31,8 @@ public class User {
     @Enumerated(EnumType.STRING)
     private ClothesSize clothesSize;
     @Enumerated(EnumType.STRING)
+    private ShoesSize shoesSize;
+    @Enumerated(EnumType.STRING)
     private SocialMedia socialMedia;
     @Enumerated(EnumType.STRING)
     private Role role;
