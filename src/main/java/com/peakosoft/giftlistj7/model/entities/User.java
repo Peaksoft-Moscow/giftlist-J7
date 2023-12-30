@@ -53,7 +53,4 @@ public class User {
     @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "user")
     private List<Holiday> myHolidays;
 
-    @OneToMany(cascade = CascadeType.ALL,mappedBy = "user")
-    private List<ShoesSize> shoesSize;
-
 }
