@@ -27,6 +27,7 @@ public class Gift {
     private LocalDate addDate;
     private LocalDate dateOfHoliday;
     private Condition condition;
+    @Enumerated(EnumType.STRING)
     private GiftStatus giftStatus;
     private BookingStatus bookingStatus;
 

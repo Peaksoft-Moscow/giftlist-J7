@@ -5,6 +5,8 @@ import com.peakosoft.giftlistj7.model.dto.WishListRequest;
 import com.peakosoft.giftlistj7.model.dto.WishListResponse;
 import com.peakosoft.giftlistj7.model.entities.Gift;
 import com.peakosoft.giftlistj7.model.entities.Holiday;
+import com.peakosoft.giftlistj7.model.enums.BookingStatus;
+import com.peakosoft.giftlistj7.model.enums.GiftStatus;
 import com.peakosoft.giftlistj7.repository.HolidayRepository;
 import com.peakosoft.giftlistj7.repository.WishListRepository;
 import lombok.RequiredArgsConstructor;
@@ -19,10 +21,11 @@ public class WishListService {
     private final WishListMapper wishListMapper;
     private final HolidayRepository holidayRepository;
     public WishListResponse save(WishListRequest wishListRequest) {
-        Holiday holiday = holidayRepository.findByName(wishListRequest.getHolidayName()).get();
+        Holiday holiday = holidayRepository.findByName(wishListRequest.getHolidayName()).orElseThrow(()-> new RuntimeException("Holiday not found by name: " + wishListRequest.getHolidayName()));
         System.out.println(holiday.getName());
         Gift gift = wishListMapper.mapToEntity(wishListRequest);
         gift.setHoliday(holiday);
+        gift.setGiftStatus(GiftStatus.WISHLIST);
         wishListRepository.save(gift);
         return wishListMapper.mapToResponse(gift);
     }
@@ -37,9 +40,11 @@ public class WishListService {
         oldGift.setImage(wishListRequest.getImage());
         oldGift.setName(wishListRequest.getName());
         oldGift.setLink(wishListRequest.getLink());
-        oldGift.setHoliday(holidayRepository.findByName(wishListRequest.getHolidayName()).get());
+        oldGift.setHoliday(holidayRepository.findByName(wishListRequest.getHolidayName())
+                .orElseThrow(()->new RuntimeException("Not found holiday by name: " + wishListRequest.getHolidayName())));
         oldGift.setDateOfHoliday(wishListRequest.getDateOfHoliday());
         oldGift.setDescription(wishListRequest.getDescription());
+        oldGift.setBookingStatus(BookingStatus.EXPECTATION);
         wishListRepository.save(oldGift);
         return wishListMapper.mapToResponse(oldGift);
     }
