@@ -20,9 +20,10 @@ public class Booking {
     private String image;
     private String name;
     private LocalDate createDate;
+    @Enumerated(EnumType.STRING)
     private BookingStatus bookingStatus;
 
     @ManyToOne(cascade = {CascadeType.ALL})
-    @JoinColumn(name = "users_id")
+    @JoinColumn(name = "user_id")
     private User user;
 }

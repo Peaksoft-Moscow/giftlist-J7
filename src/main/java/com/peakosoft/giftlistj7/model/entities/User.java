@@ -31,9 +31,8 @@ public class User {
     @Enumerated(EnumType.STRING)
     private ClothesSize clothesSize;
     @Enumerated(EnumType.STRING)
-    private ShoesSize shoesSize;
-    @Enumerated(EnumType.STRING)
     private SocialMedia socialMedia;
+    @Enumerated(EnumType.STRING)
     private Role role;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
@@ -52,6 +51,9 @@ public class User {
     private List<Gift> gifts;
 
     @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "user")
-    private List<MyHoliday> myHolidays;
+    private List<Holiday> myHolidays;
+
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "user")
+    private List<ShoesSize> shoesSize;
 
 }
