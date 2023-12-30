@@ -14,9 +14,9 @@ import java.util.Collection;
 import java.util.List;
 
 @Entity
-@Table(name = "users")
 @Getter
 @Setter
+@Table(name = "users")
 @NoArgsConstructor
 public class User implements UserDetails {
     @Id
@@ -58,12 +58,12 @@ public class User implements UserDetails {
     private List<MyHoliday> myHolidays;
 
 
-        @Override
-        public Collection<? extends GrantedAuthority> getAuthorities() {
-            List<GrantedAuthority>grantedAuthorities =new ArrayList<>();
-            grantedAuthorities.add(new SimpleGrantedAuthority(role.getAuthority()));
-            return grantedAuthorities;
-        }
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
+        grantedAuthorities.add(new SimpleGrantedAuthority(role.getAuthority()));
+        return grantedAuthorities;
+    }
 
     @Override
     public String getUsername() {

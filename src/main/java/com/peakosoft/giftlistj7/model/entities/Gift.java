@@ -12,9 +12,9 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Entity
-@Table(name = "gifts")
 @Getter
 @Setter
+@Table(name = "gifts")
 @NoArgsConstructor
 public class Gift {
     @Id
@@ -40,9 +40,9 @@ public class Gift {
     @JoinColumn(name = "category_id")
     private Category category;
 
-    @OneToMany(cascade ={CascadeType.ALL},mappedBy = "gift")
+    @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "gift")
     private List<Complaint> complaints;
 
-    @OneToMany(cascade = {CascadeType.ALL},mappedBy = "gift")
+    @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "gift")
     private List<MyHoliday> myHolidays;
 }

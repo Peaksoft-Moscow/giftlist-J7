@@ -7,9 +7,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "myHolidays")
 @Getter
 @Setter
+@Table(name = "myHolidays")
 @NoArgsConstructor
 public class MyHoliday {
     @Id

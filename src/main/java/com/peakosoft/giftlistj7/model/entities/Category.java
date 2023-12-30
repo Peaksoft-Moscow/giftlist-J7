@@ -24,6 +24,6 @@ public class Category {
     private Transport transport;
     private Electronic electronic;
 
-    @OneToMany(cascade = {CascadeType.ALL},mappedBy = "category")
+    @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "category")
     private List<Gift> gifts;
 }
