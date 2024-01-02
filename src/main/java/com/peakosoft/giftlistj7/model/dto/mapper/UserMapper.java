@@ -3,6 +3,7 @@ package com.peakosoft.giftlistj7.model.dto.mapper;
 import com.peakosoft.giftlistj7.config.jwt.JwtUtil;
 import com.peakosoft.giftlistj7.model.dto.AuthRequest;
 import com.peakosoft.giftlistj7.model.dto.AuthResponse;
+
 import com.peakosoft.giftlistj7.model.entities.User;
 import com.peakosoft.giftlistj7.model.enums.Role;
 import com.peakosoft.giftlistj7.repository.UserRepository;
