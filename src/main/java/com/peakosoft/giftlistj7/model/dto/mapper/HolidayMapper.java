@@ -18,7 +18,7 @@ public class HolidayMapper implements Mapper<HolidayRequest, Holiday, HolidayRes
         Holiday holiday = new Holiday();
         holiday.setName(holidayRequest.getName());
         holiday.setImage(holidayRequest.getImage());
-        holiday.setDate(LocalDate.now());
+        holiday.setCreateDate(LocalDate.now());
         return holiday;
     }
 
@@ -28,7 +28,6 @@ public class HolidayMapper implements Mapper<HolidayRequest, Holiday, HolidayRes
                 .id(holiday.getId())
                 .name(holiday.getName())
                 .image(holiday.getImage())
-                .date(holiday.getDate())
                 .createDate(LocalDate.now())
                 .build();
     }

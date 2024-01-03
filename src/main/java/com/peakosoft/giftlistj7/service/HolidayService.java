@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+import java.security.Principal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -34,7 +35,7 @@ public class HolidayService {
                 throw new EntityNotFoundException("the user already has such a holiday");
             }
         }
-        holiday.setDate(LocalDate.now());
+        holiday.setCreateDate(LocalDate.now());
         holiday.setUser(user);
         holidayRepository.save(holiday);
         log.info("Success is create holiday");
@@ -50,13 +51,17 @@ public class HolidayService {
         return holidayMapper.mapToResponse(holiday);
     }
 
-    public HolidayResponse update(Long id, HolidayRequest request) {
+    public HolidayResponse update(Long id, HolidayRequest request, Principal principal) {
         Holiday holiday = holidayRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("not found by id" + id));
-        holiday.setName(request.getName());
-        holiday.setImage(request.getImage());
-        holiday.setDate(LocalDate.now());
-        holidayRepository.save(holiday);
+        User user = userRepository.findByEmail(principal.getName())
+                .orElseThrow(() -> new EntityNotFoundException("not found by email" + principal.getName()));
+        if (user.getId() == holiday.getUser().getId()) {
+            holiday.setName(request.getName());
+            holiday.setImage(request.getImage());
+            holiday.setCreateDate(LocalDate.now());
+            holidayRepository.save(holiday);
+        }
         return holidayMapper.mapToResponse(holiday);
     }
 
@@ -67,10 +72,14 @@ public class HolidayService {
         return myHoliday.stream().map(holidayMapper::mapToResponse).toList();
     }
 
-    public void removeById(Long id) {
+    public void removeById(Long id, Principal principal) {
         Holiday holiday = holidayRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("not found by id" + id));
-        holidayRepository.delete(holiday);
+        User user = userRepository.findByEmail(principal.getName())
+                .orElseThrow(() -> new RuntimeException("not found by email" + principal.getName()));
+        if (user.getId() == holiday.getUser().getId()) {
+            holidayRepository.delete(holiday);
+        }
 
     }
 }

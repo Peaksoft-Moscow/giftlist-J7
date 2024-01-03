@@ -43,6 +43,7 @@ public class Gift {
     @OneToMany(cascade ={CascadeType.ALL},mappedBy = "gift")
     private List<Complaint> complaints;
 
-    @OneToMany(cascade = {CascadeType.ALL},mappedBy = "gift")
-    private List<Holiday> myHolidays;
+    @ManyToOne(cascade = {CascadeType.ALL})
+    @JoinColumn(name ="holiday_id")
+    private Holiday holiday;
 }

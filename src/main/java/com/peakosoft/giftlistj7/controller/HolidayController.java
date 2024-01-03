@@ -38,13 +38,13 @@ public class HolidayController {
     }
 
     @PutMapping("update/{id}")
-    public HolidayResponse update(@PathVariable("id") Long holidayId, @RequestBody HolidayRequest request) {
-        return holidayService.update(holidayId, request);
+    public HolidayResponse update(@PathVariable("id") Long holidayId, @RequestBody HolidayRequest request,Principal principal) {
+        return holidayService.update(holidayId, request,principal);
     }
 
     @DeleteMapping("/{id}")
-    public String delete(@PathVariable("id") Long id) {
-        holidayService.removeById(id);
+    public String delete(@PathVariable("id") Long id,Principal principal) {
+        holidayService.removeById(id,principal);
         return "Holiday with id" + id + "successfully deleted";
     }
 }
