@@ -38,7 +38,7 @@ public class JwtFilter extends OncePerRequestFilter {
             if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
                 UserDetails user = userService.loadUserByUsername(username);
                 Collection<? extends GrantedAuthority> role = user.getAuthorities();
-                if (jwtUtil.tokeIsValidation(jwt, user)) {
+                if (jwtUtil.tokenIsValidation(jwt, user)) {
                     UsernamePasswordAuthenticationToken token =
                             new UsernamePasswordAuthenticationToken(user, null, role);
                     token.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));

@@ -8,6 +8,8 @@ import com.peakosoft.giftlistj7.model.entities.User;
 import com.peakosoft.giftlistj7.model.enums.Role;
 import com.peakosoft.giftlistj7.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.engine.internal.Collections;
+import org.springframework.mail.MailException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
@@ -15,11 +17,14 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.oauth2.core.OAuth2AuthenticatedPrincipal;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.time.LocalDate;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -28,9 +33,9 @@ public class UserService {
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
-
     private final AuthenticationManager authenticationManager;
     private final LoginMapper loginMapper;
+    private final MailSender mailSender;
 
 
     public AuthResponse registration(AuthRequest authRequest) {
@@ -123,4 +128,33 @@ public class UserService {
     }
 
 
+    public String sendCode(String email){
+        System.out.println("service sendcode");
+       User user = userRepository.findByEmail(email).orElse(null);
+        System.out.println("salam");
+        String code = UUID.randomUUID().toString();
+        if (user != null){
+            user.setActivationCode(code);
+            mailSender.send(email,"furgot passowrd ",code );
+            userRepository.save(user);
+            return "Code sent";
+        }else{
+            return "Code is not sent";
+        }
+
+    }
+
+    public boolean activateUser(String code, String email, String password) {
+       User user = userRepository.findByEmail(email).orElse(null);
+       if (user == null){
+           return false;
+       }
+       if (!user.getActivationCode().equals(code)) {
+           return false;
+       }
+       user.setActivationCode(null);
+       user.setPassword(password);
+       userRepository.save(user);
+        return true;
+    }
 }
