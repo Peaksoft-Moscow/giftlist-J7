@@ -5,11 +5,13 @@ import com.peakosoft.giftlistj7.model.dto.AuthResponse;
 import com.peakosoft.giftlistj7.model.dto.LoginRequest;
 import com.peakosoft.giftlistj7.model.dto.LoginResponse;
 import com.peakosoft.giftlistj7.service.UserService;
+
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+
 
 @RestController
 @RequiredArgsConstructor
@@ -25,5 +27,18 @@ public class AuthController {
     public LoginResponse login(@RequestBody LoginRequest request) {
         return userService.login(request);
     }
+    @PutMapping("/forgot-password")
+    public ResponseEntity<String> forgotPassword(@RequestParam String email){
+        System.out.println("controloller forgot-password");
+        return new ResponseEntity<>(userService.sendCode(email),HttpStatus.OK);
+    }
 
+    @GetMapping("/activate/{code}")
+    public String activate(@PathVariable String code, @RequestParam String email, @RequestParam String password){
+        boolean isActivation = userService.activateUser(code, email, password);
+        if (isActivation){
+            return "User activated";
+        }
+        return "User not activated!";
+    }
 }

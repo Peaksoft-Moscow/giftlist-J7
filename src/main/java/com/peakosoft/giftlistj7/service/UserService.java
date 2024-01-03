@@ -11,13 +11,18 @@ import com.peakosoft.giftlistj7.model.entities.User;
 import com.peakosoft.giftlistj7.model.enums.Role;
 import com.peakosoft.giftlistj7.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.engine.internal.Collections;
+import org.springframework.mail.MailException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -28,6 +33,7 @@ public class UserService {
     private final JwtUtil jwtUtil;
     private final AuthenticationManager authenticationManager;
     private final LoginMapper loginMapper;
+    private final MailSender mailSender;
 
 
     public AuthResponse registration(AuthRequest authRequest) {
@@ -99,5 +105,55 @@ public class UserService {
         return loginMapper.mapToResponse(jwt, user.getRole().toString());
     }
 
+//    public String forgotPassword(String email) {
+//        User user = userRepository.findByEmail(email)
+//                .orElseThrow(
+//                        () -> new RuntimeException("User not found with this email: " + email));
+//        try {
+//            jwtUtil.getUsernameFromToken(email);
+//        } catch (MailException e) {
+//            throw new RuntimeException("unable to send set password email please try again");
+//        }
+//        return "please check your email to set new password your to account";
+//
+//    }
+//    public String setPassword(String email, String newPassword){
+//        User user = userRepository.findByEmail(email)
+//                .orElseThrow(
+//                        () -> new RuntimeException("User not found with this email: " + email));
+//        user.setPassword(newPassword);
+//        userRepository.save(user);
+//        return "New password set successfully login with new password";
+//    }
 
+    public String sendCode(String email){
+        System.out.println("service sendcode");
+       User user = userRepository.findByEmail(email).orElse(null);
+        System.out.println("salam");
+        String code = UUID.randomUUID().toString();
+        if (user != null){
+            user.setActivationCode(code);
+            mailSender.send(email,"furgot passowrd ",code );
+            userRepository.save(user);
+            return "Code sent";
+        }else{
+            return "Code is not sent";
+        }
+
+    }
+
+    public boolean activateUser(String code, String email, String password) {
+       User user = userRepository.findByEmail(email).orElse(null);
+       if (user == null){
+           return false;
+       }
+       if (!user.getActivationCode().equals(code)) {
+           return false;
+       }
+       user.setActivationCode(null);
+       user.setPassword(password);
+      /// passwordEncoder.encode(password);
+       userRepository.save(user);
+        return true;
+    }
 }
