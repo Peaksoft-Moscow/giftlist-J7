@@ -7,9 +7,9 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 @Entity
-@Table(name = "mailings")
 @Getter
 @Setter
+@Table(name = "mailings")
 @NoArgsConstructor
 public class Mailing {
     @Id
