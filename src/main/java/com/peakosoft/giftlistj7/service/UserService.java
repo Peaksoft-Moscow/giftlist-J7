@@ -12,8 +12,6 @@ import com.peakosoft.giftlistj7.model.entities.User;
 import com.peakosoft.giftlistj7.model.enums.Role;
 import com.peakosoft.giftlistj7.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.engine.internal.Collections;
-import org.springframework.mail.MailException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
@@ -21,7 +19,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.oauth2.core.OAuth2AuthenticatedPrincipal;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 import java.time.LocalDate;
 import java.util.LinkedHashMap;
@@ -138,7 +135,7 @@ public class UserService {
         String code = UUID.randomUUID().toString();
         if (user != null) {
             user.setActivationCode(code);
-            mailSender.send(email, "forgot-password", code);
+            mailSender.send(email, "furgot passowrd ", code);
             userRepository.save(user);
             return "Code sent";
         } else {
@@ -147,6 +144,17 @@ public class UserService {
 
     }
 
+    public boolean activateUser(String code, String email, String password) {
+        User user = userRepository.findByEmail(email).orElse(null);
+        if (user == null) {
+            return false;
+        }
+        if (!user.getActivationCode().equals(code)) {
+            return false;
+        }
+        user.setActivationCode(null);
+        user.setPassword(passwordEncoder.encode(password));
+        userRepository.save(user);}
     public boolean changePassword(String code, String email, String password, String confirmPassword) {
         User user = userRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("not found"));
         if (!user.getActivationCode().equals(code)) {
