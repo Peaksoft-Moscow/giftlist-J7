@@ -7,11 +7,11 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 public interface WishListRepository extends JpaRepository<Gift, Long> {
-    @Query("SELECT gift FROM Gift gift WHERE gift.user.id=:id AND gift.giftStatus='WISHLIST'")
-    Optional<List<Gift>> findAllByUserId(@Param("id") Long id);
+
+    @Query("select gift from Gift gift where gift.user.id=:id and gift.giftStatus='WISHLIST'")
+    List<Gift> findAllByUserId(@Param("id") Long id);
 
 }

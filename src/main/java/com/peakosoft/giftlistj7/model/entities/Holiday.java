@@ -19,6 +19,7 @@ public class Holiday {
     private String name;
 
     @OneToMany(cascade = {CascadeType.ALL})
+    @JoinColumn(name = "gift_id")
     private List<Gift> wishlist;
 
     @ManyToOne(cascade = {CascadeType.ALL})

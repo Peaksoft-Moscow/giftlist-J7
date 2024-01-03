@@ -9,9 +9,9 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Entity
-@Table(name = "notifications")
 @Getter
 @Setter
+@Table(name = "notifications")
 @NoArgsConstructor
 public class Notification {
     @Id

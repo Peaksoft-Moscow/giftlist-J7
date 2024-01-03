@@ -15,5 +15,4 @@ public class WishListRequest {
     private String holidayName;
     private LocalDate dateOfHoliday;
     private String description;
-    private BookingStatus bookingStatus;
 }

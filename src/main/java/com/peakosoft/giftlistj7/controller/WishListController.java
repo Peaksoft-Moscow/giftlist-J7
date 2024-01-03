@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -16,15 +17,15 @@ import java.util.List;
 public class WishListController {
     private final WishListService wishListService;
     @PostMapping("/save")
-    public WishListResponse save(@RequestBody WishListRequest wishListRequest) {
+    public WishListResponse save(@RequestBody WishListRequest wishListRequest, Principal principal) {
         log.info(wishListRequest.getHolidayName());
-        return wishListService.save(wishListRequest);
+        return wishListService.save(wishListRequest, principal);
     }
-    @GetMapping("/{id}")
-    public List<WishListResponse> findAllByUserId(@PathVariable("id") Long id) {
-        return wishListService.findAll(id);
+    @GetMapping
+    public List<WishListResponse> findAllByUserId(Principal principal) {
+        return wishListService.findAll(principal);
     }
-    @GetMapping("/update/{id}")
+    @PutMapping("/update/{id}")
     public WishListResponse update(@PathVariable("id") Long id,@RequestBody WishListRequest wishListRequest) {
         return wishListService.update(id, wishListRequest);
     }
