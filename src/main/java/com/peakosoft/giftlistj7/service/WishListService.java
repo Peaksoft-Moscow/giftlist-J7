@@ -33,6 +33,7 @@ public class WishListService {
         List<Gift> myGifts = wishListRepository
                 .findAllByUserId(userId)
                 .orElseThrow(()-> new RuntimeException("Not found user by id: " + userId));
+        System.out.println(myGifts.stream().map(wishListMapper::mapToResponse).toList());
         return myGifts.stream().map(wishListMapper::mapToResponse).toList();
     }
     public WishListResponse update(Long giftId, WishListRequest wishListRequest) {
