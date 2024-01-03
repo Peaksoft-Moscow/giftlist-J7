@@ -30,4 +30,25 @@ public class AuthController {
         return userService.saveWithGoogle(oAuth2AuthenticationToken);
     }
 
+    @PutMapping("/forgot-password")
+    public ResponseEntity<String> forgotPassword(@RequestParam String email) {
+        return new ResponseEntity<>(userService.sendCode(email), HttpStatus.OK);
+    }
+
+    @GetMapping("/change-password")
+    public String changePassword(@RequestParam String code, @RequestParam String email, @RequestParam String password, @RequestParam String confirmPassword) {
+        boolean isActivation = userService.changePassword(code, email, password, confirmPassword);
+        if (isActivation) {
+            return "User successfully changed";
+        }
+        return "User not changed!";
+    }
+    @GetMapping("/activate/{code}")
+    public String activate(@PathVariable String code, @RequestParam String email, @RequestParam String password){
+        boolean isActivation = userService.activateUser(code, email, password);
+        if (isActivation){
+            return "User activated";
+        }
+        return "User not activated!";
+    }
 }

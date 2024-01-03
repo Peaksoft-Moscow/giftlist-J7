@@ -73,6 +73,7 @@
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
     </dependencies>
+
     <build>
         <plugins>
             <plugin>
@@ -89,4 +90,5 @@
             </plugin>
         </plugins>
     </build>
+
 </project>
