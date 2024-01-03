@@ -6,10 +6,11 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+
 @Entity
-@Table(name = "complaints")
 @Getter
 @Setter
+@Table(name = "complaints")
 @NoArgsConstructor
 public class Complaint {
     @Id
