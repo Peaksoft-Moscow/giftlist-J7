@@ -18,6 +18,7 @@ public class Holiday {
     private Long id;
     private String holidayName;
     private String image;
+    private String name;
     private String description;
 
     @OneToMany(cascade = {CascadeType.ALL},mappedBy = "myHoliday")
@@ -26,6 +27,8 @@ public class Holiday {
 
     @OneToMany(cascade = {CascadeType.ALL})
     private List<Gift> wishlist;
+    @OneToMany(cascade = {CascadeType.ALL})
+    private List<Gift> gift;
 
     @ManyToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "user_id")

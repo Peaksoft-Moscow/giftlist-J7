@@ -27,6 +27,7 @@ public class WishListService {
 
     public WishListResponse save(WishListRequest wishListRequest, Principal principal) {
         User user = userRepository.findByEmail(principal.getName()).orElseThrow(() -> new RuntimeException("Not found user with email: " + principal.getName()));
+        System.out.println(wishListRequest.getHolidayName());
         Holiday holiday = holidayRepository.findByName(wishListRequest.getHolidayName()).orElseThrow(() -> new RuntimeException("Holiday not found by name: " + wishListRequest.getHolidayName()));
         Gift gift = wishListMapper.mapToEntity(wishListRequest);
         gift.setHoliday(holiday);
