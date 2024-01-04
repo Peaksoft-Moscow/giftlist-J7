@@ -24,7 +24,6 @@ public class AuthController {
     public AuthResponse registration(@RequestBody AuthRequest authRequest) {
         return userService.registration(authRequest);
     }
-
     @PostMapping("/sign-in")
     public LoginResponse login(@RequestBody LoginRequest request) {
         return userService.login(request);
