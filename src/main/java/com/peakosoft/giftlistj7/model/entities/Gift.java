@@ -12,22 +12,20 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Entity
-@Table(name = "gifts")
 @Getter
 @Setter
+@Table(name = "gifts")
 @NoArgsConstructor
 public class Gift {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String image;
     private String name;
     private String link;
     private String description;
     private LocalDate addDate;
     private LocalDate dateOfHoliday;
     private Condition condition;
-    @Enumerated(EnumType.STRING)
     private GiftStatus giftStatus;
     private BookingStatus bookingStatus;
 
@@ -42,11 +40,9 @@ public class Gift {
     @JoinColumn(name = "category_id")
     private Category category;
 
-    @OneToMany(cascade ={CascadeType.ALL},mappedBy = "gift")
+    @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "gift")
     private List<Complaint> complaints;
 
-    @ManyToOne(cascade = {CascadeType.ALL})
-    @JoinColumn(name = "myHoliday_id")
-    private Holiday holiday;
-
+    @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "gift")
+    private List<MyHoliday> myHolidays;
 }

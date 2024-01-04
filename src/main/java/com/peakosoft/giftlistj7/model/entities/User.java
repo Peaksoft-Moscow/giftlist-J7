@@ -31,9 +31,13 @@ public class User implements UserDetails {
     private String hobby;
     private String important;
     private String email;
+    @Enumerated(EnumType.STRING)
     private Country country;
+    @Enumerated(EnumType.STRING)
     private ClothesSize clothesSize;
+    @Enumerated(EnumType.STRING)
     private ShoesSize shoesSize;
+    @Enumerated(EnumType.STRING)
     private SocialMedia socialMedia;
     @Enumerated(EnumType.STRING)
     private Role role;
