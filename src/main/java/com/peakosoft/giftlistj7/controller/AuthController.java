@@ -13,6 +13,11 @@ import org.springframework.security.oauth2.client.authentication.OAuth2Authentic
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+
 
 @RestController
 @RequiredArgsConstructor
@@ -28,12 +33,10 @@ public class AuthController {
     public LoginResponse login(@RequestBody LoginRequest request) {
         return userService.login(request);
     }
-
     @GetMapping("/sign-in-with-google")
     public Map<String, Object> addUser(OAuth2AuthenticationToken oAuth2AuthenticationToken) throws IllegalAccessException {
         return userService.saveWithGoogle(oAuth2AuthenticationToken);
     }
-
     @PutMapping("/forgot-password")
     public ResponseEntity<String> forgotPassword(@RequestParam String email) {
         return new ResponseEntity<>(userService.sendCode(email), HttpStatus.OK);
@@ -45,7 +48,6 @@ public class AuthController {
         if (isActivation) {
             return "User successfully changed";
         }
-        return "User not activated!";
+        return "User not changed!";
     }
-
 }
