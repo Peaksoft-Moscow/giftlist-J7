@@ -52,6 +52,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize -> {
                     authorize.requestMatchers("/api/oauth2/with-google", "/api/auth/sign-up", "/api/auth/sign-in").permitAll();
                     authorize.requestMatchers("/api/auth/**").permitAll()
+                            .requestMatchers("/api/auth/sign-up").permitAll()
                             .anyRequest().authenticated();
                 })
                 .oauth2Login(withDefaults())
