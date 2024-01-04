@@ -16,7 +16,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
-
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/auth")
@@ -27,25 +26,27 @@ public class AuthController {
     public AuthResponse registration(@RequestBody AuthRequest authRequest) {
         return userService.registration(authRequest);
     }
+
     @PostMapping("/sign-in")
     public LoginResponse login(@RequestBody LoginRequest request) {
         return userService.login(request);
     }
+
     @GetMapping("/sign-in-with-google")
     public Map<String, Object> addUser(OAuth2AuthenticationToken oAuth2AuthenticationToken) throws IllegalAccessException{
         return userService.saveWithGoogle(oAuth2AuthenticationToken);
     }
     @PutMapping("/forgot-password")
-    public ResponseEntity<String> forgotPassword(@RequestParam String email){
+    public ResponseEntity<String> forgotPassword(@RequestParam String email) {
         System.out.println("controloller forgot-password");
-        return new ResponseEntity<>(userService.sendCode(email),HttpStatus.OK);
+        return new ResponseEntity<>(userService.sendCode(email), HttpStatus.OK);
     }
 
     @GetMapping("/change-password")
-    public String changePassword(@RequestParam String code, @RequestParam String email, @RequestParam String password){
-        System.out.println("Code:  "+code);
+    public String changePassword(@RequestParam String code, @RequestParam String email, @RequestParam String password) {
+        System.out.println("Code:  " + code);
         boolean isActivation = userService.changePassword(code, email, password);
-        if (isActivation){
+        if (isActivation) {
             return "User successfully changed ";
         }
         return "User not changed!";
