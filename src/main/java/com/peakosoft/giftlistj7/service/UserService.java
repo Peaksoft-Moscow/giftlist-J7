@@ -99,7 +99,6 @@ public class UserService {
         }
         User user = userRepository.findByEmail(request.getEmail()).orElseThrow(() -> new RuntimeException("not found"));
         String jwt = jwtUtil.generateToke(user);
-
         return loginMapper.mapToResponse(jwt, user.getRole().toString());
     }
 
@@ -139,11 +138,9 @@ public class UserService {
 
     }
 
-    public boolean activateUser(String code, String email, String password) {
-        User user = userRepository.findByEmail(email).orElse(null);
-        if (user == null) {
-            return false;
-        }
+    public boolean changePassword(String code, String email, String password) {
+        User user = userRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("not found"));
+        System.out.println(code == user.getActivationCode());
         if (!user.getActivationCode().equals(code)) {
             return false;
         }
