@@ -120,7 +120,6 @@ public class UserService {
         user.setEmail((String) json.get("email"));
         user.setPassword((String) json.get("given_name"));
         user.setLocalDate(LocalDate.now());
-        user.setRole(Role.USER);
         userRepository.save(user);
         Map<String,Object> response = new LinkedHashMap<>();
         response.put("name",user.getName());
