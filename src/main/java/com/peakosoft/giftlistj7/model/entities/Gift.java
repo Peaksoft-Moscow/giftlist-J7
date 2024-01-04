@@ -26,9 +26,11 @@ public class Gift {
     private String description;
     private LocalDate addDate;
     private LocalDate dateOfHoliday;
+    @Enumerated(EnumType.STRING)
     private Condition condition;
     @Enumerated(EnumType.STRING)
     private GiftStatus giftStatus;
+    @Enumerated(EnumType.STRING)
     private BookingStatus bookingStatus;
 
     @OneToOne(cascade = CascadeType.ALL)

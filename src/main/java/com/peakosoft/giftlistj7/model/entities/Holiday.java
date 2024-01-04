@@ -18,6 +18,7 @@ public class Holiday {
     private Long id;
     private String image;
     private String name;
+    private String description;
 
     @OneToMany(cascade = {CascadeType.ALL})
     private List<Gift> gift;
