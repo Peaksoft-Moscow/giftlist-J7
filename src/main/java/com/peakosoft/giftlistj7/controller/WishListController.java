@@ -26,12 +26,12 @@ public class WishListController {
         return wishListService.findAll(principal);
     }
     @PutMapping("/update/{id}")
-    public WishListResponse update(@PathVariable("id") Long id,@RequestBody WishListRequest wishListRequest) {
-        return wishListService.update(id, wishListRequest);
+    public WishListResponse update(@PathVariable("id") Long id,@RequestBody WishListRequest wishListRequest, Principal principal) {
+        return wishListService.update(id, wishListRequest, principal);
     }
     @DeleteMapping("/{id}")
-    public String delete(@PathVariable("id") Long id){
-        wishListService.delete(id);
+    public String delete(@PathVariable("id") Long id, Principal principal){
+        wishListService.delete(id, principal);
         return "Gift with id: "+id+" successfully deleted";
     }
 }

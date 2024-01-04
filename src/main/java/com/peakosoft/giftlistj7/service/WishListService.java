@@ -26,7 +26,7 @@ public class WishListService {
     private final UserRepository userRepository;
 
     public WishListResponse save(WishListRequest wishListRequest, Principal principal) {
-        User user = userRepository.findByEmail(principal.getName()).orElseThrow(()-> new RuntimeException("Not found user with email: " + principal.getName()));
+        User user = userRepository.findByEmail(principal.getName()).orElseThrow(() -> new RuntimeException("Not found user with email: " + principal.getName()));
         Holiday holiday = holidayRepository.findByName(wishListRequest.getHolidayName()).orElseThrow(() -> new RuntimeException("Holiday not found by name: " + wishListRequest.getHolidayName()));
         Gift gift = wishListMapper.mapToEntity(wishListRequest);
         gift.setHoliday(holiday);
@@ -48,22 +48,28 @@ public class WishListService {
         return myGifts.stream().map(wishListMapper::mapToResponse).toList();
     }
 
-    public WishListResponse update(Long giftId, WishListRequest wishListRequest) {
+    public WishListResponse update(Long giftId, WishListRequest wishListRequest, Principal principal) {
         Gift oldGift = wishListRepository.findById(giftId).orElseThrow(() -> new RuntimeException("Not found gift by id: " + giftId));
-        oldGift.setImage(wishListRequest.getImage());
-        oldGift.setName(wishListRequest.getName());
-        oldGift.setLink(wishListRequest.getLink());
-        oldGift.setHoliday(holidayRepository.findByName(wishListRequest.getHolidayName())
-                .orElseThrow(() -> new RuntimeException("Not found holiday by name: " + wishListRequest.getHolidayName())));
-        oldGift.setDateOfHoliday(wishListRequest.getDateOfHoliday());
-        oldGift.setDescription(wishListRequest.getDescription());
-        oldGift.setBookingStatus(BookingStatus.EXPECTATION);
-        wishListRepository.save(oldGift);
+        User user = userRepository.findByEmail(principal.getName()).orElseThrow(() -> new RuntimeException("Not found user by email: " + principal.getName()));
+        if (user.getEmail() == oldGift.getUser().getEmail()) {
+            oldGift.setImage(wishListRequest.getImage());
+            oldGift.setName(wishListRequest.getName());
+            oldGift.setLink(wishListRequest.getLink());
+            oldGift.setHoliday(holidayRepository.findByName(wishListRequest.getHolidayName())
+                    .orElseThrow(() -> new RuntimeException("Not found holiday by name: " + wishListRequest.getHolidayName())));
+            oldGift.setDateOfHoliday(wishListRequest.getDateOfHoliday());
+            oldGift.setDescription(wishListRequest.getDescription());
+            oldGift.setBookingStatus(BookingStatus.EXPECTATION);
+            wishListRepository.save(oldGift);
+        }
         return wishListMapper.mapToResponse(oldGift);
     }
 
-    public void delete(Long giftId) {
+    public void delete(Long giftId, Principal principal) {
+        User user = userRepository.findByEmail(principal.getName()).orElseThrow(() -> new RuntimeException("Not found user by email: " + principal.getName()));
         Gift gift = wishListRepository.findById(giftId).orElseThrow(() -> new RuntimeException("Not found gift by id: " + giftId));
-        wishListRepository.delete(gift);
+        if (user.getEmail() == gift.getUser().getEmail()) {
+            wishListRepository.delete(gift);
+        }
     }
 }
