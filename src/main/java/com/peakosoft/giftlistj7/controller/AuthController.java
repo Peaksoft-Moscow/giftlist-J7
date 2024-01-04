@@ -33,9 +33,10 @@ public class AuthController {
         return new ResponseEntity<>(userService.sendCode(email),HttpStatus.OK);
     }
 
-    @GetMapping("/activate/{code}")
-    public String activate(@PathVariable String code, @RequestParam String email, @RequestParam String password){
-        boolean isActivation = userService.activateUser(code, email, password);
+    @GetMapping("change-password")
+    public String changePassword(@RequestParam String code, @RequestParam String email, @RequestParam String password){
+        System.out.println("Code:  "+code);
+        boolean isActivation = userService.changePassword(code, email, password);
         if (isActivation){
             return "User activated";
         }

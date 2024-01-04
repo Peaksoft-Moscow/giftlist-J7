@@ -102,7 +102,7 @@ public class UserService {
     }
 
     public String sendCode(String email) {
-        User user = userRepository.findByEmail(email).orElse(null);
+        User user = userRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("not found"));
         String code = UUID.randomUUID().toString();
         if (user != null) {
             user.setActivationCode(code);
@@ -115,11 +115,14 @@ public class UserService {
 
     }
 
-    public boolean activateUser(String code, String email, String password) {
-        User user = userRepository.findByEmail(email).orElse(null);
-        if (user == null) {
-            return false;
-        }
+    public boolean changePassword(String code, String email, String password) {
+        System.out.println("email: "+email);
+        User user = userRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("not found"));
+//        if (user == null) {
+//            return false;
+//        }
+        System.out.println("proverka");
+        System.out.println(code == user.getActivationCode());
         if (!user.getActivationCode().equals(code)) {
             return false;
         }
