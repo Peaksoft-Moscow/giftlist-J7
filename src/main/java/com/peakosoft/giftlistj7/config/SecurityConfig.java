@@ -18,6 +18,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import static org.springframework.security.config.Customizer.withDefaults;
+
 @Configuration
 @RequiredArgsConstructor
 @EnableWebSecurity
@@ -44,15 +46,17 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        return http.cors(AbstractHttpConfigurer::disable)
+                        return http.cors(AbstractHttpConfigurer::disable)
                 .csrf(AbstractHttpConfigurer::disable)
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.ALWAYS))
                 .authorizeHttpRequests(authorize -> {
-                    authorize.requestMatchers("/api/auth/sign-up", "/api/auth/sign-in").permitAll()
+                    authorize.requestMatchers("/api/oauth2/with-google", "/api/auth/sign-up", "/api/auth/sign-in").permitAll()
                             .anyRequest().authenticated();
                 })
+                .oauth2Login(withDefaults())
+                .formLogin(withDefaults())
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
-
 }
+
