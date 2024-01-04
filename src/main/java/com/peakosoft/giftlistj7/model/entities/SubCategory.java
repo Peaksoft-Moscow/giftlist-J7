@@ -5,17 +5,17 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDate;
 @Entity
+@Table(name = "subcategories")
 @Getter
 @Setter
-@Table(name = "mailings")
 @NoArgsConstructor
-public class Mailing {
+public class SubCategory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String theme;
-    private String text;
-    private LocalDate createDate;
+    private String name;
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
 }

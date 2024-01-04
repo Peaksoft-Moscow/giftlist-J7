@@ -12,9 +12,9 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Entity
-@Table(name = "gifts")
 @Getter
 @Setter
+@Table(name = "gifts")
 @NoArgsConstructor
 public class Gift {
     @Id
@@ -25,8 +25,11 @@ public class Gift {
     private String description;
     private LocalDate addDate;
     private LocalDate dateOfHoliday;
+    @Enumerated(EnumType.STRING)
     private Condition condition;
+    @Enumerated(EnumType.STRING)
     private GiftStatus giftStatus;
+    @Enumerated(EnumType.STRING)
     private BookingStatus bookingStatus;
 
     @OneToOne(cascade = CascadeType.ALL)
@@ -44,5 +47,6 @@ public class Gift {
     private List<Complaint> complaints;
 
     @OneToMany(cascade = {CascadeType.ALL},mappedBy = "gift")
-    private List<MyHoliday> myHolidays;
+    private List<Holiday> myHolidays;
+
 }

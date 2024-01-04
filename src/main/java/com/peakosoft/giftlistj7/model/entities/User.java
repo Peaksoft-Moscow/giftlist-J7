@@ -15,9 +15,9 @@ import java.util.Collection;
 import java.util.List;
 
 @Entity
-@Table(name = "users")
 @Getter
 @Setter
+@Table(name = "users")
 @NoArgsConstructor
 public class User implements UserDetails {
     @Id
@@ -33,9 +33,13 @@ public class User implements UserDetails {
     private String hobby;
     private String important;
     private String email;
+    @Enumerated(EnumType.STRING)
     private Country country;
+    @Enumerated(EnumType.STRING)
     private ClothesSize clothesSize;
+    @Enumerated(EnumType.STRING)
     private ShoesSize shoesSize;
+    @Enumerated(EnumType.STRING)
     private SocialMedia socialMedia;
     @Enumerated(EnumType.STRING)
     private Role role;
@@ -58,15 +62,15 @@ public class User implements UserDetails {
     private List<Gift> gifts;
 
     @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "user")
-    private List<MyHoliday> myHolidays;
+    private List<Holiday> myHolidays;
 
 
-        @Override
-        public Collection<? extends GrantedAuthority> getAuthorities() {
-            List<GrantedAuthority>grantedAuthorities =new ArrayList<>();
-            grantedAuthorities.add(new SimpleGrantedAuthority(role.getAuthority()));
-            return grantedAuthorities;
-        }
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
+        grantedAuthorities.add(new SimpleGrantedAuthority(role.getAuthority()));
+        return grantedAuthorities;
+    }
 
     @Override
     public String getUsername() {
