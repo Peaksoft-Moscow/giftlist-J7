@@ -6,10 +6,10 @@ import com.peakosoft.giftlistj7.model.dto.LoginRequest;
 import com.peakosoft.giftlistj7.model.dto.LoginResponse;
 import com.peakosoft.giftlistj7.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -24,6 +24,10 @@ public class AuthController {
     @PostMapping("/sign-in")
     public LoginResponse login(@RequestBody LoginRequest request) {
         return userService.login(request);
+    }
+    @GetMapping("/sign-in-with-google")
+    public Map<String, Object> addUser(OAuth2AuthenticationToken oAuth2AuthenticationToken) throws IllegalAccessException{
+        return userService.saveWithGoogle(oAuth2AuthenticationToken);
     }
 
 }
