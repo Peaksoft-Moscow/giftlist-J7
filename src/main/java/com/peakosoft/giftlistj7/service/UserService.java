@@ -1,7 +1,6 @@
 package com.peakosoft.giftlistj7.service;
 
 import com.peakosoft.giftlistj7.config.jwt.JwtUtil;
-import com.peakosoft.giftlistj7.model.dto.*;
 import com.peakosoft.giftlistj7.model.dto.AuthRequest;
 import com.peakosoft.giftlistj7.model.dto.AuthResponse;
 import com.peakosoft.giftlistj7.model.dto.LoginRequest;
@@ -16,7 +15,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.oauth2.core.OAuth2AuthenticatedPrincipal;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +23,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.UUID;
 import java.util.Map;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -107,6 +104,7 @@ public class UserService {
         return loginMapper.mapToResponse(jwt, user.getRole().toString());
     }
 
+
     public Map<String,Object> saveWithGoogle(OAuth2AuthenticationToken oAuth2AuthenticationToken) throws IllegalAccessException{
         OAuth2AuthenticatedPrincipal principal = oAuth2AuthenticationToken.getPrincipal();
         if(oAuth2AuthenticationToken == null) {
@@ -135,9 +133,9 @@ public class UserService {
             user.setActivationCode(code);
             mailSender.send(email, "forgot-password", code);
             userRepository.save(user);
-            return "Code sent";
+            return "User code sent";
         } else {
-            return "Code is not sent";
+            return "User code is not sent";
         }
 
     }
@@ -159,5 +157,10 @@ public class UserService {
         user.setPassword(passwordEncoder.encode(password));
         userRepository.save(user);
         return true;
+    }
+
+
+    public Map<String, Object> saveWithGoogle(org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken oAuth2AuthenticationToken) {
+        return null;
     }
 }
