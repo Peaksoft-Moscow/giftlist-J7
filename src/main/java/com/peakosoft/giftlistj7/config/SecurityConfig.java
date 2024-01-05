@@ -57,6 +57,7 @@ public class SecurityConfig {
                             .requestMatchers(HttpMethod.DELETE,"/api/holiday/{id}").hasAnyAuthority("ADMIN","USER")
                             .requestMatchers("/api/holiday/update/{id}").hasAnyAuthority("ADMIN","USER")
                             .requestMatchers("/api/holiday").hasAnyAuthority("ADMIN","USER")
+                            .requestMatchers("/api/holiday/search").hasAnyAuthority("ADMIN","USER")
                             .anyRequest().authenticated();
                 })
                 .oauth2Login(withDefaults())
