@@ -14,11 +14,6 @@ import java.util.Map;
 public class Oauth2Controller {
     private final UserService userService;
 
-    @GetMapping("/")
-    public Map<String, Object> currentUser(OAuth2AuthenticationToken oAuth2AuthenticationToken) {
-        return oAuth2AuthenticationToken.getPrincipal().getAttributes();
-    }
-
     @GetMapping("/with-google")
     public Map<String, Object> addUser(OAuth2AuthenticationToken oAuth2AuthenticationToken) throws IllegalAccessException {
         return userService.saveWithGoogle(oAuth2AuthenticationToken);
