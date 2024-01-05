@@ -5,7 +5,6 @@ import com.peakosoft.giftlistj7.model.dto.AuthResponse;
 import com.peakosoft.giftlistj7.model.dto.LoginRequest;
 import com.peakosoft.giftlistj7.model.dto.LoginResponse;
 import com.peakosoft.giftlistj7.service.UserService;
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
 
 
 
@@ -37,6 +35,7 @@ public class AuthController {
     public Map<String, Object> addUser(OAuth2AuthenticationToken oAuth2AuthenticationToken) throws IllegalAccessException {
         return userService.saveWithGoogle(oAuth2AuthenticationToken);
     }
+
     @PutMapping("/forgot-password")
     public ResponseEntity<String> forgotPassword(@RequestParam String email) {
         return new ResponseEntity<>(userService.sendCode(email), HttpStatus.OK);
