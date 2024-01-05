@@ -20,6 +20,7 @@ public class Gift {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String image;
     private String name;
     private String link;
     private String description;
@@ -43,10 +44,10 @@ public class Gift {
     @JoinColumn(name = "category_id")
     private Category category;
 
-    @OneToMany(cascade ={CascadeType.ALL},mappedBy = "gift")
+    @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "gift")
     private List<Complaint> complaints;
 
-    @OneToMany(cascade = {CascadeType.ALL},mappedBy = "gift")
-    private List<Holiday> myHolidays;
-
+    @ManyToOne(cascade = {CascadeType.ALL})
+    @JoinColumn(name = "holiday_id")
+    private Holiday holiday;
 }

@@ -52,18 +52,20 @@ VALUES (1, 'LAPTOP', 1),
        (29, 'CAR', 6),
        (30, 'SCOOTER', 6);
 
+INSERT INTO my_holidays( user_id, description,name)
+VALUES (1, 'be happy', 'Mothers_Day');
+
 INSERT INTO bookings(name, create_date, booking_status, user_id)
 VALUES ('gifts', '2023.12.20', 'UNBOOKED', 1);
 
-INSERT INTO gifts(add_date, booking_status, condition, date_of_holiday, gift_status, booking_id, category_id, id,
-                  user_id, description, name)
-VALUES ('2023.12.29', 'BOOKED', 'NEW', '2023.12.31', 'WISHLIST', 1, 1, 1, 1, 'gift to my friend', 'Telephone');
+INSERT INTO gifts(add_date, booking_status, condition, date_of_holiday, gift_status, booking_id, category_id,
+                  user_id, description, name,holiday_id)
+VALUES ('2023.12.29', 'BOOKED', 'NEW', '2023.12.31', 'WISHLIST', 1, 1, 1, 'gift to my friend', 'Telephone', 1);
 
 INSERT INTO mailings(create_date, text, theme)
 VALUES ('2023.12.12', 'send gift to your friend', 'gifts');
 
-INSERT INTO my_holidays(gift_id, user_id, description, holiday_name)
-VALUES (1, 1, 'be happy', 'Mothers_Day');
+
 
 
 

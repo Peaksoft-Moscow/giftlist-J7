@@ -32,7 +32,6 @@ public class UserService {
 
     public AuthResponse registration(AuthRequest authRequest) {
         User user = userMapper.mapToEntity(authRequest);
-        System.out.println(user.getName());
         if (user.getName().length() < 2 || user.getLastName().length() < 2) {
             throw new RuntimeException("Имя и фамилия должны содержать более двух символов!");
         }
