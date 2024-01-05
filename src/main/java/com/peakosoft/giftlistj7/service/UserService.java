@@ -35,7 +35,6 @@ public class UserService {
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
-
     private final AuthenticationManager authenticationManager;
     private final LoginMapper loginMapper;
     private final MailSender mailSender;
@@ -105,7 +104,6 @@ public class UserService {
         }
         User user = userRepository.findByEmail(request.getEmail()).orElseThrow(() -> new RuntimeException("not found"));
         String jwt = jwtUtil.generateToke(user);
-
         return loginMapper.mapToResponse(jwt, user.getRole().toString());
     }
 
@@ -135,7 +133,7 @@ public class UserService {
         String code = UUID.randomUUID().toString();
         if (user != null) {
             user.setActivationCode(code);
-            mailSender.send(email, "furgot passowrd ", code);
+            mailSender.send(email, "forgot-password", code);
             userRepository.save(user);
             return "Code sent";
         } else {
@@ -144,22 +142,10 @@ public class UserService {
 
     }
 
-    public boolean changePassword(String code, String email, String password) {
-        System.out.println("email: "+email);
-        User user = userRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("not found"));
-//        if (user == null) {
-//            return false;
-//        }
-        System.out.println("proverka");
-        System.out.println(code == user.getActivationCode());
-        if (!user.getActivationCode().equals(code)) {
-            return false;
-        }
-        user.setActivationCode(null);
-        user.setPassword(passwordEncoder.encode(password));
-        userRepository.save(user);}
     public boolean changePassword(String code, String email, String password, String confirmPassword) {
         User user = userRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("not found"));
+        System.out.println(code == user.getActivationCode());
+
         if (!user.getActivationCode().equals(code)) {
             return false;
         }
