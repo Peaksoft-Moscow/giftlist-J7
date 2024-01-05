@@ -48,6 +48,6 @@ public class Gift {
     private List<Complaint> complaints;
 
     @ManyToOne(cascade = {CascadeType.ALL})
-    @JoinColumn(name = "holiday_id")
+    @JoinColumn(name ="holiday_id")
     private Holiday holiday;
 }

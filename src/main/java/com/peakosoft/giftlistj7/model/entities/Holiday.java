@@ -5,23 +5,23 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
+@Table(name = "Holiday")
 @Getter
 @Setter
-@Table(name = "myHolidays")
 @NoArgsConstructor
 public class Holiday {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String image;
     private String name;
-    private String description;
-
-    @OneToMany(cascade = {CascadeType.ALL})
-    private List<Gift> gift;
+    private String image;
+    private LocalDate createDate;
+    @OneToMany(cascade = {CascadeType.ALL},mappedBy = "holiday")
+    private List<Gift> wishLift;
 
     @ManyToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "user_id")

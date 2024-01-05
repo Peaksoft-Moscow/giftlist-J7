@@ -23,6 +23,6 @@ public class AuthRequest {
     @Min(value = 6, message = "Пароль пользователя должен содержать минимум 6 символов")
     private String password;
     @NotNull
-        private String repeatPassword;
+    private String repeatPassword;
     private boolean subscribe;
 }
