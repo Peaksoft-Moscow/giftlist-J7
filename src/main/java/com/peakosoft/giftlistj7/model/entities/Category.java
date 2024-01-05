@@ -17,13 +17,11 @@ public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Clothes clothes;
-    private Shoes shoes;
-    private HouseAndGarden houseAndGarden;
-    private SchoolRequirements schoolRequirements;
-    private Transport transport;
-    private Electronic electronic;
+    private String name;
 
     @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "category")
     private List<Gift> gifts;
+
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "category")
+    private List<SubCategory> subCategories;
 }
