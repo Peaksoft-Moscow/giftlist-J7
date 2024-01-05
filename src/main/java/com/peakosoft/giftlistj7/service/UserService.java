@@ -2,6 +2,11 @@ package com.peakosoft.giftlistj7.service;
 
 import com.peakosoft.giftlistj7.config.jwt.JwtUtil;
 import com.peakosoft.giftlistj7.model.dto.*;
+import com.peakosoft.giftlistj7.model.dto.*;
+import com.peakosoft.giftlistj7.model.dto.AuthRequest;
+import com.peakosoft.giftlistj7.model.dto.AuthResponse;
+import com.peakosoft.giftlistj7.model.dto.LoginRequest;
+import com.peakosoft.giftlistj7.model.dto.LoginResponse;
 import com.peakosoft.giftlistj7.model.dto.mapper.LoginMapper;
 import com.peakosoft.giftlistj7.model.dto.mapper.UserMapper;
 import com.peakosoft.giftlistj7.model.entities.User;
@@ -22,6 +27,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -30,6 +36,7 @@ public class UserService {
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
+
     private final AuthenticationManager authenticationManager;
     private final LoginMapper loginMapper;
     private final MailSender mailSender;
@@ -99,6 +106,7 @@ public class UserService {
         }
         User user = userRepository.findByEmail(request.getEmail()).orElseThrow(() -> new RuntimeException("not found"));
         String jwt = jwtUtil.generateToke(user);
+
         return loginMapper.mapToResponse(jwt, user.getRole().toString());
     }
 
