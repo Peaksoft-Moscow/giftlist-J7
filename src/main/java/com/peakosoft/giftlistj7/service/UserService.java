@@ -20,7 +20,8 @@ import java.time.LocalDate;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -29,10 +30,9 @@ public class UserService {
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
-
     private final AuthenticationManager authenticationManager;
     private final LoginMapper loginMapper;
-    private final MailSenderService mailSender;
+    private final MailSender mailSender;
 
 
     public AuthResponse registration(AuthRequest authRequest) {
@@ -99,17 +99,16 @@ public class UserService {
         }
         User user = userRepository.findByEmail(request.getEmail()).orElseThrow(() -> new RuntimeException("not found"));
         String jwt = jwtUtil.generateToke(user);
-
         return loginMapper.mapToResponse(jwt, user.getRole().toString());
     }
 
-    public Map<String, Object> saveWithGoogle(OAuth2AuthenticationToken oAuth2AuthenticationToken) throws IllegalAccessException {
+    public Map<String,Object> saveWithGoogle(OAuth2AuthenticationToken oAuth2AuthenticationToken) throws IllegalAccessException{
         OAuth2AuthenticatedPrincipal principal = oAuth2AuthenticationToken.getPrincipal();
-        if (oAuth2AuthenticationToken == null) {
+        if(oAuth2AuthenticationToken == null) {
             throw new IllegalAccessException("The token must be not null");
         }
-        Map<String, Object> json = principal.getAttributes();
-        User user = new User();
+        Map<String,Object> json = principal.getAttributes();
+        User user =new User();
         user.setName((String) json.get("given_name"));
         user.setLastName((String) json.get("family_name"));
         user.setEmail((String) json.get("email"));
@@ -152,7 +151,7 @@ public class UserService {
             return false;
         }
         if (!password.equals(confirmPassword)) {
-            throw new RuntimeException("Passwords do not match");
+          throw new RuntimeException("Passwords do not match");
         }
         if (password.length() < 6 || !password.matches(".*[A-Z].*")) {
             throw new RuntimeException("Пароль должен иметь длину не менее 6 символов и содержать хотя бы одну заглавную букву");
