@@ -1,6 +1,7 @@
 package com.peakosoft.giftlistj7.repository;
 
 import com.peakosoft.giftlistj7.model.entities.Holiday;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -12,5 +13,8 @@ import java.util.List;
 public interface HolidayRepository extends JpaRepository<Holiday, Long> {
     @Query("SELECT h FROM Holiday h WHERE h.user.id = :userId")
     List<Holiday> findAllHolidaysByUserId(@Param("userId") Long userId);
+    @Query("select  holiday from Holiday  holiday where upper(holiday.name) like concat('%',:text,'%')")
+    List<Holiday> searchAndPagination(@Param("text") String text, Pageable pageable);
+
 
 }

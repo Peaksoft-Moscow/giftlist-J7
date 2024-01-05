@@ -27,6 +27,13 @@ public class HolidayController {
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
+    @GetMapping("/search")
+    public List<HolidayResponse> searchAndPagination(@RequestParam(name = "text", required = false) String text,
+                                                     @RequestParam int page,
+                                                     @RequestParam int size) {
+        return holidayService.searchAndPagination(text, page, size);
+    }
+
     @GetMapping("/{id}")
     public HolidayResponse findById(@PathVariable("id") Long id) {
         return holidayService.findById(id);
@@ -38,13 +45,13 @@ public class HolidayController {
     }
 
     @PutMapping("update/{id}")
-    public HolidayResponse update(@PathVariable("id") Long holidayId, @RequestBody HolidayRequest request,Principal principal) {
-        return holidayService.update(holidayId, request,principal);
+    public HolidayResponse update(@PathVariable("id") Long holidayId, @RequestBody HolidayRequest request, Principal principal) {
+        return holidayService.update(holidayId, request, principal);
     }
 
     @DeleteMapping("/{id}")
-    public String delete(@PathVariable("id") Long id,Principal principal) {
-        holidayService.removeById(id,principal);
+    public String delete(@PathVariable("id") Long id, Principal principal) {
+        holidayService.removeById(id, principal);
         return "Holiday with id" + id + "successfully deleted";
     }
 }
