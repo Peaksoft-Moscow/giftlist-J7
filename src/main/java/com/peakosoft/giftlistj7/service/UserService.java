@@ -116,8 +116,6 @@ public class UserService {
 
     public boolean changePassword(String code, String email, String password, String confirmPassword) {
         User user = userRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("not found"));
-        System.out.println(code == user.getActivationCode());
-
         if (!user.getActivationCode().equals(code)) {
             return false;
         }
