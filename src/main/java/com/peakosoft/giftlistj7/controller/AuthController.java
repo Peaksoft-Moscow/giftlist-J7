@@ -30,15 +30,14 @@ public class AuthController {
 
     @PutMapping("/forgot-password")
     public ResponseEntity<String> forgotPassword(@RequestParam String email) {
-        System.out.println("controloller forgot-password");
         return new ResponseEntity<>(userService.sendCode(email), HttpStatus.OK);
     }
 
     @GetMapping("/change-password")
-    public String changePassword(@RequestParam String code, @RequestParam String email, @RequestParam String password,@RequestParam String confirmPassword) {
-        boolean isActivation = userService.changePassword(code, email, password,confirmPassword);
+    public String changePassword(@RequestParam String code, @RequestParam String email, @RequestParam String password, @RequestParam String confirmPassword) {
+        boolean isActivation = userService.changePassword(code, email, password, confirmPassword);
         if (isActivation) {
-            return "User successfully changed ";
+            return "User successfully changed";
         }
         return "User not changed!";
     }

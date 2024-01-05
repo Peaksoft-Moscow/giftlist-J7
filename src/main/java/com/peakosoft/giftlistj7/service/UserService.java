@@ -105,7 +105,7 @@ public class UserService {
         String code = UUID.randomUUID().toString();
         if (user != null) {
             user.setActivationCode(code);
-            mailSender.send(email, "furgot passowrd ", code);
+            mailSender.send(email, "forgot-password", code);
             userRepository.save(user);
             return "Code sent";
         } else {
@@ -114,7 +114,7 @@ public class UserService {
 
     }
 
-    public boolean changePassword(String code, String email, String password,String confirmPassword) {
+    public boolean changePassword(String code, String email, String password, String confirmPassword) {
         User user = userRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("not found"));
         System.out.println(code == user.getActivationCode());
 
@@ -122,7 +122,7 @@ public class UserService {
             return false;
         }
         if (!password.equals(confirmPassword)) {
-          throw new RuntimeException("Passwords do not match");
+            throw new RuntimeException("Passwords do not match");
         }
         if (password.length() < 6 || !password.matches(".*[A-Z].*")) {
             throw new RuntimeException("Пароль должен иметь длину не менее 6 символов и содержать хотя бы одну заглавную букву");
