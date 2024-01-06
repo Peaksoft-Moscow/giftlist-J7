@@ -26,14 +26,6 @@ public class HolidayController {
         HolidayResponse response = holidayService.create(holidayRequest, principal.getName());
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
-
-    @GetMapping("/search")
-    public List<HolidayResponse> searchAndPagination(@RequestParam(name = "text", required = false) String text,
-                                                     @RequestParam int page,
-                                                     @RequestParam int size) {
-        return holidayService.searchAndPagination(text, page, size);
-    }
-
     @GetMapping("/{id}")
     public HolidayResponse findById(@PathVariable("id") Long id) {
         return holidayService.findById(id);

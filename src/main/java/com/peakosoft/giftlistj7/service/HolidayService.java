@@ -46,17 +46,6 @@ public class HolidayService {
         return holidayMapper.mapToResponse(holiday);
 
     }
-
-    public List<HolidayResponse> searchAndPagination(String text, int page, int size) {
-        String name = text == null ? "" : text;
-        Pageable pageable = PageRequest.of(page - 1, size);
-        List<Holiday> applications = holidayRepository.searchAndPagination(name.toUpperCase(), pageable);
-        return applications.stream()
-                .map(holidayMapper::mapToResponse).
-                collect(toList());
-
-    }
-
     public HolidayResponse findById(Long id) {
         Holiday holiday = holidayRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("not found by id" + id));
