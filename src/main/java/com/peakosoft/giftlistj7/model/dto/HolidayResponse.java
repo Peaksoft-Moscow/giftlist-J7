@@ -12,6 +12,7 @@ import java.time.LocalDate;
 public class HolidayResponse {
     private Long id;
     private String name;
+    private String description;
     private String image;
     private LocalDate createDate;
 

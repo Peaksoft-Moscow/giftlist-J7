@@ -9,6 +9,7 @@ import lombok.Setter;
 @Builder
 public class HolidayRequest {
     private String name;
+    private String description;
     private String image;
 
 

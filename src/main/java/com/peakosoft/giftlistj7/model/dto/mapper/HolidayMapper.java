@@ -17,6 +17,7 @@ public class HolidayMapper implements Mapper<HolidayRequest, Holiday, HolidayRes
     public Holiday mapToEntity(HolidayRequest holidayRequest) {
         Holiday holiday = new Holiday();
         holiday.setName(holidayRequest.getName());
+        holiday.setDescription(holidayRequest.getDescription());
         holiday.setImage(holidayRequest.getImage());
         holiday.setCreateDate(LocalDate.now());
         return holiday;
@@ -27,6 +28,7 @@ public class HolidayMapper implements Mapper<HolidayRequest, Holiday, HolidayRes
         return HolidayResponse.builder()
                 .id(holiday.getId())
                 .name(holiday.getName())
+                .description(holiday.getDescription())
                 .image(holiday.getImage())
                 .createDate(LocalDate.now())
                 .build();

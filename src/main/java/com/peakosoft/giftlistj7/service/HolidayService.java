@@ -60,6 +60,7 @@ public class HolidayService {
                 .orElseThrow(() -> new EntityNotFoundException("not found by email" + principal.getName()));
         if (user.getId() == holiday.getUser().getId()) {
             holiday.setName(request.getName());
+            holiday.setDescription(request.getDescription());
             holiday.setImage(request.getImage());
             holiday.setCreateDate(LocalDate.now());
             holidayRepository.save(holiday);

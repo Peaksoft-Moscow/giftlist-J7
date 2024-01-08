@@ -9,7 +9,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Entity
-@Table(name = "Holiday")
+@Table(name = "myHolidays")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -19,8 +19,9 @@ public class Holiday {
     private Long id;
     private String name;
     private String image;
+    private String description;
     private LocalDate createDate;
-    @OneToMany(cascade = {CascadeType.ALL},mappedBy = "holiday")
+    @OneToMany(cascade = {CascadeType.ALL})
     private List<Gift> wishLift;
 
     @ManyToOne(cascade = {CascadeType.ALL})
