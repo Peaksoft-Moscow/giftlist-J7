@@ -51,6 +51,9 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.ALWAYS))
                 .authorizeHttpRequests(authorize -> {
                     authorize.requestMatchers("/api/oauth2/with-google", "/api/auth/sign-up", "/api/auth/sign-in").permitAll()
+                            .requestMatchers("/swagger-ui/**",
+                                    "/swagger-resources/*",
+                                    "/v3/api-docs/**").permitAll()
                             .anyRequest().authenticated();
                 })
                 .oauth2Login(withDefaults())
