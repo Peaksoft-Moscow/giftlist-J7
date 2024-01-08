@@ -47,17 +47,16 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-                        return http.cors(AbstractHttpConfigurer::disable)
+        return http.cors(AbstractHttpConfigurer::disable)
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.ALWAYS))
                 .authorizeHttpRequests(authorize -> {
                     authorize.requestMatchers("/api/auth/sign-up", "/api/auth/sign-in").permitAll()
-                            .requestMatchers("/api/holiday/save").hasAnyAuthority("ADMIN","USER")
-                            .requestMatchers(HttpMethod.GET,"/api/holiday/{id}").hasAnyAuthority("ADMIN","USER")
-                            .requestMatchers(HttpMethod.DELETE,"/api/holiday/{id}").hasAnyAuthority("ADMIN","USER")
-                            .requestMatchers("/api/holiday/update/{id}").hasAnyAuthority("ADMIN","USER")
-                            .requestMatchers("/api/holiday").hasAnyAuthority("ADMIN","USER")
-                            .requestMatchers("/api/holiday/search").hasAnyAuthority("ADMIN","USER")
+                            .requestMatchers("/api/holiday/save").hasAnyAuthority("ADMIN", "USER")
+                            .requestMatchers(HttpMethod.GET, "/api/holiday/{id}").hasAnyAuthority("ADMIN", "USER")
+                            .requestMatchers(HttpMethod.DELETE, "/api/holiday/{id}").hasAnyAuthority("ADMIN", "USER")
+                            .requestMatchers("/api/holiday/update/{id}").hasAnyAuthority("ADMIN", "USER")
+                            .requestMatchers("/api/holiday").hasAnyAuthority("ADMIN", "USER")
                             .anyRequest().authenticated();
                 })
                 .oauth2Login(withDefaults())
