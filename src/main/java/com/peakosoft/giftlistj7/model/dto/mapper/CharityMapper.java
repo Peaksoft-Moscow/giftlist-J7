@@ -29,9 +29,8 @@ public class CharityMapper {
                 .addDate(LocalDate.now())
                 .bookingStatus(gift.getBookingStatus())
                 .condition(gift.getCondition())
-                .userName(gift.getName())
-                .userLastName(gift.getName())
+                .user(gift.getUser())
+                .category(gift.getCategory())
                 .build();
-
     }
 }

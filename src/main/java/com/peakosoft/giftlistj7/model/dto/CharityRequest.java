@@ -11,9 +11,10 @@ import lombok.Setter;
 public class CharityRequest {
     private String image;
     private String giftName;
-    private String holidayName;
     private Condition condition;
     private String description;
     private Category category;
     private SubCategory subCategory;
+    private Long  categoryId;
+    private Long subCategoryId;
 }

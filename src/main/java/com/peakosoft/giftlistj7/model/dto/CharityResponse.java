@@ -1,5 +1,8 @@
 package com.peakosoft.giftlistj7.model.dto;
 
+import com.peakosoft.giftlistj7.model.entities.Category;
+import com.peakosoft.giftlistj7.model.entities.SubCategory;
+import com.peakosoft.giftlistj7.model.entities.User;
 import com.peakosoft.giftlistj7.model.enums.BookingStatus;
 import com.peakosoft.giftlistj7.model.enums.Condition;
 import lombok.Builder;
@@ -18,6 +21,6 @@ public class CharityResponse {
     private BookingStatus bookingStatus;
     private LocalDate addDate;
     private String giftName;
-    private String userName;
-    private String userLastName;
+    private User user;
+    private Category category;
 }
