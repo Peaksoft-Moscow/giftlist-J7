@@ -17,9 +17,9 @@ import java.util.List;
 public class WishListController {
     private final WishListService wishListService;
     @PostMapping("/save")
-    public WishListResponse save(@RequestBody WishListRequest wishListRequest, Principal principal) {
+    public WishListResponse save(@RequestBody WishListRequest wishListRequest) {
         log.info(wishListRequest.getHolidayName());
-        return wishListService.save(wishListRequest, principal);
+        return wishListService.save(wishListRequest);
     }
     @GetMapping("/{id}")
     public List<WishListResponse> findAllByUserId(@PathVariable("id") Long id) {

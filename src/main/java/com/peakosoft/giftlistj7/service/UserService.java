@@ -1,7 +1,6 @@
 package com.peakosoft.giftlistj7.service;
 
 import com.peakosoft.giftlistj7.config.jwt.JwtUtil;
-import com.peakosoft.giftlistj7.model.dto.*;
 import com.peakosoft.giftlistj7.model.dto.AuthRequest;
 import com.peakosoft.giftlistj7.model.dto.AuthResponse;
 import com.peakosoft.giftlistj7.model.dto.LoginRequest;
@@ -12,22 +11,18 @@ import com.peakosoft.giftlistj7.model.entities.User;
 import com.peakosoft.giftlistj7.model.enums.Role;
 import com.peakosoft.giftlistj7.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.engine.internal.Collections;
-import org.springframework.mail.MailException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.oauth2.core.OAuth2AuthenticatedPrincipal;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 import java.time.LocalDate;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.UUID;
 import java.util.Map;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -39,11 +34,11 @@ public class UserService {
     private final JwtUtil jwtUtil;
     private final AuthenticationManager authenticationManager;
     private final LoginMapper loginMapper;
-    private final MailSender mailSender;
 
 
     public AuthResponse registration(AuthRequest authRequest) {
         User user = userMapper.mapToEntity(authRequest);
+        System.out.println(user.getName());
         if (user.getName().length() < 2 || user.getLastName().length() < 2) {
             throw new RuntimeException("Имя и фамилия должны содержать более двух символов!");
         }
@@ -106,8 +101,10 @@ public class UserService {
         }
         User user = userRepository.findByEmail(request.getEmail()).orElseThrow(() -> new RuntimeException("not found"));
         String jwt = jwtUtil.generateToke(user);
+
         return loginMapper.mapToResponse(jwt, user.getRole().toString());
     }
+
 
     public Map<String,Object> saveWithGoogle(OAuth2AuthenticationToken oAuth2AuthenticationToken) throws IllegalAccessException{
         OAuth2AuthenticatedPrincipal principal = oAuth2AuthenticationToken.getPrincipal();
@@ -137,9 +134,9 @@ public class UserService {
             user.setActivationCode(code);
             mailSender.send(email, "forgot-password", code);
             userRepository.save(user);
-            return "Code sent";
+            return "User code sent";
         } else {
-            return "Code is not sent";
+            return "User code is not sent";
         }
 
     }
@@ -161,5 +158,10 @@ public class UserService {
         user.setPassword(passwordEncoder.encode(password));
         userRepository.save(user);
         return true;
+    }
+
+
+    public Map<String, Object> saveWithGoogle(org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken oAuth2AuthenticationToken) {
+        return null;
     }
 }

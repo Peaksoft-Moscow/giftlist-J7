@@ -36,16 +36,11 @@ public class WishListService {
         wishListRepository.save(gift);
         return wishListMapper.mapToResponse(gift);
     }
-
-    public List<WishListResponse> findAll(Principal principal) {
-        User user = userRepository.findByEmail(principal.getName()).orElseThrow(() -> new RuntimeException("Not found user with email: " + principal.getName()));
+    public List<WishListResponse> findAll(Long userId) {
         List<Gift> myGifts = wishListRepository
-                .findAllByUserId(user.getId());
-        System.out.println(myGifts.isEmpty());
-        System.out.println("my gift: ");
-        for (Gift myGift : myGifts) {
-            System.out.println(myGift.getName());
-        }
+                .findAllByUserId(userId)
+                .orElseThrow(()-> new RuntimeException("Not found user by id: " + userId));
+        System.out.println(myGifts.stream().map(wishListMapper::mapToResponse).toList());
         return myGifts.stream().map(wishListMapper::mapToResponse).toList();
     }
 

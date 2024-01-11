@@ -50,7 +50,9 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.ALWAYS))
                 .authorizeHttpRequests(authorize -> {
-                    authorize.requestMatchers("/api/oauth2/with-google", "/api/auth/sign-up", "/api/auth/sign-in").permitAll()
+                    authorize.requestMatchers("/api/oauth2/with-google", "/api/auth/sign-up", "/api/auth/sign-in").permitAll();
+                    authorize.requestMatchers("/api/auth/sign-in-with-google").permitAll();
+                    authorize.requestMatchers("/api/auth/**").permitAll()
                             .anyRequest().authenticated();
                 })
                 .oauth2Login(withDefaults())
