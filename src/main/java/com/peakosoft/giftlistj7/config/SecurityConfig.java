@@ -53,8 +53,8 @@ public class SecurityConfig {
                     authorize.requestMatchers("/api/oauth2/with-google", "/api/auth/sign-up", "/api/auth/sign-in").permitAll()
                             .anyRequest().authenticated();
                 })
-               //.oauth2Login(withDefaults())
-               // .formLogin(withDefaults())
+               .oauth2Login(withDefaults())
+                .formLogin(withDefaults())
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
