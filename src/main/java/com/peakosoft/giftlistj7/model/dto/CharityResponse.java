@@ -23,4 +23,5 @@ public class CharityResponse {
     private String giftName;
     private User user;
     private Category category;
+    private SubCategory subCategory;
 }

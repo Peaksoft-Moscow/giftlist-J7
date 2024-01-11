@@ -31,6 +31,7 @@ public class CharityMapper {
                 .condition(gift.getCondition())
                 .user(gift.getUser())
                 .category(gift.getCategory())
+
                 .build();
     }
 }
