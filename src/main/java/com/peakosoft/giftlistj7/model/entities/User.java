@@ -64,6 +64,14 @@ public class User implements UserDetails {
     @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "user")
     private List<Holiday> myHolidays;
 
+    @ManyToMany(cascade = {CascadeType.ALL})
+    @JoinTable(name = "users_friends",
+    joinColumns = @JoinColumn(name = "user_id"),
+    inverseJoinColumns = @JoinColumn(name = "friend_id"))
+    private List<User> friends;
+
+    @ManyToMany(cascade = {CascadeType.ALL}, mappedBy = "friends")
+    private List<User> user_friends;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

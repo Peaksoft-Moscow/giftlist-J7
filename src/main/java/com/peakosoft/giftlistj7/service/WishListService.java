@@ -27,11 +27,9 @@ public class WishListService {
 
     public WishListResponse save(WishListRequest wishListRequest, Principal principal) {
         User user = userRepository.findByEmail(principal.getName()).orElseThrow(() -> new RuntimeException("Not found user with email: " + principal.getName()));
-        System.out.println(wishListRequest.getHolidayName());
         Holiday holiday = holidayRepository.findByName(wishListRequest.getHolidayName()).orElseThrow(() -> new RuntimeException("Holiday not found by name: " + wishListRequest.getHolidayName()));
         Gift gift = wishListMapper.mapToEntity(wishListRequest);
         gift.setHoliday(holiday);
-        gift.setGiftStatus(GiftStatus.WISHLIST);
         gift.setUser(user);
         wishListRepository.save(gift);
         return wishListMapper.mapToResponse(gift);
@@ -41,11 +39,6 @@ public class WishListService {
         User user = userRepository.findByEmail(principal.getName()).orElseThrow(() -> new RuntimeException("Not found user with email: " + principal.getName()));
         List<Gift> myGifts = wishListRepository
                 .findAllByUserId(user.getId());
-        System.out.println(myGifts.isEmpty());
-        System.out.println("my gift: ");
-        for (Gift myGift : myGifts) {
-            System.out.println(myGift.getName());
-        }
         return myGifts.stream().map(wishListMapper::mapToResponse).toList();
     }
 
