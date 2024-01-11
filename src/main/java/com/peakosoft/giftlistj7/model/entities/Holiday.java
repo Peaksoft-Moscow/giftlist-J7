@@ -21,8 +21,6 @@ public class Holiday {
     private String name;
     private String description;
 
-    @OneToMany(cascade = {CascadeType.ALL},mappedBy = "myHoliday")
-    private List<Gift> gifts;
 
     @OneToMany(cascade = {CascadeType.ALL})
     private List<Gift> wishlist;

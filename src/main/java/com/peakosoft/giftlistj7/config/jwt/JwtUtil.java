@@ -15,7 +15,7 @@ import java.util.function.Function;
 @Service
 public class JwtUtil {
 
-    @Value("java-7")
+    @Value("${secret-key}")
     private String secretKey;
     private final Long TOKEN_EXPIRATION = 24 * 7 * 60 * 60 * 1000L; // 7 days
 
