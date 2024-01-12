@@ -8,10 +8,9 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class MailSender {
-    @Autowired
     private JavaMailSender mailSender;
     private String username;
-    @Autowired
+   // @Autowired
     public void send(String emailTo, String subject, String massage) {
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         mailMessage.setFrom(username);
