@@ -53,6 +53,11 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize -> {
                     authorize.requestMatchers("/api/auth/sign-up", "/api/auth/sign-in").permitAll()
                             .requestMatchers("/api/holiday/**").hasAnyAuthority("ADMIN","USER")
+                    authorize.requestMatchers("/api/oauth2/with-google",
+                                    "/api/auth/sign-up",
+                                    "/api/auth/sign-in",
+                                    "/api/auth/forgot-password",
+                                    "/api/auth/change-password").permitAll()
                             .anyRequest().authenticated();
                 })
                 .oauth2Login(withDefaults())

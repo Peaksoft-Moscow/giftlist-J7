@@ -33,6 +33,7 @@ public class AuthController {
     public Map<String, Object> addUser(OAuth2AuthenticationToken oAuth2AuthenticationToken) throws IllegalAccessException {
         return userService.saveWithGoogle(oAuth2AuthenticationToken);
     }
+
     @PutMapping("/forgot-password")
     public ResponseEntity<String> forgotPassword(@RequestParam String email) {
         return new ResponseEntity<>(userService.sendCode(email), HttpStatus.OK);
@@ -46,4 +47,5 @@ public class AuthController {
         }
         return "User not activated!";
     }
+
 }
