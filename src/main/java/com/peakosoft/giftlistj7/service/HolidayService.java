@@ -46,6 +46,7 @@ public class HolidayService {
         return holidayMapper.mapToResponse(holiday);
 
     }
+
     public HolidayResponse findById(Long id) {
         Holiday holiday = holidayRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("not found by id" + id));

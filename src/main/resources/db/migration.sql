@@ -52,7 +52,7 @@ VALUES (1, 'LAPTOP', 1),
        (29, 'CAR', 6),
        (30, 'SCOOTER', 6);
 
-INSERT INTO my_holidays( user_id, description,name)
+INSERT INTO holiday( user_id, description,name)
 VALUES (1, 'be happy', 'Mothers_Day');
 
 INSERT INTO bookings(name, create_date, booking_status, user_id)

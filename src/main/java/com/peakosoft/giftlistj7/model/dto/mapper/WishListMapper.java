@@ -21,6 +21,7 @@ public class WishListMapper {
         gift.setBookingStatus(BookingStatus.UNBOOKED);
         return gift;
     }
+
     public WishListResponse mapToResponse(Gift gift) {
         return WishListResponse.builder()
                 .id(gift.getId())

@@ -26,6 +26,7 @@ public class HolidayController {
         HolidayResponse response = holidayService.create(holidayRequest, principal.getName());
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
+
     @GetMapping("/{id}")
     public HolidayResponse findById(@PathVariable("id") Long id) {
         return holidayService.findById(id);
