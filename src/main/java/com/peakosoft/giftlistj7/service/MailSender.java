@@ -11,6 +11,7 @@ public class MailSender {
     @Autowired
     private JavaMailSender mailSender;
     private String username;
+    @Autowired
     public void send(String emailTo, String subject, String massage) {
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         mailMessage.setFrom(username);
