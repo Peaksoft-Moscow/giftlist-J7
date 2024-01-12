@@ -20,6 +20,7 @@ import java.time.LocalDate;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -31,6 +32,7 @@ public class UserService {
 
     private final AuthenticationManager authenticationManager;
     private final LoginMapper loginMapper;
+    private final MailSenderService mailSender;
 
 
     public AuthResponse registration(AuthRequest authRequest) {
@@ -122,5 +124,36 @@ public class UserService {
         return response;
     }
 
+    public String sendCode(String email) {
+        User user = userRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("not found"));
+        String code = UUID.randomUUID().toString();
+        if (user != null) {
+            user.setActivationCode(code);
+            mailSender.send(email, "forgot-password", code);
+            userRepository.save(user);
+            return "User code sent";
+        } else {
+            return "User code is not sent";
+        }
 
+    }
+
+    public boolean changePassword(String code, String email, String password, String confirmPassword) {
+        User user = userRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("not found"));
+        System.out.println(code == user.getActivationCode());
+
+        if (!user.getActivationCode().equals(code)) {
+            return false;
+        }
+        if (!password.equals(confirmPassword)) {
+            throw new RuntimeException("Passwords do not match");
+        }
+        if (password.length() < 6 || !password.matches(".*[A-Z].*")) {
+            throw new RuntimeException("Пароль должен иметь длину не менее 6 символов и содержать хотя бы одну заглавную букву");
+        }
+        user.setActivationCode(null);
+        user.setPassword(passwordEncoder.encode(password));
+        userRepository.save(user);
+        return true;
+    }
 }
