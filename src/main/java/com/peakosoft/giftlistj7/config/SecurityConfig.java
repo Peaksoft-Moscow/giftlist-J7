@@ -52,7 +52,7 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.ALWAYS))
                 .authorizeHttpRequests(authorize -> {
                     authorize.requestMatchers("/api/auth/sign-up", "/api/auth/sign-in").permitAll()
-                            .requestMatchers("/api/holiday**").hasAnyAuthority("ADMIN","USER")
+                            .requestMatchers("/api/holiday/**").hasAnyAuthority("ADMIN","USER")
                             .anyRequest().authenticated();
                 })
                 .oauth2Login(withDefaults())
