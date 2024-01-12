@@ -23,14 +23,17 @@ public class AuthController {
     public AuthResponse registration(@RequestBody AuthRequest authRequest) {
         return userService.registration(authRequest);
     }
+
     @PostMapping("/sign-in")
     public LoginResponse login(@RequestBody LoginRequest request) {
         return userService.login(request);
     }
+
     @GetMapping("/sign-in-with-google")
-    public Map<String, Object> addUser(OAuth2AuthenticationToken oAuth2AuthenticationToken) throws IllegalAccessException{
+    public Map<String, Object> addUser(OAuth2AuthenticationToken oAuth2AuthenticationToken) throws IllegalAccessException {
         return userService.saveWithGoogle(oAuth2AuthenticationToken);
     }
+
     @PutMapping("/forgot-password")
     public ResponseEntity<String> forgotPassword(@RequestParam String email) {
         return new ResponseEntity<>(userService.sendCode(email), HttpStatus.OK);
@@ -44,4 +47,5 @@ public class AuthController {
         }
         return "User not activated!";
     }
+
 }

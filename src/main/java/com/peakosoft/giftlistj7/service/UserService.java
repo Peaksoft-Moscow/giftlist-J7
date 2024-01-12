@@ -103,24 +103,24 @@ public class UserService {
         return loginMapper.mapToResponse(jwt, user.getRole().toString());
     }
 
-    public Map<String,Object> saveWithGoogle(OAuth2AuthenticationToken oAuth2AuthenticationToken) throws IllegalAccessException{
+    public Map<String, Object> saveWithGoogle(OAuth2AuthenticationToken oAuth2AuthenticationToken) throws IllegalAccessException {
         OAuth2AuthenticatedPrincipal principal = oAuth2AuthenticationToken.getPrincipal();
-        if(oAuth2AuthenticationToken == null) {
+        if (oAuth2AuthenticationToken == null) {
             throw new IllegalAccessException("The token must be not null");
         }
-        Map<String,Object> json = principal.getAttributes();
-        User user =new User();
+        Map<String, Object> json = principal.getAttributes();
+        User user = new User();
         user.setName((String) json.get("given_name"));
         user.setLastName((String) json.get("family_name"));
         user.setEmail((String) json.get("email"));
         user.setPassword((String) json.get("given_name"));
         user.setLocalDate(LocalDate.now());
         userRepository.save(user);
-        Map<String,Object> response = new LinkedHashMap<>();
-        response.put("name",user.getName());
-        response.put("last_name",user.getLastName());
-        response.put("email",user.getEmail());
-        response.put("createDate",user.getLocalDate());
+        Map<String, Object> response = new LinkedHashMap<>();
+        response.put("name", user.getName());
+        response.put("last_name", user.getLastName());
+        response.put("email", user.getEmail());
+        response.put("createDate", user.getLocalDate());
         return response;
     }
 
