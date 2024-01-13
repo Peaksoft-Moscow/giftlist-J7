@@ -16,6 +16,7 @@ import org.springframework.stereotype.Component;
 public class UserMapper {
     private final JwtUtil jwtUtil;
     private final UserRepository userRepository;
+
     public User mapToEntity(AuthRequest authRequest) {
         System.out.println(authRequest.getName());
         User user = new User();
