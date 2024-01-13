@@ -64,14 +64,14 @@ public class User implements UserDetails {
     @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "user")
     private List<Holiday> myHolidays;
 
-    @ManyToMany(cascade = {CascadeType.ALL})
+    @ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
     @JoinTable(name = "users_friends",
     joinColumns = @JoinColumn(name = "user_id"),
     inverseJoinColumns = @JoinColumn(name = "friend_id"))
-    private List<User> friends;
+    private List<User> friends = new ArrayList<>();
 
-    @ManyToMany(cascade = {CascadeType.ALL}, mappedBy = "friends")
-    private List<User> user_friends;
+    @ManyToMany(cascade = {CascadeType.ALL})
+    private List<User> requestToFriends = new ArrayList<>();
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

@@ -14,4 +14,8 @@ public class FriendResponse {
     private String lastName;
     private int amountWishes;
     private int amountHolidays;
+
+    public int wishListCount(){
+        return 0;
+    }
 }

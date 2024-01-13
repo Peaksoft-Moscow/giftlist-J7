@@ -18,7 +18,6 @@ public class FriendInfoResponse {
     private Long id;
     private String image;
     private String name;
-    private boolean addAndDelete;
     private String city;
     private LocalDate birthday;
     private String email;
@@ -27,7 +26,7 @@ public class FriendInfoResponse {
     private String importantToKnow;
     private ClothesSize clothesSize;
     private ShoesSize shoesSize;
-    private List<Gift> wishLists;
+    private List<WishListResponse> wishLists;
     private List<Holiday> holidays;
     private List<Gift> charity;
 }
