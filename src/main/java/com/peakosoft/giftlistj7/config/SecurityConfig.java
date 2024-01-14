@@ -5,6 +5,7 @@ import com.peakosoft.giftlistj7.service.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -54,6 +55,7 @@ public class SecurityConfig {
                             .requestMatchers("/swagger-ui/**",
                                     "/swagger-resources/*",
                                     "/v3/api-docs/**").permitAll()
+                            .requestMatchers("/api/holiday/**").hasAnyAuthority("ADMIN","USER")
                             .anyRequest().authenticated();
                 })
                 .oauth2Login(withDefaults())
