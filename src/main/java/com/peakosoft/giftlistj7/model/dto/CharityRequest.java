@@ -13,8 +13,7 @@ public class CharityRequest {
     private String giftName;
     private Condition condition;
     private String description;
-    private Category category;
     private SubCategory subCategory;
-    private Long  categoryId;
     private Long subCategoryId;
+//    private Category category;
 }

@@ -18,7 +18,9 @@ public class CharityMapper {
         gift.setImage(charityRequest.getImage());
         gift.setDescription(charityRequest.getDescription());
         gift.setBookingStatus(BookingStatus.BOOKED);
-        gift.setCategory(charityRequest.getCategory());
+        gift.setSubCategory(charityRequest.getSubCategory());
+//        gift.setCategory(charityRequest.getCategory());
+        gift.setCondition(charityRequest.getCondition());
         return gift;
     }
     public CharityResponse mapToResponse(Gift gift){
@@ -30,8 +32,8 @@ public class CharityMapper {
                 .bookingStatus(gift.getBookingStatus())
                 .condition(gift.getCondition())
                 .user(gift.getUser())
-                .category(gift.getCategory())
-
+//                .category(gift.getCategory())
+                .subCategory(gift.getSubCategory())
                 .build();
     }
 }

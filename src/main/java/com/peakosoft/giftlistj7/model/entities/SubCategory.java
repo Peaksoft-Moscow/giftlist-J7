@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Entity
 @Table(name = "subcategories")
 @Getter
@@ -18,4 +20,7 @@ public class SubCategory {
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
+
+    @OneToMany(cascade = {CascadeType.ALL})
+    private List<Gift> gift;
 }

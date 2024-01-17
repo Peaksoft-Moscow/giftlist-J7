@@ -50,4 +50,8 @@ public class Gift {
     @ManyToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "holiday_id")
     private Holiday holiday;
+
+    @ManyToOne(cascade = {CascadeType.ALL})
+    @JoinColumn(name = "subCategory_id")
+    private SubCategory subCategory;
 }
