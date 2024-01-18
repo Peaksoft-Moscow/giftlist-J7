@@ -26,7 +26,7 @@ public class User implements UserDetails {
     private String image;
     private String name;
     private String lastName;
-    private String birthday;
+    private LocalDate birthday;
     private String phoneNumber;
     private String password;
     private String address;
@@ -35,6 +35,8 @@ public class User implements UserDetails {
     private String email;
     @Enumerated(EnumType.STRING)
     private Country country;
+    @Enumerated(EnumType.STRING)
+    private City city;
     @Enumerated(EnumType.STRING)
     private ClothesSize clothesSize;
     @Enumerated(EnumType.STRING)
@@ -70,7 +72,7 @@ public class User implements UserDetails {
     inverseJoinColumns = @JoinColumn(name = "friend_id"))
     private List<User> friends = new ArrayList<>();
 
-    @ManyToMany(cascade = {CascadeType.ALL})
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<User> requestToFriends = new ArrayList<>();
 
     @Override
@@ -103,5 +105,14 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", requestToFriends=" + requestToFriends +
+                '}';
     }
 }

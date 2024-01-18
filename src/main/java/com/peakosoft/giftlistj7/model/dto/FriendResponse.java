@@ -4,6 +4,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @Builder
@@ -14,8 +16,4 @@ public class FriendResponse {
     private String lastName;
     private int amountWishes;
     private int amountHolidays;
-
-    public int wishListCount(){
-        return 0;
-    }
 }

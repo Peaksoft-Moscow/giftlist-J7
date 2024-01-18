@@ -2,6 +2,7 @@ package com.peakosoft.giftlistj7.model.dto;
 
 import com.peakosoft.giftlistj7.model.entities.Gift;
 import com.peakosoft.giftlistj7.model.entities.Holiday;
+import com.peakosoft.giftlistj7.model.enums.City;
 import com.peakosoft.giftlistj7.model.enums.ClothesSize;
 import com.peakosoft.giftlistj7.model.enums.ShoesSize;
 import lombok.Builder;
@@ -18,7 +19,8 @@ public class FriendInfoResponse {
     private Long id;
     private String image;
     private String name;
-    private String city;
+    private String lastName;
+    private City city;
     private LocalDate birthday;
     private String email;
     private String phoneNumber;
