@@ -20,6 +20,7 @@ public class FriendService {
     private final UserRepository userRepository;
     private final FriendRepository friendRepository;
     private final FriendMapper friendMapper;
+    private final MailSenderService mailSenderService;
 
     public FriendResponse sendRequestToFriend(Long friendId, Principal principal) {
         User friend = userRepository.findById(friendId).orElseThrow(() -> new NotFoundException("Not found friend by id: " + friendId));
@@ -34,6 +35,7 @@ public class FriendService {
                 throw new RuntimeException("You have already sent a request to this user!");
         }
         user.getRequestToFriends().add(friend);
+        mailSenderService.send(friend.getEmail(), "friend request", user.getName() + " " + user.getLastName() + " has sent you a friend request.");
         friendRepository.save(friend);
         userRepository.save(user);
         return friendMapper.mapToResponse(friend);
@@ -49,6 +51,7 @@ public class FriendService {
         user.getFriends().add(friend);
         friend.getFriends().add(user);
         friend.getRequestToFriends().remove(user);
+        mailSenderService.send(friend.getEmail(), "Accept request", user.getName() + " " + user.getLastName() + " has accepted your friend request.");
         friendRepository.save(friend);
         userRepository.save(user);
         return friendMapper.mapToResponse(friend);
@@ -62,6 +65,7 @@ public class FriendService {
                 throw new RuntimeException("This user did not send you a friend request!");
         }
         friend.getRequestToFriends().remove(user);
+        mailSenderService.send(friend.getEmail(), "Cancel request", user.getName() + " " + user.getLastName() + " has canceled your friend request.");
         friendRepository.save(friend);
         userRepository.save(user);
         return friendMapper.mapToResponse(friend);
@@ -76,6 +80,7 @@ public class FriendService {
         }
         user.getFriends().remove(friend);
         friend.getFriends().remove(user);
+        mailSenderService.send(friend.getEmail(), "delete friend", user.getName() + " " + user.getLastName() + " has deleted you from friends.");
         friendRepository.save(friend);
         userRepository.save(user);
         return "Friend has been successfully deleted!";
