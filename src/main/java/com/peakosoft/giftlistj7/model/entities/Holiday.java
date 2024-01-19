@@ -22,7 +22,7 @@ public class Holiday {
     private String description;
     private LocalDate createDate;
     @OneToMany(cascade = {CascadeType.ALL})
-    private List<Gift> wishLift;
+    private List<Gift> wishList;
 
     @ManyToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "user_id")
