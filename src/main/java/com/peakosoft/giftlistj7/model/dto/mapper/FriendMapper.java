@@ -22,7 +22,7 @@ public class FriendMapper {
                 .amountWishes(wishListRepository.findAllByUserId(user.getId()).size())
                 .build();
     }
-    public FriendInfoResponse mapInfoToResponse(User user){
+    public FriendInfoResponse mapToInfoResponse(User user){
         return FriendInfoResponse.builder()
                 .id(user.getId())
                 .image(user.getImage())
