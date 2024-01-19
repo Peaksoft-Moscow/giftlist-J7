@@ -21,6 +21,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 @PreAuthorize("permitAll()")
 @RequestMapping("api/auth")
+@CrossOrigin
 @Tag(name = "Authentication Controller", description = "Operations related to user authentication")
 public class AuthController {
     private final UserService userService;

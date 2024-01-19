@@ -21,8 +21,8 @@ public class Holiday {
     private String image;
     private String description;
     private LocalDate createDate;
-    @OneToMany(cascade = {CascadeType.ALL})
-    private List<Gift> wishLift;
+    @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "holiday")
+    private List<Gift> wishList;
 
     @ManyToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "user_id")
