@@ -53,6 +53,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize -> {
                     authorize.requestMatchers("/api/auth/sign-up", "/api/auth/sign-in").permitAll()
                             .requestMatchers("/api/holiday/**").hasAnyAuthority("ADMIN","USER")
+                            .requestMatchers("/api/wish_lists/**").hasAnyAuthority("ADMIN","USER")
                             .requestMatchers("/api/friends/**").hasAnyAuthority("ADMIN","USER")
                             .anyRequest().authenticated();
                 })
