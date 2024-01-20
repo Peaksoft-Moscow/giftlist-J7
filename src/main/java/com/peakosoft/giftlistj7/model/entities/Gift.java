@@ -33,7 +33,7 @@ public class Gift {
     @Enumerated(EnumType.STRING)
     private BookingStatus bookingStatus;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = {CascadeType.ALL}, mappedBy ="gift")
     private Booking booking;
 
     @ManyToOne(cascade = {CascadeType.ALL})

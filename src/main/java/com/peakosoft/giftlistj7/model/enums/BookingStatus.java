@@ -1,7 +1,14 @@
 package com.peakosoft.giftlistj7.model.enums;
 
-public enum BookingStatus {
+import org.springframework.security.core.GrantedAuthority;
+
+public enum BookingStatus implements GrantedAuthority {
     EXPECTATION,
     BOOKED,
-    UNBOOKED
+    UNBOOKED;
+
+    @Override
+    public String getAuthority() {
+        return name();
+    }
 }

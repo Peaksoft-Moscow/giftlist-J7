@@ -1,8 +1,10 @@
 package com.peakosoft.giftlistj7.model.dto.mapper;
 
+/*
 import com.peakosoft.giftlistj7.model.dto.BookingRequest;
 import com.peakosoft.giftlistj7.model.dto.BookingResponse;
 import com.peakosoft.giftlistj7.model.entities.Booking;
+import com.peakosoft.giftlistj7.model.enums.BookingStatus;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -14,6 +16,7 @@ public class BookingMapper {
         booking.setImage(bookingRequest.getImage());
         booking.setName(booking.getName());
         booking.setCreateDate(LocalDate.now());
+        booking.setBookingStatus(BookingStatus.EXPECTATION);
         return  booking;
     }
     public BookingResponse mapToResponse(Booking booking){
@@ -25,3 +28,4 @@ public class BookingMapper {
                 .createDate(booking.getCreateDate()).build();
     }
 }
+*/
