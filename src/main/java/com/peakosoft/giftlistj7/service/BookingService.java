@@ -2,69 +2,77 @@ package com.peakosoft.giftlistj7.service;
 
 
 import com.peakosoft.giftlistj7.model.entities.Booking;
+import com.peakosoft.giftlistj7.model.entities.Gift;
 import com.peakosoft.giftlistj7.model.entities.User;
+import com.peakosoft.giftlistj7.model.enums.BookingStatus;
 import com.peakosoft.giftlistj7.repository.BookingRepository;
 import com.peakosoft.giftlistj7.repository.UserRepository;
-import jakarta.persistence.EntityNotFoundException;
+import com.peakosoft.giftlistj7.repository.WishListRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
-import java.util.Optional;
-
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class BookingService {
     private final UserRepository userRepository;
     private final BookingRepository bookingRepository;
+    private final WishListRepository giftListRepository;
 
-    public User book(Principal principal, Long bookingId) {
-        Optional<User> userOptional = userRepository.findByEmail(principal.getName());
-        if (userOptional.isPresent()) {
-            User user = userOptional.get();
+    public User book(Long giftId, Principal principal) {
 
-            // Проверяем, что бронирование еще не привязано к пользователю
-            Optional<Booking> bookingOptional = Optional.ofNullable(bookingRepository.findById(bookingId)
-                    .orElseThrow(() -> new EntityNotFoundException("booking with id not found")));
-            if (bookingOptional.isPresent()) {
-                Booking booking = bookingOptional.get();
+        // Метод для бронирования подарка
 
-                if (!user.getBooking().contains(booking)) {
-                    user.getBooking().add(booking);
-                    booking.setUser(user);
-                    // Сохраняем изменения
-                    userRepository.save(user);
-                    bookingRepository.save(booking);
-                    return user;
-                }
-            }
+        Gift gift = giftListRepository.findById(giftId).orElseThrow(() -> new RuntimeException("not found"));
+        if (gift.getBookingStatus().equals(BookingStatus.BOOKED)) {
+            throw new RuntimeException(" Gift is already booked ");
         }
-        return null;
-    }
-    // удаление забронированного Usera
-    public User cancelBooking(Principal principal,Long bookingId){
 
-        Optional<User> userOptional =userRepository.findByEmail(principal.getName());
-        if (userOptional.isPresent()){
-            User user =userOptional.get();
+        //находим user по емаилу  положили user-ру
+        User user = userRepository.findByEmail(principal.getName()).orElseThrow(() -> new RuntimeException("not found"));
 
-            Optional<Booking>bookingOptional= bookingRepository.findById(bookingId);
-            if (bookingOptional.isPresent()){
-                Booking booking = bookingOptional.get();
 
-                if (user.getBooking().contains(booking)){
-                    user.getBooking().remove(booking);
-                    booking.setUser(null);
-                    userRepository.save(user);
-                    bookingRepository.save(booking);
+        //находим booking по id и положили booking
+        Booking book = bookingRepository.findBookingByGiftId(giftId);
+        if (book != null) {
+            throw new RuntimeException("Booking already exists for this gift");
+        }
 
-                    return user;
-
+        // лист бронирование - туда положилиb userId
+        List<Booking> bookings = bookingRepository.findBookingByUserId(user.getId());
+        if (!bookings.isEmpty()) {
+            for (Booking booking : bookings) {
+                if (booking.getGift().getId() == giftId) {
+                    throw new RuntimeException("User has already booked this gift");
                 }
             }
+            Booking booking = new Booking();
+            booking.setUser(user);
+            booking.setGift(gift);
+            bookingRepository.save(booking);
+            return user;
 
         }
         return null;
     }
+
+    public Booking remove(Long bookingId, Principal principal) {
+        // Находим бронь по её идентификатору
+        Booking booking = bookingRepository.findById(bookingId)
+                .orElseThrow(() -> new RuntimeException("Booking not found"));
+
+        // Проверяем, имеет ли пользователь право удалить данную бронь
+        User user = userRepository.findByEmail(principal.getName())
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        if (!booking.getUser().equals(user)) {
+            throw new RuntimeException("User does not have permission to remove this booking");
+
+        }
+        bookingRepository.delete(booking);
+        return booking;
+
+    }
+
 }
