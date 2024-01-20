@@ -17,10 +17,7 @@ import org.springframework.security.oauth2.core.OAuth2AuthenticatedPrincipal;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -123,12 +120,18 @@ public class UserService {
         response.put("createDate", user.getLocalDate());
         return response;
     }
+    private String generateSixDigitCode() {
+        Random random = new Random();
+        int code = 100000 + random.nextInt(900000);
+        return String.valueOf(code);
+    }
+
 
     public String sendCode(String email) {
         User user = userRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("not found"));
-        String code = UUID.randomUUID().toString();
         if (user != null) {
-            user.setActivationCode(code);
+            String code = generateSixDigitCode();
+           user.setActivationCode(code);
             mailSender.send(email, "forgot-password", code);
             userRepository.save(user);
             return "User code sent";
