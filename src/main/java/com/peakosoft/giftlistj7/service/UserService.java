@@ -17,7 +17,10 @@ import org.springframework.security.oauth2.core.OAuth2AuthenticatedPrincipal;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.*;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
 
 @Service
 @RequiredArgsConstructor
@@ -130,7 +133,6 @@ public class UserService {
     public String sendCode(String email) {
         User user = userRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("not found"));
         if (user != null) {
-
             String code = generateSixDigitCode();
            user.setActivationCode(code);
             mailSender.send(email, "forgot-password", code);
