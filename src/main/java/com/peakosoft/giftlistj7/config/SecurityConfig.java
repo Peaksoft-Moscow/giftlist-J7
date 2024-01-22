@@ -52,10 +52,8 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.ALWAYS))
                 .authorizeHttpRequests(authorize -> {
                     authorize.requestMatchers("/api/auth/sign-up", "/api/auth/sign-in").permitAll()
-                            .requestMatchers("/api/holiday/**").hasAnyAuthority("ADMIN","USER")
-                    authorize.requestMatchers("/api/oauth2/with-google",
-                                    "/api/auth/sign-up",
-                                    "/api/auth/sign-in",
+                            .requestMatchers("/api/holiday/**").hasAnyAuthority("ADMIN", "USER")
+                            .requestMatchers("/api/oauth2/with-google",
                                     "/api/auth/forgot-password",
                                     "/api/auth/change-password").permitAll()
                             .anyRequest().authenticated();
