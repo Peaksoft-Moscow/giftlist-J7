@@ -130,6 +130,7 @@ public class UserService {
     public String sendCode(String email) {
         User user = userRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("not found"));
         if (user != null) {
+
             String code = generateSixDigitCode();
            user.setActivationCode(code);
             mailSender.send(email, "forgot-password", code);
