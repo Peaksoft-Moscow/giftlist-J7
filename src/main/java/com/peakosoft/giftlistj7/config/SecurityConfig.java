@@ -49,13 +49,16 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.cors(AbstractHttpConfigurer::disable)
                 .csrf(AbstractHttpConfigurer::disable)
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.ALWAYS))
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> {
                     authorize.requestMatchers("/api/oauth2/with-google",
                                     "/api/auth/sign-up",
                                     "/api/auth/sign-in",
                                     "/api/auth/forgot-password",
                                     "/api/auth/change-password").permitAll()
+                            .requestMatchers("/api/holiday/**").hasAnyAuthority("ADMIN","USER")
+                            .requestMatchers("/api/wish_lists/**").hasAnyAuthority("ADMIN","USER")
+                            .requestMatchers("/api/friends/**").hasAnyAuthority("ADMIN","USER")
                             .anyRequest().authenticated();
                 })
                 .oauth2Login(withDefaults())
