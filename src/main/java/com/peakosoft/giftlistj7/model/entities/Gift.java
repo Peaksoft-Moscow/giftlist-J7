@@ -1,5 +1,6 @@
 package com.peakosoft.giftlistj7.model.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.peakosoft.giftlistj7.model.enums.BookingStatus;
 import com.peakosoft.giftlistj7.model.enums.Condition;
 import com.peakosoft.giftlistj7.model.enums.GiftStatus;
@@ -40,6 +41,7 @@ public class Gift {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @JsonIgnore
     @ManyToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "category_id")
     private Category category;
@@ -51,6 +53,7 @@ public class Gift {
     @JoinColumn(name = "holiday_id")
     private Holiday holiday;
 
+    @JsonIgnore
     @ManyToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "subCategory_id")
     private SubCategory subCategory;

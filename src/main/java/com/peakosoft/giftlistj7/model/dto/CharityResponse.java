@@ -21,7 +21,7 @@ public class CharityResponse {
     private BookingStatus bookingStatus;
     private LocalDate addDate;
     private String giftName;
-    private User user;
-    private Category category;
+    private String userName;
+    private String userLastName;
     private SubCategory subCategory;
 }

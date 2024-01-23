@@ -1,5 +1,6 @@
 package com.peakosoft.giftlistj7.model.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.peakosoft.giftlistj7.model.entities.Category;
 import com.peakosoft.giftlistj7.model.entities.SubCategory;
 import com.peakosoft.giftlistj7.model.enums.Condition;
@@ -13,7 +14,6 @@ public class CharityRequest {
     private String giftName;
     private Condition condition;
     private String description;
-    private SubCategory subCategory;
-    private Long subCategoryId;
-//    private Category category;
+    private String subCategoryName;
+
 }
