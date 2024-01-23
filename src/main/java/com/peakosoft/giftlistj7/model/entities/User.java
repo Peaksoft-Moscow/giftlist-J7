@@ -45,6 +45,8 @@ public class User implements UserDetails {
     private Role role;
     private boolean subscribe;
     private LocalDate localDate;
+    private boolean active;
+    private String activationCode;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private List<Booking> booking;

@@ -20,6 +20,7 @@ import java.time.LocalDate;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 @Service
 @RequiredArgsConstructor
@@ -31,6 +32,7 @@ public class UserService {
 
     private final AuthenticationManager authenticationManager;
     private final LoginMapper loginMapper;
+    private final MailSenderService mailSender;
 
 
     public AuthResponse registration(AuthRequest authRequest) {
@@ -101,26 +103,63 @@ public class UserService {
         return loginMapper.mapToResponse(jwt, user.getRole().toString());
     }
 
-    public Map<String,Object> saveWithGoogle(OAuth2AuthenticationToken oAuth2AuthenticationToken) throws IllegalAccessException{
+    public Map<String, Object> saveWithGoogle(OAuth2AuthenticationToken oAuth2AuthenticationToken) throws IllegalAccessException {
         OAuth2AuthenticatedPrincipal principal = oAuth2AuthenticationToken.getPrincipal();
-        if(oAuth2AuthenticationToken == null) {
+        if (oAuth2AuthenticationToken == null) {
             throw new IllegalAccessException("The token must be not null");
         }
-        Map<String,Object> json = principal.getAttributes();
-        User user =new User();
+        Map<String, Object> json = principal.getAttributes();
+        User user = new User();
         user.setName((String) json.get("given_name"));
         user.setLastName((String) json.get("family_name"));
         user.setEmail((String) json.get("email"));
         user.setPassword((String) json.get("given_name"));
         user.setLocalDate(LocalDate.now());
         userRepository.save(user);
-        Map<String,Object> response = new LinkedHashMap<>();
-        response.put("name",user.getName());
-        response.put("last_name",user.getLastName());
-        response.put("email",user.getEmail());
-        response.put("createDate",user.getLocalDate());
+        Map<String, Object> response = new LinkedHashMap<>();
+        response.put("name", user.getName());
+        response.put("last_name", user.getLastName());
+        response.put("email", user.getEmail());
+        response.put("createDate", user.getLocalDate());
         return response;
+    }
+    private String generateSixDigitCode() {
+        Random random = new Random();
+        int code = 100000 + random.nextInt(900000);
+        return String.valueOf(code);
     }
 
 
+    public String sendCode(String email) {
+        User user = userRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("not found"));
+        if (user != null) {
+            String code = generateSixDigitCode();
+           user.setActivationCode(code);
+            mailSender.send(email, "forgot-password", code);
+            userRepository.save(user);
+            return "User code sent";
+        } else {
+            return "User code is not sent";
+        }
+
+    }
+
+    public boolean changePassword(String code, String email, String password, String confirmPassword) {
+        User user = userRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("not found"));
+        System.out.println(code == user.getActivationCode());
+
+        if (!user.getActivationCode().equals(code)) {
+            return false;
+        }
+        if (!password.equals(confirmPassword)) {
+            throw new RuntimeException("Passwords do not match");
+        }
+        if (password.length() < 6 || !password.matches(".*[A-Z].*")) {
+            throw new RuntimeException("Пароль должен иметь длину не менее 6 символов и содержать хотя бы одну заглавную букву");
+        }
+        user.setActivationCode(null);
+        user.setPassword(passwordEncoder.encode(password));
+        userRepository.save(user);
+        return true;
+    }
 }
