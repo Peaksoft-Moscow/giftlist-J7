@@ -7,6 +7,7 @@ import java.time.LocalDate;
 @Getter
 @Setter
 public class MailRequest {
-    private String subject;
+    private String theme;
     private String text;
+    private LocalDate createDate;
 }
