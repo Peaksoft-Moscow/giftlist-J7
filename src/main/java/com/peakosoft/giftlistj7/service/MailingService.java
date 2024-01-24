@@ -46,7 +46,6 @@ public class MailingService {
         message.setTo(email);
         message.setFrom("GiftList");
         message.setText(mailing.getText());
-        message.
         mailSender.send(message);
 
     }
