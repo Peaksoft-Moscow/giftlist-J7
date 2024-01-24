@@ -27,34 +27,39 @@ public class FriendController {
 
     @PostMapping("/accept-request/{id}")
     @Operation(summary = "accept requests from user")
-    public FriendResponse acceptRequestToFriend(@PathVariable("id")Long friendId, Principal principal) {
+    public FriendResponse acceptRequestToFriend(@PathVariable("id") Long friendId, Principal principal) {
         return friendService.acceptRequestToFriend(friendId, principal);
     }
 
     @DeleteMapping("/cancel-request/{id}")
     @Operation(summary = "cancel requests from user")
-    public FriendResponse cancelRequestToFriend(@PathVariable("id")Long friendId, Principal principal) {
+    public FriendResponse cancelRequestToFriend(@PathVariable("id") Long friendId, Principal principal) {
         return friendService.cancelRequestToFriend(friendId, principal);
     }
+
     @DeleteMapping("/{id}")
     @Operation(summary = "delete a user's friend")
-    public String deleteFriend(@PathVariable("id")Long friendId, Principal principal){
+    public String deleteFriend(@PathVariable("id") Long friendId, Principal principal) {
         friendService.deleteFriend(friendId, principal);
         return "Friend has been successfully deleted!";
     }
+
     @GetMapping("/find-all-requests")
     @Operation(summary = "find all the user's friends")
     public List<FriendResponse> findAllRequestsFriends(Principal principal) {
         return friendService.findAllRequestsFriends(principal);
     }
+
     @GetMapping("/find-all-friends")
     @Operation(summary = "find all the friends requests to user")
     public List<FriendResponse> findAllFriends(Principal principal) {
         return friendService.findAllFriends(principal);
     }
+
     @GetMapping("/{id}")
     @Operation(summary = "find friend by id")
-    public FriendInfoResponse findById(@PathVariable("id") Long friendId, Principal principal){
-        return friendService.findById(friendId, principal);}
+    public FriendInfoResponse findById(@PathVariable("id") Long friendId, Principal principal) {
+        return friendService.findById(friendId, principal);
+    }
 
 }
