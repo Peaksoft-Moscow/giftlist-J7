@@ -2,6 +2,7 @@ package com.peakosoft.giftlistj7.service;
 import com.peakosoft.giftlistj7.model.dto.CharityRequest;
 import com.peakosoft.giftlistj7.model.dto.CharityResponse;
 import com.peakosoft.giftlistj7.model.dto.mapper.CharityMapper;
+import com.peakosoft.giftlistj7.model.entities.Category;
 import com.peakosoft.giftlistj7.model.entities.Gift;
 import com.peakosoft.giftlistj7.model.entities.SubCategory;
 import com.peakosoft.giftlistj7.model.entities.User;
@@ -23,12 +24,16 @@ public class CharityService {
     private final CharityMapper charityMapper;
     private final UserRepository userRepository;
     private final SubCategoryRepository subCategoryRepository;
+    private final CategoryRepository categoryRepository;
 
 
 
     public CharityResponse save(CharityRequest charityRequest, Principal principal) {
         User user = userRepository.findByEmail(principal.getName()).orElseThrow(() -> new RuntimeException("Not found user with email: " + principal.getName()));
         Gift gift = charityMapper.mapToEntity(charityRequest);
+        SubCategory subCategory=subCategoryRepository.findByName(charityRequest.getSubCategoryName()).orElseThrow(() -> new RuntimeException("SubCategory not found by name: " + charityRequest.getSubCategoryName()));
+        Category category=categoryRepository.findByName(subCategory.getCategory().getName()).orElseThrow(() -> new RuntimeException("SubCategory not found by name: " + charityRequest.getSubCategoryName()));
+        gift.setCategory(category);
         gift.setUser(user);
         charityRepository.save(gift);
         return charityMapper.mapToResponse(gift);
