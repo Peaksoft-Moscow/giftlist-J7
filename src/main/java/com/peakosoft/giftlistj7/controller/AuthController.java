@@ -10,8 +10,11 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.web.bind.annotation.*;
 
@@ -63,6 +66,20 @@ public class AuthController {
     })
     public Map<String, Object> addUser(@Parameter(hidden = true) OAuth2AuthenticationToken oAuth2AuthenticationToken) throws IllegalAccessException {
         return userService.saveWithGoogle(oAuth2AuthenticationToken);
+    }
+
+    @PutMapping("/forgot-password")
+    public ResponseEntity<String> forgotPassword(@RequestParam String email) {
+        return new ResponseEntity<>(userService.sendCode(email), HttpStatus.OK);
+    }
+
+    @GetMapping("/change-password")
+    public String changePassword(@RequestParam String code, @RequestParam String email, @RequestParam String password, @RequestParam String confirmPassword) {
+        boolean isActivation = userService.changePassword(code, email, password, confirmPassword);
+        if (isActivation) {
+            return "User successfully changed";
+        }
+        return "User not activated!";
     }
 
 }
