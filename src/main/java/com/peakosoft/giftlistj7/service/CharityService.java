@@ -32,7 +32,7 @@ public class CharityService {
         User user = userRepository.findByEmail(principal.getName()).orElseThrow(() -> new RuntimeException("Not found user with email: " + principal.getName()));
         Gift gift = charityMapper.mapToEntity(charityRequest);
         SubCategory subCategory=subCategoryRepository.findByName(charityRequest.getSubCategoryName()).orElseThrow(() -> new RuntimeException("SubCategory not found by name: " + charityRequest.getSubCategoryName()));
-        Category category=categoryRepository.findByName(subCategory.getCategory().getName()).orElseThrow(() -> new RuntimeException("SubCategory not found by name: " + charityRequest.getSubCategoryName()));
+        Category category=categoryRepository.findByName(subCategory.getCategory().getName()).orElseThrow(() -> new RuntimeException("Category not found by name: " + charityRequest.getSubCategoryName()));
         gift.setCategory(category);
         gift.setUser(user);
         charityRepository.save(gift);
@@ -49,6 +49,7 @@ public class CharityService {
     public CharityResponse update(Long giftId, CharityRequest charityRequest, Principal principal) {
         Gift oldGift = charityRepository.findById(giftId).orElseThrow(() -> new RuntimeException("Not found gift by id: " + giftId));
         SubCategory subCategory = subCategoryRepository.findByName(charityRequest.getSubCategoryName()).orElseThrow(() -> new RuntimeException("Not found subCategory with this name"));
+        Category category=categoryRepository.findByName(subCategory.getCategory().getName()).orElseThrow(() -> new RuntimeException("Category not found by name: " + charityRequest.getSubCategoryName()));
         User user = userRepository.findByEmail(principal.getName()).orElseThrow(() -> new RuntimeException("Not found user by email: " + principal.getName()));
         if (user.getEmail() == oldGift.getUser().getEmail()) {
             oldGift.setImage(charityRequest.getImage());
@@ -56,6 +57,7 @@ public class CharityService {
             oldGift.setCondition(charityRequest.getCondition());
             oldGift.setDescription(charityRequest.getDescription());
             oldGift.setSubCategory(subCategory);
+            oldGift.setCategory(category);
             oldGift.setBookingStatus(BookingStatus.BOOKED);
             charityRepository.save(oldGift);
 
