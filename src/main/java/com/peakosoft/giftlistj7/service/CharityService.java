@@ -29,7 +29,6 @@ public class CharityService {
     public CharityResponse save(CharityRequest charityRequest, Principal principal) {
         User user = userRepository.findByEmail(principal.getName()).orElseThrow(() -> new RuntimeException("Not found user with email: " + principal.getName()));
         Gift gift = charityMapper.mapToEntity(charityRequest);
-        System.out.println("Это имя сабкатегории"+charityRequest.getSubCategoryName());
         gift.setUser(user);
         charityRepository.save(gift);
         return charityMapper.mapToResponse(gift);
