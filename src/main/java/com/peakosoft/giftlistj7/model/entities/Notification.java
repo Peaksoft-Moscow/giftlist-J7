@@ -18,8 +18,8 @@ public class Notification {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String image;
+    private boolean isExpand=false;
     private LocalDate createDate;
-
     @ManyToMany(cascade = CascadeType.ALL,mappedBy = "notifications")
     private List<User> users;
 

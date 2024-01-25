@@ -56,9 +56,9 @@ public class SecurityConfig {
                                     "/api/auth/sign-in",
                                     "/api/auth/forgot-password",
                                     "/api/auth/change-password").permitAll()
-                            .requestMatchers("/api/holiday/**").hasAnyAuthority("ADMIN","USER")
-                            .requestMatchers("/api/wish_lists/**").hasAnyAuthority("ADMIN","USER")
-                            .requestMatchers("/api/friends/**").hasAnyAuthority("ADMIN","USER")
+                            .requestMatchers("/api/holiday/**").hasAnyAuthority("ADMIN", "USER")
+                            .requestMatchers("/api/wish_lists/**").hasAnyAuthority("ADMIN", "USER")
+                            .requestMatchers("/api/friends/**").hasAnyAuthority("ADMIN", "USER")
                             .anyRequest().authenticated();
                 })
                 .oauth2Login(withDefaults())
