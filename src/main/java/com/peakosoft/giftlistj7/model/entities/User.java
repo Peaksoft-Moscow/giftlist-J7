@@ -27,7 +27,7 @@ public class User implements UserDetails {
     private String image;
     private String name;
     private String lastName;
-    private String birthday;
+    private LocalDate birthday;
     private String phoneNumber;
     private String password;
     private String address;
@@ -36,6 +36,8 @@ public class User implements UserDetails {
     private String email;
     @Enumerated(EnumType.STRING)
     private Country country;
+    @Enumerated(EnumType.STRING)
+    private City city;
     @Enumerated(EnumType.STRING)
     private ClothesSize clothesSize;
     @Enumerated(EnumType.STRING)
@@ -46,6 +48,8 @@ public class User implements UserDetails {
     private Role role;
     private boolean subscribe;
     private LocalDate localDate;
+    private boolean active;
+    private String activationCode;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private List<Booking> booking;
@@ -65,6 +69,14 @@ public class User implements UserDetails {
     @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "user")
     private List<Holiday> myHolidays;
 
+    @ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
+    @JoinTable(name = "users_friends",
+    joinColumns = @JoinColumn(name = "user_id"),
+    inverseJoinColumns = @JoinColumn(name = "friend_id"))
+    private List<User> friends = new ArrayList<>();
+
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<User> requestToFriends = new ArrayList<>();
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -96,5 +108,14 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", requestToFriends=" + requestToFriends +
+                '}';
     }
 }
