@@ -1,5 +1,6 @@
 package com.peakosoft.giftlistj7.model.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.peakosoft.giftlistj7.model.enums.*;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -19,9 +20,11 @@ public class Category {
     private Long id;
     private String name;
 
+    @JsonIgnore
     @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "category")
     private List<Gift> gifts;
 
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "category")
     private List<SubCategory> subCategories;
 }
