@@ -1,11 +1,13 @@
 package com.peakosoft.giftlistj7.model.entities;
 
+import com.peakosoft.giftlistj7.model.enums.Status;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -17,13 +19,30 @@ public class Notification {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String giftName;
+    private Status status;
     private String image;
-    private boolean isExpand=false;
+    private boolean isRead=false;
+    @Column(name = "create_date")
     private LocalDate createDate;
-    @ManyToMany(cascade = CascadeType.ALL,mappedBy = "notifications")
-    private List<User> users;
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    private List<User>receivers;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    private User user;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "gift_id")
     private Gift gift;
+
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "wishList_id")
+    private Gift wishList;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name ="complaints_id")
+    private Complaints complaints;
+
+
 }

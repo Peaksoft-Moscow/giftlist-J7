@@ -6,13 +6,14 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Getter
 @Setter
 @Table(name = "complaints")
 @NoArgsConstructor
-public class Complaint {
+public class Complaints {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -25,4 +26,6 @@ public class Complaint {
 
     @ManyToOne(cascade = {CascadeType.ALL})
     private Gift gift;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "complaints")
+    private List<Notification> notification;
 }
