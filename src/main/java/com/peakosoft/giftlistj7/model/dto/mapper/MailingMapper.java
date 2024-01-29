@@ -9,18 +9,21 @@ import java.time.LocalDate;
 
 @Component
 public class MailingMapper {
-    public Mailing mapToEntity(MailRequest request){
-        Mailing mailing=new Mailing();
+    public Mailing mapToEntity(MailRequest request) {
+        Mailing mailing = new Mailing();
         mailing.setText(request.getText());
         mailing.setTheme(request.getTheme());
+        mailing.setPhoto(request.getPhoto());
+        mailing.setCreateDate(LocalDate.now());
         return mailing;
     }
-    public MailResponse mapToResponse(Mailing mailing){
+
+    public MailResponse mapToResponse(Mailing mailing) {
         return MailResponse.builder()
                 .id(mailing.getId())
-                .text(mailing.getText())
+                .photo(mailing.getPhoto())
                 .theme(mailing.getTheme())
-                .createDate(LocalDate.now())
-                .response("Mail successfully send").build();
+                .text(mailing.getText())
+                .createDate(LocalDate.now()).build();
     }
 }

@@ -10,8 +10,9 @@ import java.time.LocalDate;
 @Builder
 public class MailResponse {
     private Long id;
+    private String photo;
     private String theme;
     private String text;
     private LocalDate createDate;
-    private String response;
+
 }
