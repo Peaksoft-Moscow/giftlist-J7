@@ -6,13 +6,15 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
+
 @Getter
 @Setter
 public class ProfileRequest {
     private String lastName;
     private String firstName;
     private String country;
-    private String birthday;
+    private LocalDate birthday;
     private String email;
     private String phoneNumber;
     private ClothesSize clothesSize;

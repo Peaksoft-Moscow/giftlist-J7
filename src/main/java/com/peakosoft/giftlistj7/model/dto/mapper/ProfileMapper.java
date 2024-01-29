@@ -6,6 +6,9 @@ import com.peakosoft.giftlistj7.model.entities.User;
 import com.peakosoft.giftlistj7.model.enums.Country;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 @Component
 public class ProfileMapper {
     public User mapToEntity(ProfileRequest profileRequest) {
@@ -24,13 +27,14 @@ public class ProfileMapper {
         }
         return user;
     }
+    private static final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
     public ProfileResponse mapToResponse(User user) {
         return ProfileResponse.builder()
                 .id(user.getId())
                 .firstName(user.getName())
                 .lastName(user.getLastName())
-                .birthday(user.getBirthday())
+                .birthday(user.getBirthday().format(dateFormatter))
                 .email(user.getEmail())
                 .phoneNumber(user.getPhoneNumber())
                 .clothesSize(user.getClothesSize())
