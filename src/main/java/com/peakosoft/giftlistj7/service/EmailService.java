@@ -4,7 +4,7 @@ import com.peakosoft.giftlistj7.exception.IncorrectCodeException;
 import com.peakosoft.giftlistj7.model.dto.MailingRequest;
 import com.peakosoft.giftlistj7.model.dto.MailingResponse;
 import com.peakosoft.giftlistj7.model.dto.mapper.MailingMapper;
-import com.peakosoft.giftlistj7.model.dto.mapper.NotificationMapper;
+
 import com.peakosoft.giftlistj7.model.entities.Mailing;
 import com.peakosoft.giftlistj7.model.entities.User;
 import com.peakosoft.giftlistj7.repository.MailingRepository;
@@ -15,16 +15,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.mail.MailSendException;
-import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.util.List;
-import java.util.Random;
-import java.util.stream.Collectors;
 
+import java.util.List;
 @Service
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @RequiredArgsConstructor
@@ -41,7 +37,7 @@ public class EmailService {
         for (User user : users) {
             if (user.isSubscribe()) {
                 try {
-                    sendMessage(request.getEmail(), request.getSender(), request.getMassage());
+                    sendMessage(request.g, request.getSender(), request.getMassage());
                 } catch (MailSendException e) {
                     log.info("Error sending email");
                     throw new IncorrectCodeException("Error sending email");
