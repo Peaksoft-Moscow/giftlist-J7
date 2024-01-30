@@ -12,6 +12,5 @@ import java.util.List;
 public interface WishListRepository extends JpaRepository<Gift, Long> {
 
     @Query("select gift from Gift gift where gift.user.id=:id and gift.giftStatus='WISHLIST'")
-    List<Gift> findAllByUserId(@Param("id") Long id);
-
+    List<Gift> findAllWishListsByUserId(@Param("id") Long id);
 }

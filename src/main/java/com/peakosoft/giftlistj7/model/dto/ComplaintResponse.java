@@ -1,8 +1,6 @@
 package com.peakosoft.giftlistj7.model.dto;
 
-import com.peakosoft.giftlistj7.model.entities.Gift;
-import com.peakosoft.giftlistj7.model.entities.User;
-import com.peakosoft.giftlistj7.model.enums.ComplaintName;
+import com.peakosoft.giftlistj7.model.enums.ComplaintStatus;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,9 +12,9 @@ import java.time.LocalDate;
 @Builder
 public class ComplaintResponse {
     private Long id;
-    private Gift gift;
-    private User user;
-    private ComplaintName complaints;
+    private GiftResponse gift;
+    private AuthResponse user;
+    private ComplaintStatus complaints;
     private String description;
     private LocalDate createDate;
 
