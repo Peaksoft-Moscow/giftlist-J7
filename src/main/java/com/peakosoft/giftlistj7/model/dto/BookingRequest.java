@@ -8,7 +8,6 @@ import java.time.LocalDate;
 @Getter
 @Setter
 public class BookingRequest {
-    private String image;
     private String name;
     private LocalDate createDate;
     private BookingStatus bookingStatus;

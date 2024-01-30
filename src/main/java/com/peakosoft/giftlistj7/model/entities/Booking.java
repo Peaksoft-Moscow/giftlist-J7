@@ -18,12 +18,12 @@ public class Booking {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-//    private String image;
+    private String image;
     private String giftName;
     private GiftStatus giftStatus;
     private LocalDate createDate;
-//    @Enumerated(EnumType.STRING)
-//    private BookingStatus bookingStatus;
+    @Enumerated(EnumType.STRING)
+    private BookingStatus bookingStatus;
 
     @ManyToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "user_id")
