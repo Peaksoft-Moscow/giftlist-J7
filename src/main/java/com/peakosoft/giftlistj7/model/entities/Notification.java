@@ -1,13 +1,12 @@
 package com.peakosoft.giftlistj7.model.entities;
 
-import com.peakosoft.giftlistj7.model.enums.Status;
+import com.peakosoft.giftlistj7.model.enums.NotificationStatus;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -20,7 +19,7 @@ public class Notification {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String giftName;
-    private Status status;
+    private NotificationStatus notificationStatus;
     private String image;
     private boolean isRead=false;
     @Column(name = "create_date")

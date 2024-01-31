@@ -1,6 +1,5 @@
 package com.peakosoft.giftlistj7.model.dto.mapper;
 
-import com.peakosoft.giftlistj7.model.dto.MailingRequest;
 import com.peakosoft.giftlistj7.model.dto.MailingResponse;
 import com.peakosoft.giftlistj7.model.entities.Mailing;
 import org.springframework.stereotype.Component;

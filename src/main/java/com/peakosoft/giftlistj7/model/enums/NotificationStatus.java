@@ -1,6 +1,6 @@
 package com.peakosoft.giftlistj7.model.enums;
 
-public enum Status {
+public enum NotificationStatus {
     PENDING,
     APPROVED,
     BOOKED,

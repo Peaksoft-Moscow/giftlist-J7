@@ -1,8 +1,7 @@
 package com.peakosoft.giftlistj7.model.dto;
 
-import com.peakosoft.giftlistj7.model.enums.Status;
+import com.peakosoft.giftlistj7.model.enums.NotificationStatus;
 import lombok.*;
-import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDate;
 
@@ -14,12 +13,13 @@ import java.time.LocalDate;
 public class NotificationResponse {
     private Long id;
     private String name;
+    private String lastName;
     private String giftName;
-    private Status status;
+    private NotificationStatus status;
     private boolean isRead;
     private LocalDate createDate;
-    public NotificationResponse(String name){
-        this.name=name;
-    }
 
+    public NotificationResponse(String name) {
+        this.name = name;
+    }
 }
