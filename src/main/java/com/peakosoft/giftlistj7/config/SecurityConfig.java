@@ -5,7 +5,6 @@ import com.peakosoft.giftlistj7.service.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -52,6 +51,9 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> {
+
+                    authorize.requestMatchers("/api/booking/**").hasAnyAuthority("USER","ADMIN");
+
                     authorize.requestMatchers("/api/oauth2/with-google",
                                     "/api/auth/sign-up",
                                     "/api/auth/sign-in",
@@ -72,3 +74,4 @@ public class SecurityConfig {
     }
 
 }
+

@@ -20,16 +20,18 @@ public class BookingController {
     @PostMapping("/book/{id}")
     public ResponseEntity<String> book(@PathVariable("id") Long id, Principal principal) {
         System.out.println(id);
-        bookingService.book(id,principal);
+        bookingService.book(id, principal);
         return new ResponseEntity<>("Successfully", HttpStatusCode.valueOf(200));
     }
 
     @DeleteMapping("/remove")
-    public Booking remove(@RequestParam Long bookingId, Principal principal){
+    public Booking remove(@RequestParam Long bookingId, Principal principal) {
+
         return bookingService.remove(bookingId, principal);
     }
+
     @GetMapping("/getAll")
-    public List<Booking> getAllBooking(){
+    public List<Booking> getAllBooking() {
         return bookingService.getAllBooking();
     }
 
