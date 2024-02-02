@@ -54,6 +54,8 @@ public class SecurityConfig {
                     authorize.requestMatchers("/api/oauth2/with-google", "/api/auth/sign-up", "/api/auth/sign-in").permitAll();
                     authorize.requestMatchers("/api/auth/**").permitAll()
                             .requestMatchers("/api/auth/sign-up").permitAll()
+                            .requestMatchers("/api/booking/**").hasAnyAuthority("USER","ADMIN")
+
                             .anyRequest().authenticated();
                 })
                 .oauth2Client(Customizer.withDefaults())
