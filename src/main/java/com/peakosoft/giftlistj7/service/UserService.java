@@ -1,8 +1,6 @@
 package com.peakosoft.giftlistj7.service;
 
 import com.peakosoft.giftlistj7.config.jwt.JwtUtil;
-import com.peakosoft.giftlistj7.model.dto.*;
-import com.peakosoft.giftlistj7.model.dto.*;
 import com.peakosoft.giftlistj7.model.dto.AuthRequest;
 import com.peakosoft.giftlistj7.model.dto.AuthResponse;
 import com.peakosoft.giftlistj7.model.dto.LoginRequest;
@@ -26,9 +24,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-import java.util.Optional;
-import java.util.UUID;
-import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -41,7 +36,6 @@ public class UserService {
     private final AuthenticationManager authenticationManager;
     private final LoginMapper loginMapper;
     private final MailSenderService mailSender;
-    private final MailSender mailSender;
 
 
     public AuthResponse registration(AuthRequest authRequest) {
@@ -132,6 +126,7 @@ public class UserService {
         response.put("createDate", user.getLocalDate());
         return response;
     }
+
     private String generateSixDigitCode() {
         Random random = new Random();
         int code = 100000 + random.nextInt(900000);
@@ -143,42 +138,30 @@ public class UserService {
         User user = userRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("not found"));
         if (user != null) {
             String code = generateSixDigitCode();
-           user.setActivationCode(code);
+            user.setActivationCode(code);
             mailSender.send(email, "forgot-password", code);
             userRepository.save(user);
             return "User code sent";
         } else {
             return "User code is not sent";
         }
+    }
 
-    public String sendCode(String email){
-       User user = userRepository.findByEmail(email).orElse(null);
-        String code = UUID.randomUUID().toString();
-        if (user != null) {
-            user.setActivationCode(code);
-            mailSender.send(email, "forgot-password", code);
+
+        public boolean changePassword (String code, String email, String password, String confirmPassword){
+            User user = userRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("not found"));
+            if (!user.getActivationCode().equals(code)) {
+                return false;
+            }
+            if (!password.equals(confirmPassword)) {
+                throw new RuntimeException("Passwords do not match");
+            }
+            if (password.length() < 6 || !password.matches(".*[A-Z].*")) {
+                throw new RuntimeException("Пароль должен иметь длину не менее 6 символов и содержать хотя бы одну заглавную букву");
+            }
+            user.setActivationCode(null);
+            user.setPassword(passwordEncoder.encode(password));
             userRepository.save(user);
-            return "Code sent";
-        } else {
-            return "Code is not sent";
+            return true;
         }
-
-    }
-
-    public boolean changePassword(String code, String email, String password, String confirmPassword) {
-        User user = userRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("not found"));
-        if (!user.getActivationCode().equals(code)) {
-            return false;
-        }
-        if (!password.equals(confirmPassword)) {
-            throw new RuntimeException("Passwords do not match");
-        }
-        if (password.length() < 6 || !password.matches(".*[A-Z].*")) {
-            throw new RuntimeException("Пароль должен иметь длину не менее 6 символов и содержать хотя бы одну заглавную букву");
-        }
-        user.setActivationCode(null);
-        user.setPassword(passwordEncoder.encode(password));
-        userRepository.save(user);
-        return true;
-    }
 }

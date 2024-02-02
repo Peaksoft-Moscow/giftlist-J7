@@ -60,11 +60,8 @@ public class SecurityConfig {
                             .requestMatchers("/api/wish_lists/**").hasAnyAuthority("ADMIN","USER")
                             .requestMatchers("/api/friends/**").hasAnyAuthority("ADMIN","USER")
                             .requestMatchers("/api/charity/**").hasAnyAuthority("ADMIN","USER")
-                    authorize.requestMatchers("/api/oauth2/with-google", "/api/auth/sign-up", "/api/auth/sign-in").permitAll();
-                    authorize.requestMatchers("/api/auth/**").permitAll()
                             .requestMatchers("/api/auth/sign-up").permitAll()
                             .requestMatchers("/api/booking/**").hasAnyAuthority("USER","ADMIN")
-
                             .anyRequest().authenticated();
                 })
                 .oauth2Login(withDefaults())
