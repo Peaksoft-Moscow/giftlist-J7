@@ -25,6 +25,7 @@ import java.time.LocalDate;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.Map;
@@ -39,6 +40,7 @@ public class UserService {
 
     private final AuthenticationManager authenticationManager;
     private final LoginMapper loginMapper;
+    private final MailSenderService mailSender;
     private final MailSender mailSender;
 
 
@@ -110,27 +112,44 @@ public class UserService {
         return loginMapper.mapToResponse(jwt, user.getRole().toString());
     }
 
-    public Map<String,Object> saveWithGoogle(OAuth2AuthenticationToken oAuth2AuthenticationToken) throws IllegalAccessException{
+    public Map<String, Object> saveWithGoogle(OAuth2AuthenticationToken oAuth2AuthenticationToken) throws IllegalAccessException {
         OAuth2AuthenticatedPrincipal principal = oAuth2AuthenticationToken.getPrincipal();
-        if(oAuth2AuthenticationToken == null) {
+        if (oAuth2AuthenticationToken == null) {
             throw new IllegalAccessException("The token must be not null");
         }
-        Map<String,Object> json = principal.getAttributes();
-        User user =new User();
+        Map<String, Object> json = principal.getAttributes();
+        User user = new User();
         user.setName((String) json.get("given_name"));
         user.setLastName((String) json.get("family_name"));
         user.setEmail((String) json.get("email"));
         user.setPassword((String) json.get("given_name"));
         user.setLocalDate(LocalDate.now());
         userRepository.save(user);
-        Map<String,Object> response = new LinkedHashMap<>();
-        response.put("name",user.getName());
-        response.put("last_name",user.getLastName());
-        response.put("email",user.getEmail());
-        response.put("createDate",user.getLocalDate());
+        Map<String, Object> response = new LinkedHashMap<>();
+        response.put("name", user.getName());
+        response.put("last_name", user.getLastName());
+        response.put("email", user.getEmail());
+        response.put("createDate", user.getLocalDate());
         return response;
     }
+    private String generateSixDigitCode() {
+        Random random = new Random();
+        int code = 100000 + random.nextInt(900000);
+        return String.valueOf(code);
+    }
 
+
+    public String sendCode(String email) {
+        User user = userRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("not found"));
+        if (user != null) {
+            String code = generateSixDigitCode();
+           user.setActivationCode(code);
+            mailSender.send(email, "forgot-password", code);
+            userRepository.save(user);
+            return "User code sent";
+        } else {
+            return "User code is not sent";
+        }
 
     public String sendCode(String email){
        User user = userRepository.findByEmail(email).orElse(null);

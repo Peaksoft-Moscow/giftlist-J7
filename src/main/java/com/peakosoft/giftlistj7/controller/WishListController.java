@@ -16,22 +16,26 @@ import java.util.List;
 @Slf4j
 public class WishListController {
     private final WishListService wishListService;
+
     @PostMapping("/save")
     public WishListResponse save(@RequestBody WishListRequest wishListRequest, Principal principal) {
         log.info(wishListRequest.getHolidayName());
         return wishListService.save(wishListRequest, principal);
     }
+
     @GetMapping
     public List<WishListResponse> findAllByUserId(Principal principal) {
         return wishListService.findAll(principal);
     }
+
     @PutMapping("/update/{id}")
-    public WishListResponse update(@PathVariable("id") Long id,@RequestBody WishListRequest wishListRequest, Principal principal) {
+    public WishListResponse update(@PathVariable("id") Long id, @RequestBody WishListRequest wishListRequest, Principal principal) {
         return wishListService.update(id, wishListRequest, principal);
     }
+
     @DeleteMapping("/{id}")
-    public String delete(@PathVariable("id") Long id, Principal principal){
+    public String delete(@PathVariable("id") Long id, Principal principal) {
         wishListService.delete(id, principal);
-        return "Gift with id: "+id+" successfully deleted";
+        return "Gift with id: " + id + " successfully deleted";
     }
 }
