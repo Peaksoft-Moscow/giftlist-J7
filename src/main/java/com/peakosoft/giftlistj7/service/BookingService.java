@@ -82,5 +82,4 @@ public class BookingService {
         return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
 
-
 }
