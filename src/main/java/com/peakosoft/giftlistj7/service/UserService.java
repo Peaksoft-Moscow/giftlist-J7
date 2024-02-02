@@ -25,9 +25,7 @@ import java.time.LocalDate;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
-import java.util.UUID;
-import java.util.Map;
+import java.util.Random;
 
 @Service
 @RequiredArgsConstructor
@@ -39,7 +37,7 @@ public class UserService {
 
     private final AuthenticationManager authenticationManager;
     private final LoginMapper loginMapper;
-    private final MailSender mailSender;
+    private final MailSenderService mailSender;
 
 
     public AuthResponse registration(AuthRequest authRequest) {
