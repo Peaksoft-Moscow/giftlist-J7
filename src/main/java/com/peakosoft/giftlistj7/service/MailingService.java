@@ -22,7 +22,7 @@ public class MailingService {
     private final MailingRepository mailingRepository;
     private final UserRepository userRepository;
     private final MailSenderService mailSenderService;
-    private final JavaMailSender javaMailSender;
+
 
     public MailResponse createMailing(MailRequest mailRequest) {
         Mailing mailing = mailingMapper.mapToEntity(mailRequest);
