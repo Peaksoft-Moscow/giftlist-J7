@@ -33,12 +33,4 @@ public class MailingService {
         mailingRepository.save(mailing);
         return mailingMapper.mapToResponse(mailing);
     }
-
-    public void sendMailing(String email, String sender, String message) {
-        SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
-        simpleMailMessage.setTo(email);
-        simpleMailMessage.setSubject(sender);
-        simpleMailMessage.setText(message);
-        javaMailSender.send(simpleMailMessage);
-    }
 }
