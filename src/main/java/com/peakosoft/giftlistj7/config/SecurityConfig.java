@@ -60,11 +60,13 @@ public class SecurityConfig {
                             .requestMatchers("/api/wish_lists/**").hasAnyAuthority("ADMIN","USER")
                             .requestMatchers("/api/friends/**").hasAnyAuthority("ADMIN","USER")
                             .requestMatchers("/api/charity/**").hasAnyAuthority("ADMIN","USER")
+                            .requestMatchers("api/profile/**").hasAnyAuthority("ADMIN","USER")
                             .anyRequest().authenticated();
                 })
                 .oauth2Login(withDefaults())
                 .formLogin(withDefaults())
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
+                .csrf(withDefaults())
                 .build();
     }
 
