@@ -24,16 +24,17 @@ import static java.util.stream.Collectors.toList;
 
 @Service
 @RequiredArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+@FieldDefaults(level = AccessLevel.PRIVATE,makeFinal = true)
 public class NotificationService {
     UserRepository userRepository;
     NotificationRepository notificationRepository;
     NotificationMapper notificationMapper;
+    MailSenderService mailSenderService;
 
     public Optional<User> getAuthenticatedUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String login = authentication.getName();
-        return userRepository.findByEmail(login);
+        String email = authentication.getName();
+        return userRepository.findByEmail(email);
     }
 
     public List<NotificationResponse> getAllNotification() {
@@ -53,7 +54,7 @@ public class NotificationService {
     public List<NotificationResponse> getAllReadNotification() {
         User user = getAuthenticatedUser().orElseThrow(
                 () -> new EntityNotFoundException("Not found user Authentication"));
-        List<Notification> notifications = notificationRepository.getAllUnReadNotification(user.getId());
+        List<Notification> notifications = notificationRepository.getAllReadNotification(user.getId());
         return notifications.stream()
                 .map(notificationMapper::mapToResponse).
                 collect(toList());
@@ -78,12 +79,13 @@ public class NotificationService {
         if (notification == null) {
             throw new EntityNotFoundException("Not found Notification for user wish id");
         }
+        notification.setUser(user);
         Objects.requireNonNull(notification).setRead(true);
         notificationRepository.save(notification);
         return notificationMapper.mapToResponse(notification);
     }
 
-    public void markNotificationAsRead() {
+    public void markSeenNotificationAsRead() {
         User user = getAuthenticatedUser().orElseThrow(
                 () -> new EntityNotFoundException("Not found user Authentication"));
         Notification notification = (Notification) notificationRepository.getAllNotification(user.getId());
@@ -96,14 +98,14 @@ public class NotificationService {
         notificationMapper.mapToResponse(notification);
     }
 
-    public NotificationResponse deleteAllNotification() {
+    public void deleteAllNotification() {
         User user = getAuthenticatedUser().orElseThrow(
                 () -> new EntityNotFoundException("Not found user Authentication"));
         if (notificationRepository.countByUserId(user.getId()) == 0) {
             throw new RuntimeException("Not found user id");
         }
         notificationRepository.deleteByUserId(user.getId());
-        return new NotificationResponse("Notification delete successfully");
+        new NotificationResponse("Notification delete successfully");
     }
 
     public Notification sendNotification(List<User> receivers) {
@@ -112,6 +114,7 @@ public class NotificationService {
         notification.setReceivers(receivers);
         notification.setCreateDate(LocalDate.now());
         notification.setNotificationStatus(NotificationStatus.REQUEST_TO_FRIED);
+        mailSenderService.sendNotifications(notification.getUser().getEmail(),"giftList-m7","text");
         return notification;
     }
 

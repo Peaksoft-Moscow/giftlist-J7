@@ -28,8 +28,7 @@ public class NotificationController {
     @GetMapping()
     @Operation(summary = "Get notification", description = "Getting notification from user")
     public ResponseEntity<List<NotificationResponse>> getAllNotifications() {
-        List<NotificationResponse> notifications = notificationService.getAllNotification();
-        return ResponseEntity.ok(notifications);
+        return new ResponseEntity<>(notificationService.getAllNotification(),HttpStatus.CREATED);
     }
 
     @Operation(summary = "Get notification", description = "Getting notification from user")
@@ -55,8 +54,8 @@ public class NotificationController {
 
     @Operation(summary = "Get notification", description = "Getting notification from user")
     @PutMapping("/read")
-    public ResponseEntity<String> markNotificationAsRead() {
-        notificationService.markNotificationAsRead();
+    public ResponseEntity<String> markSeenNotificationAsRead() {
+        notificationService.markSeenNotificationAsRead();
         return ResponseEntity.ok("Notification marked as read successfully");
     }
 
