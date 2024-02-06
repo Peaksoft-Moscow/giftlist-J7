@@ -24,6 +24,8 @@ public class Notification {
     private boolean isRead=false;
     @Column(name = "create_date")
     private LocalDate createDate;
+    private String subject;
+    private String message;
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private List<User>receivers;
 

@@ -25,35 +25,33 @@ import java.util.List;
 public class NotificationController {
     NotificationService notificationService;
 
-    @GetMapping()
+    @GetMapping("/find-all_notifications")
     @Operation(summary = "Get notification", description = "Getting notification from user")
     public ResponseEntity<List<NotificationResponse>> getAllNotifications() {
-        return new ResponseEntity<>(notificationService.getAllNotification(),HttpStatus.CREATED);
+        return new ResponseEntity<>(notificationService.getAllNotification(), HttpStatus.CREATED);
     }
 
     @Operation(summary = "Get notification", description = "Getting notification from user")
-    @GetMapping("/read")
-    public ResponseEntity<List<NotificationResponse>> getAllReadNotifications() {
-        List<NotificationResponse> notifications = notificationService.getAllReadNotification();
-        return ResponseEntity.ok(notifications);
+    @GetMapping("/isread")
+    public ResponseEntity<List<NotificationResponse>> getAllIsReadNotifications() {
+        return new ResponseEntity<>(notificationService.getAllIsReadNotification(), HttpStatus.OK);
     }
 
     @Operation(summary = "Get notification", description = "Getting notification from user")
     @GetMapping("/unread")
-    public ResponseEntity<List<NotificationResponse>> getAllUnreadNotifications() {
-        List<NotificationResponse> notifications = notificationService.getAllUnReadNotification();
-        return ResponseEntity.ok(notifications);
+    public ResponseEntity<List<NotificationResponse>> getAllUnReadNotifications() {
+        return new ResponseEntity<>(notificationService.getAllUnReadNotification(), HttpStatus.OK);
+
     }
 
     @Operation(summary = "Get notification", description = "Getting notification from user")
     @GetMapping("/{id}")
     public ResponseEntity<NotificationResponse> getNotificationByUserId(@PathVariable("id") Long userId) {
-        NotificationResponse notification = notificationService.getNotificationByUserId(userId);
-        return ResponseEntity.ok(notification);
+        return new ResponseEntity<>(notificationService.getNotificationByUserId(userId), HttpStatus.OK);
     }
 
     @Operation(summary = "Get notification", description = "Getting notification from user")
-    @PutMapping("/read")
+    @PutMapping("/mark")
     public ResponseEntity<String> markSeenNotificationAsRead() {
         notificationService.markSeenNotificationAsRead();
         return ResponseEntity.ok("Notification marked as read successfully");

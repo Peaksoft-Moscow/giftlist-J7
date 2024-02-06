@@ -8,9 +8,7 @@ import com.peakosoft.giftlistj7.model.enums.NotificationStatus;
 import com.peakosoft.giftlistj7.repository.NotificationRepository;
 import com.peakosoft.giftlistj7.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
-import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
-import lombok.experimental.FieldDefaults;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -24,12 +22,11 @@ import static java.util.stream.Collectors.toList;
 
 @Service
 @RequiredArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE,makeFinal = true)
 public class NotificationService {
-    UserRepository userRepository;
-    NotificationRepository notificationRepository;
-    NotificationMapper notificationMapper;
-    MailSenderService mailSenderService;
+    private final UserRepository userRepository;
+    private final NotificationRepository notificationRepository;
+    private final NotificationMapper notificationMapper;
+    private final MailSenderService mailSenderService;
 
     public Optional<User> getAuthenticatedUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -51,10 +48,10 @@ public class NotificationService {
                 collect(toList());
     }
 
-    public List<NotificationResponse> getAllReadNotification() {
+    public List<NotificationResponse> getAllIsReadNotification() {
         User user = getAuthenticatedUser().orElseThrow(
                 () -> new EntityNotFoundException("Not found user Authentication"));
-        List<Notification> notifications = notificationRepository.getAllReadNotification(user.getId());
+        List<Notification> notifications = notificationRepository.getAllIsReadNotification(user.getId());
         return notifications.stream()
                 .map(notificationMapper::mapToResponse).
                 collect(toList());
@@ -114,7 +111,7 @@ public class NotificationService {
         notification.setReceivers(receivers);
         notification.setCreateDate(LocalDate.now());
         notification.setNotificationStatus(NotificationStatus.REQUEST_TO_FRIED);
-        mailSenderService.sendNotifications(notification.getUser().getEmail(),"giftList-m7","text");
+        mailSenderService.sendNotifications(notification.getUser().getEmail(), notification.getSubject(), notification.getMessage());
         return notification;
     }
 
