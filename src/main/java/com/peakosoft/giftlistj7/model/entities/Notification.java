@@ -21,13 +21,13 @@ public class Notification {
     private String giftName;
     private NotificationStatus notificationStatus;
     private String image;
-    private boolean isRead=false;
+    private boolean isRead = false;
     @Column(name = "create_date")
     private LocalDate createDate;
     private String subject;
     private String message;
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-    private List<User>receivers;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<User> receivers;
 
     @ManyToOne(cascade = CascadeType.ALL)
     private User user;
@@ -42,7 +42,7 @@ public class Notification {
     private Gift wishList;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name ="complaints_id")
+    @JoinColumn(name = "complaints_id")
     private Complaints complaints;
 
 
