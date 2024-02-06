@@ -60,6 +60,8 @@ public class SecurityConfig {
                             .requestMatchers("/api/wish_lists/**").hasAnyAuthority("ADMIN","USER")
                             .requestMatchers("/api/friends/**").hasAnyAuthority("ADMIN","USER")
                             .requestMatchers("/api/charity/**").hasAnyAuthority("ADMIN","USER")
+                            .requestMatchers("/api/mailings/**").hasAuthority("ADMIN")
+
                             .anyRequest().authenticated();
                 })
                 .oauth2Login(withDefaults())
