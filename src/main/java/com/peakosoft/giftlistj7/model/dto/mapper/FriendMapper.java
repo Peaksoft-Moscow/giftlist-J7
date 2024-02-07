@@ -19,7 +19,7 @@ public class FriendMapper {
                 .name(user.getName())
                 .lastName(user.getLastName())
                 .amountHolidays(user.getMyHolidays().size())
-                .amountWishes(wishListRepository.findAllByUserId(user.getId()).size())
+                .amountWishes(wishListRepository.findAllWishListsByUserId(user.getId()).size())
                 .build();
     }
     public FriendInfoResponse mapToInfoResponse(User user){
@@ -36,7 +36,7 @@ public class FriendMapper {
                 .importantToKnow(user.getImportant())
                 .clothesSize(user.getClothesSize())
                 .shoesSize(user.getShoesSize())
-                .wishLists(wishListRepository.findAllByUserId(user.getId()).stream().map(wishListMapper::mapToResponse).toList())
+                .wishLists(wishListRepository.findAllWishListsByUserId(user.getId()).stream().map(wishListMapper::mapToResponse).toList())
                 .holidays(user.getMyHolidays())
                 .build();
     }
