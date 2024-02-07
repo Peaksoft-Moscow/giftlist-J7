@@ -8,8 +8,6 @@ import com.peakosoft.giftlistj7.model.entities.User;
 import com.peakosoft.giftlistj7.repository.MailingRepository;
 import com.peakosoft.giftlistj7.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

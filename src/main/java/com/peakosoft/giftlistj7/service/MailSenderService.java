@@ -1,6 +1,4 @@
 package com.peakosoft.giftlistj7.service;
-
-import com.peakosoft.giftlistj7.model.entities.Mailing;
 import com.peakosoft.giftlistj7.exception.NotFoundException;
 import com.peakosoft.giftlistj7.model.entities.User;
 import com.peakosoft.giftlistj7.repository.UserRepository;
