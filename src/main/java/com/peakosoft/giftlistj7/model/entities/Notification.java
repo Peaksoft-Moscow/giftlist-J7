@@ -43,7 +43,7 @@ public class Notification {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "complaints_id")
-    private Complaints complaints;
+    private Complaint complaints;
 
 
 }

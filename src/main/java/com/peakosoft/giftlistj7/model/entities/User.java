@@ -59,7 +59,7 @@ public class User implements UserDetails {
     private Notification notification;
 
     @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "user")
-    private List<Complaints> complaints;
+    private List<Complaint> complaints;
 
     @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "user")
     private List<Gift> gifts;

@@ -11,7 +11,7 @@ public class NotificationMapper {
                 .id(notification.getId())
                 .name(notification.getGiftName())
                 .giftName(notification.getGiftName())
-                .status(notification.getStatus())
+                .status(notification.getNotificationStatus())
                 .isRead(notification.isRead())
                 .createDate(notification.getCreateDate())
                 .build();

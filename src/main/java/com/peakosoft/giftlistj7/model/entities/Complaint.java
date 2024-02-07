@@ -15,7 +15,7 @@ import java.util.List;
 @Setter
 @Table(name = "complaints")
 @NoArgsConstructor
-public class Complaints {
+public class Complaint {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
