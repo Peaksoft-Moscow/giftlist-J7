@@ -9,8 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface WishListRepository extends JpaRepository<Gift, Long> {
-
-    @Query("select gift from Gift gift where gift.user.id=:id and gift.giftStatus='WISHLIST'")
-    List<Gift> findAllWishListsByUserId(@Param("id") Long id);
+public interface CharityRepository extends JpaRepository<Gift, Long> {
+    @Query("select gift from Gift gift where gift.user.id=:id and gift.giftStatus='CHARITY'")
+    List<Gift> findAllByUserId(@Param("id") Long id);
 }

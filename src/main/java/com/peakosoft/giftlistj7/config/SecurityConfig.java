@@ -59,6 +59,12 @@ public class SecurityConfig {
                             .requestMatchers("/api/holiday/**").hasAnyAuthority("ADMIN", "USER")
                             .requestMatchers("/api/wish_lists/**").hasAnyAuthority("ADMIN", "USER")
                             .requestMatchers("/api/friends/**").hasAnyAuthority("ADMIN", "USER")
+                            .requestMatchers("/api/holiday/**").hasAnyAuthority("ADMIN","USER")
+                            .requestMatchers("/api/wish_lists/**").hasAnyAuthority("ADMIN","USER")
+                            .requestMatchers("/api/friends/**").hasAnyAuthority("ADMIN","USER")
+                            .requestMatchers("/api/charity/**").hasAnyAuthority("ADMIN","USER")
+                            .requestMatchers("/api/complaints/save").hasAnyAuthority("ADMIN","USER")
+                            .requestMatchers("/api/complaints/find-all", "/api/complaints/find-by-id", "/api/complaints/delete").hasAuthority("ADMIN")
                             .anyRequest().authenticated();
                 })
                 .oauth2Login(withDefaults())

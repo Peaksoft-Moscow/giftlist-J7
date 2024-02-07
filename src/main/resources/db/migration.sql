@@ -3,13 +3,13 @@ INSERT INTO users(role, shoes_size, clothes_size, country, social_media, birthda
                   password, phone_number, subscribe,active,activation_code)
 VALUES ( 'ADMIN', 'THIRTY_SIX', 'S', 'KYRGYZSTAN', 'INSTAGRAM', '1994.02.17', 'admin@gmail.com', 'reading', 'naz',
         'Mansuralieva', 'Nazgul',
-        '$2a$12$qzI8tcK2DDUI5PkTvPYeSewtOvqoFHyqsfh06niRkTFoOGZ8gTATe',--123 password
+        '$2a$12$WKQVSTS9BBy8zUqKFdiF6e4bvN9Bbl6kTgEoTYoJ72HZ07CyBvf0a',--admin password
         '89999009090', true,false,null),
        ( 'USER', 'THIRTY_SEVEN', 'M', 'RUSSIA', 'FACEBOOK', '2000.02.02', 'asan@gmail.com', 'dancing', 'asan',
-        'Asanov', 'Asan', '$2a$12$pf5ZBE5aSrUlOsgyXNVyCeAN18/RHyEq/8lDrBZCXVCs3z0oZFbRa',--444 password
+        'Asanov', 'Asan', '$2a$12$2WKm//c7SO183NKaBG53OeQFv7knqnUCv/DOrTHaW65bT8h2CB4CO',--asan password
         '88002223344', false,false,null),
        ( 'USER', 'THIRTY_EIGHT', 'XS', 'KAZAKHSTAN', 'VK', '1999.09.08', 'user@gmail.com', 'singing', 'jamal',
-        'Shamuratovna', 'Jamal', '$2a$12$ppzJUl9qIJttL2tIJuhvFOEx6ruvCw9xeygyv0AZTYDV6oXadQvgy',--555 password
+        'Shamuratovna', 'Jamal', '$2a$12$fq2VmLSqgmmoU9dFQn9Ste3BgKpSG0PfSdWpbbkSCKbToize5666K',--user password
         '89001110033', true,false,null);
 
 INSERT INTO categories(id, name)

@@ -44,7 +44,7 @@ public class WishListService {
     public List<WishListResponse> findAll(Principal principal) {
         User user = userRepository.findByEmail(principal.getName()).orElseThrow(() -> new RuntimeException("Not found user with email: " + principal.getName()));
         List<Gift> myGifts = wishListRepository
-                .findAllByUserId(user.getId());
+                .findAllWishListsByUserId(user.getId());
         return myGifts.stream().map(wishListMapper::mapToResponse).toList();
     }
 
