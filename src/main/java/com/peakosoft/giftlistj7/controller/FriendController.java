@@ -16,6 +16,7 @@ import java.util.List;
 @RequestMapping("api/friends")
 @RequiredArgsConstructor
 @Tag(name = "Friends controller", description = "")
+@SecurityRequirement(name="Authorization")
 public class FriendController {
     private final FriendService friendService;
 
