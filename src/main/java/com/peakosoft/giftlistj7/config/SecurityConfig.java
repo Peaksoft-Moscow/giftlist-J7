@@ -63,6 +63,8 @@ public class SecurityConfig {
                             .requestMatchers("/swagger-ui/**",
                                     "/swagger-resources/*," +
                                             "/v3/api-docs/**").permitAll()
+                            .requestMatchers("/api/complaints/save").hasAnyAuthority("ADMIN","USER")
+                            .requestMatchers("/api/complaints/find-all", "/api/complaints/find-by-id", "/api/complaints/delete").hasAuthority("ADMIN")
                             .anyRequest().authenticated();
                 })
                 .oauth2Login(withDefaults())
