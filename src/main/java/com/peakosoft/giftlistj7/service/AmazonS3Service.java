@@ -1,37 +1,61 @@
 package com.peakosoft.giftlistj7.service;
 
-import com.amazonaws.auth.AWSStaticCredentialsProvider;
-import com.amazonaws.auth.BasicAWSCredentials;
-import com.amazonaws.regions.Regions;
+
 import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.AmazonS3Client;
-import com.amazonaws.services.s3.model.GetObjectRequest;
+import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.s3.model.S3Object;
-import lombok.RequiredArgsConstructor;
+import com.amazonaws.services.s3.model.S3ObjectInputStream;
+import com.amazonaws.util.IOUtils;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.Objects;
 
 @Service
-@RequiredArgsConstructor
+@Slf4j
 public class AmazonS3Service {
-    private final BasicAWSCredentials credentials = new BasicAWSCredentials("giftList", "java7");
-    private final AmazonS3 amazonS3 = AmazonS3Client.builder().withRegion(Regions.US_EAST_1)
-            .withCredentials(new AWSStaticCredentialsProvider(credentials))
-            .build();
+    @Value("${amazon.s3.bucket-name}")
+    private String bucketName;
+//    @Autowired
+    private AmazonS3 s3client;
 
-    public void uploadObject(String bucketName, String key, String filePath) {
-        amazonS3.putObject(bucketName, key, new java.io.File(filePath));
+    public String uploadFile(MultipartFile file) {
+        File fileObj = convertMultiPartFileToFile(file);
+        String fileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
+        s3client.putObject(new PutObjectRequest(bucketName, fileName, fileObj));
+        fileObj.delete();
+        return "File uploaded:" + fileName;
     }
 
-    public S3Object downloadObject(String bucketName, String key) {
-        return amazonS3.getObject(new GetObjectRequest(bucketName, key));
+    public byte[] downloadFile(String fileName) {
+        S3Object s3Object = s3client.getObject(bucketName, fileName);
+        S3ObjectInputStream inputStream = s3Object.getObjectContent();
+        try {
+            return IOUtils.toByteArray(inputStream);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
-
-    public void updateObject(String bucketName, String key, String filePath) {
-        uploadObject(bucketName, key, filePath);
+    public String deleteFile(String fileName) {
+        s3client.deleteObject(bucketName, fileName);
+        return fileName + " removed...";
     }
 
-    public void deleteObject(String bucketName, String key) {
-        amazonS3.deleteObject(bucketName, key);
+    private File convertMultiPartFileToFile(MultipartFile file) {
+        File convertedFile = new File(Objects.requireNonNull(file.getOriginalFilename()));
+        try (FileOutputStream fos = new FileOutputStream(convertedFile)) {
+            fos.write(file.getBytes());
+        } catch (IOException e) {
+            log.error("Error converting multipartFile to   file", e);
+        }
+        return convertedFile;
     }
+
 }
