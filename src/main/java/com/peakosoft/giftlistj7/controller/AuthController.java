@@ -5,6 +5,7 @@ import com.peakosoft.giftlistj7.model.dto.AuthResponse;
 import com.peakosoft.giftlistj7.model.dto.LoginRequest;
 import com.peakosoft.giftlistj7.model.dto.LoginResponse;
 import com.peakosoft.giftlistj7.service.UserService;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,10 +13,6 @@ import org.springframework.security.oauth2.client.authentication.OAuth2Authentic
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-
-
 
 @RestController
 @RequiredArgsConstructor
@@ -27,10 +24,12 @@ public class AuthController {
     public AuthResponse registration(@RequestBody AuthRequest authRequest) {
         return userService.registration(authRequest);
     }
+
     @PostMapping("/sign-in")
     public LoginResponse login(@RequestBody LoginRequest request) {
         return userService.login(request);
     }
+
     @GetMapping("/sign-in-with-google")
     public Map<String, Object> addUser(OAuth2AuthenticationToken oAuth2AuthenticationToken) throws IllegalAccessException {
         return userService.saveWithGoogle(oAuth2AuthenticationToken);
@@ -49,4 +48,5 @@ public class AuthController {
         }
         return "User not changed!";
     }
+
 }

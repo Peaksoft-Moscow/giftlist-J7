@@ -51,9 +51,7 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> {
-
                     authorize.requestMatchers("/api/booking/**").hasAnyAuthority("USER","ADMIN");
-
                     authorize.requestMatchers("/api/oauth2/with-google",
                                     "/api/auth/sign-up",
                                     "/api/auth/sign-in",
@@ -62,12 +60,7 @@ public class SecurityConfig {
                             .requestMatchers("/api/holiday/**").hasAnyAuthority("ADMIN","USER")
                             .requestMatchers("/api/wish_lists/**").hasAnyAuthority("ADMIN","USER")
                             .requestMatchers("/api/friends/**").hasAnyAuthority("ADMIN","USER")
-                            .requestMatchers("/api/charity/**").hasAnyAuthority("ADMIN","USER");
-                    authorize.requestMatchers("/api/oauth2/with-google", "/api/auth/sign-up", "/api/auth/sign-in").permitAll();
-                    authorize.requestMatchers("/api/auth/**").permitAll()
-                            .requestMatchers("/api/auth/sign-up").permitAll()
-                            .requestMatchers("/api/booking/**").hasAnyAuthority("USER","ADMIN")
-
+                            .requestMatchers("/api/charity/**").hasAnyAuthority("ADMIN","USER")
                             .anyRequest().authenticated();
                 })
                 .oauth2Client(Customizer.withDefaults())
