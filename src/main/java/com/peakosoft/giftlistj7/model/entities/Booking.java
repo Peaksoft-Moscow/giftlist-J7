@@ -34,6 +34,7 @@ public class Booking {
     @OneToOne(cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH})
     @JoinColumn(name = "gift_id")
     @JsonIgnore
+    @Enumerated
     private  Gift gift;
 
 

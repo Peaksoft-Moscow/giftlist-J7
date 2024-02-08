@@ -3,10 +3,9 @@ package com.peakosoft.giftlistj7.controller;
 import com.peakosoft.giftlistj7.model.entities.Booking;
 import com.peakosoft.giftlistj7.service.BookingService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatusCode;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.security.Principal;
 import java.util.List;
 
@@ -19,14 +18,12 @@ public class BookingController {
 
     @PostMapping("/book/{id}")
     public ResponseEntity<String> book(@PathVariable("id") Long id, Principal principal) {
-        System.out.println(id);
         bookingService.book(id, principal);
-        return new ResponseEntity<>("Successfully", HttpStatusCode.valueOf(200));
+        return new ResponseEntity<>("Successfully", HttpStatus.OK);
     }
 
-    @DeleteMapping("/remove")
-    public Booking remove(@RequestParam Long bookingId, Principal principal) {
-
+    @DeleteMapping("/remove/{bookingId}")
+    public Booking remove(@PathVariable Long bookingId, Principal principal) {
         return bookingService.remove(bookingId, principal);
     }
 

@@ -5,9 +5,8 @@ import com.peakosoft.giftlistj7.model.entities.Booking;
 import com.peakosoft.giftlistj7.model.entities.Gift;
 import com.peakosoft.giftlistj7.model.entities.User;
 import com.peakosoft.giftlistj7.model.enums.BookingStatus;
-import com.peakosoft.giftlistj7.repository.BookingRepository;
-import com.peakosoft.giftlistj7.repository.UserRepository;
-import com.peakosoft.giftlistj7.repository.WishListRepository;
+import com.peakosoft.giftlistj7.repository.*;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -48,7 +47,11 @@ public class BookingService {
             }
         }
         Booking booking = new Booking();
+        booking.setImage(gift.getImage());
+        booking.setGiftStatus(gift.getGiftStatus());
+        booking.setGiftName(gift.getName());
         booking.setCreateDate(LocalDate.now());
+        booking.setBookingStatus(BookingStatus.BOOKED);
 
         gift.setBookingStatus(BookingStatus.BOOKED);
         booking.setUser(user);
@@ -60,14 +63,17 @@ public class BookingService {
 
 
     public Booking remove(Long bookingId, Principal principal) {
+
         Booking booking = bookingRepository.findById(bookingId)
-                .orElseThrow(() -> new RuntimeException("Booking not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Booking not found"));
+        booking.setBookingStatus(BookingStatus.UNBOOKED);
 
         User user = userRepository.findByEmail(principal.getName())
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new EntityNotFoundException("User not found"));
         if (!booking.getUser().equals(user)) {
             throw new RuntimeException("User does not have permission to remove this booking");
         }
+
         bookingRepository.delete(booking);
         return booking;
     }
