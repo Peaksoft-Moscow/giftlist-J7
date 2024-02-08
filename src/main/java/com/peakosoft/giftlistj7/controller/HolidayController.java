@@ -4,6 +4,7 @@ package com.peakosoft.giftlistj7.controller;
 import com.peakosoft.giftlistj7.model.dto.HolidayRequest;
 import com.peakosoft.giftlistj7.model.dto.HolidayResponse;
 import com.peakosoft.giftlistj7.service.HolidayService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -18,6 +19,7 @@ import java.util.List;
 @RequestMapping("api/holiday")
 @RequiredArgsConstructor
 @Slf4j
+@SecurityRequirement(name="Authorization")
 public class HolidayController {
     private final HolidayService holidayService;
 
