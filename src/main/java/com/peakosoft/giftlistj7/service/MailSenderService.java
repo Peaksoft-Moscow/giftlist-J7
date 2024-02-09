@@ -7,13 +7,13 @@ import org.springframework.stereotype.Service;
 
 
 @Service
-public class MailSender {
+public class MailSenderService {
     @Autowired
     private JavaMailSender mailSender;
     private String username;
    // @Autowired
 
-    public void send(String emailTo, String subject, String massage) {
+    public void send(String emailTo, String subject, String message) {
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         mailMessage.setFrom(username);
         mailMessage.setTo(emailTo);

@@ -1,6 +1,8 @@
 package com.peakosoft.giftlistj7.model.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.peakosoft.giftlistj7.model.enums.BookingStatus;
+import com.peakosoft.giftlistj7.model.enums.GiftStatus;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
