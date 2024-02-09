@@ -22,8 +22,9 @@ public class BookingController {
         return new ResponseEntity<>("Successfully", HttpStatus.OK);
     }
 
-    @DeleteMapping("/remove/{bookingId}")
-    public Booking remove(@PathVariable Long bookingId, Principal principal) {
+    @DeleteMapping("/{bookingId}")
+    public String remove(@PathVariable("bookingId") Long bookingId, Principal principal) {
+        System.out.println("booking controller ");
         return bookingService.remove(bookingId, principal);
     }
 

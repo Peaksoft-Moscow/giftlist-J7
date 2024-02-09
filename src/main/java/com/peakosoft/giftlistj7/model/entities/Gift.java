@@ -34,7 +34,7 @@ public class Gift {
     @Enumerated(EnumType.STRING)
     private BookingStatus bookingStatus;
 
-    @OneToOne(cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH}, mappedBy ="gift")
+    @OneToOne(cascade = {CascadeType.ALL}, mappedBy ="gift")
     private Booking booking;
 
     @ManyToOne(cascade = {CascadeType.ALL})

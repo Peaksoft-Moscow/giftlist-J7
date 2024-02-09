@@ -62,20 +62,24 @@ public class BookingService {
     }
 
 
-    public Booking remove(Long bookingId, Principal principal) {
-
+    public String remove(Long bookingId, Principal principal) {
         Booking booking = bookingRepository.findById(bookingId)
                 .orElseThrow(() -> new EntityNotFoundException("Booking not found"));
-        booking.setBookingStatus(BookingStatus.UNBOOKED);
 
         User user = userRepository.findByEmail(principal.getName())
                 .orElseThrow(() -> new EntityNotFoundException("User not found"));
         if (!booking.getUser().equals(user)) {
             throw new RuntimeException("User does not have permission to remove this booking");
         }
+        Gift gift = booking.getGift();
+        if (gift != null ){
+            gift.setBookingStatus(BookingStatus.UNBOOKED);
+            gift.setBooking(null);
+            giftListRepository.save(gift);
 
-        bookingRepository.delete(booking);
-        return booking;
+        }
+        bookingRepository.deleteById(booking.getId());
+        return "Successful deleted";
     }
 
     public List<Booking> getAllBooking() {
@@ -83,6 +87,7 @@ public class BookingService {
                 .orElseThrow(() -> new RuntimeException("User not found"));
         return bookingRepository.findBookingByUserId(user.getId());
     }
+
 
     private User getPrincipalEmail() {
         return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
