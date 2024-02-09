@@ -18,7 +18,7 @@ public class MailSenderService {
 
     private final JavaMailSender mailSender;
     private final UserRepository userRepository;
-
+    private String username;
 
 
     public void send(String emailTo, String subject, String message) {
@@ -29,8 +29,18 @@ public class MailSenderService {
         mailMessage.setText(message);
         mailSender.send(mailMessage);
     }
-    public void sendComplaints( String emailFrom, String status, String description) {
-        User admin = userRepository.findById(1L).orElseThrow(()-> new NotFoundException("Not found user by id: " + 1));
+
+    public void sendToFriends(String emailTo, String subject, String message) {
+        SimpleMailMessage mailMessage = new SimpleMailMessage();
+        mailMessage.setFrom(username);
+        mailMessage.setTo(emailTo);
+        mailMessage.setSubject(subject);
+        mailMessage.setText(message);
+        mailSender.send(mailMessage);
+    }
+
+    public void sendComplaints(String emailFrom, String status, String description) {
+        User admin = userRepository.findById(1L).orElseThrow(() -> new NotFoundException("Not found user by id: " + 1));
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         mailMessage.setFrom(emailFrom);
         mailMessage.setTo(admin.getEmail());
