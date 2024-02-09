@@ -25,20 +25,20 @@ import java.util.List;
 public class NotificationController {
     NotificationService notificationService;
 
-    @GetMapping("/find-all_notifications")
+    @GetMapping("/notifications")
     @Operation(summary = "Get notification", description = "Getting notification from user")
     public ResponseEntity<List<NotificationResponse>> getAllNotifications() {
-        return new ResponseEntity<>(notificationService.getAllNotification(), HttpStatus.CREATED);
+        return new ResponseEntity<>(notificationService.getAllNotification(), HttpStatus.OK);
     }
 
     @Operation(summary = "Get notification", description = "Getting notification from user")
-    @GetMapping("/isread")
+    @GetMapping("/isread-notifications")
     public ResponseEntity<List<NotificationResponse>> getAllIsReadNotifications() {
         return new ResponseEntity<>(notificationService.getAllIsReadNotification(), HttpStatus.OK);
     }
 
     @Operation(summary = "Get notification", description = "Getting notification from user")
-    @GetMapping("/unread")
+    @GetMapping("/unread-notifications")
     public ResponseEntity<List<NotificationResponse>> getAllUnReadNotifications() {
         return new ResponseEntity<>(notificationService.getAllUnReadNotification(), HttpStatus.OK);
 
