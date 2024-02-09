@@ -1,5 +1,9 @@
 package com.peakosoft.giftlistj7.service;
 
+import com.peakosoft.giftlistj7.exception.NotFoundException;
+import com.peakosoft.giftlistj7.model.entities.User;
+import com.peakosoft.giftlistj7.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -9,10 +13,12 @@ import org.springframework.stereotype.Service;
 
 @Service
 @Component
+@RequiredArgsConstructor
 public class MailSenderService {
 
-    @Autowired
-    private JavaMailSender mailSender;
+    private final JavaMailSender mailSender;
+    private final UserRepository userRepository;
+
 
 
     public void send(String emailTo, String subject, String message) {
