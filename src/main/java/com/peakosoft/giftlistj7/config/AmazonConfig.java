@@ -17,8 +17,9 @@ public class AmazonConfig {
     private String secretKey;
     @Value("${cloud.aws.credentials.region.static}")
     private String region;
+
     @Bean
-    public AmazonS3 generateS3client(){
+    public AmazonS3 generateS3client() {
         AWSCredentials credentials = new BasicAWSCredentials(accessKey, secretKey);
         return AmazonS3ClientBuilder.standard()
                 .withCredentials(new AWSStaticCredentialsProvider(credentials))
