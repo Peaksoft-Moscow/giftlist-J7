@@ -7,6 +7,7 @@ import com.amazonaws.services.s3.model.S3Object;
 import com.amazonaws.services.s3.model.S3ObjectInputStream;
 import com.amazonaws.util.IOUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -19,9 +20,9 @@ import java.util.Objects;
 @Service
 @Slf4j
 public class AmazonS3Service {
-    @Value("${amazon.s3.bucket-name}")
+    @Value("${application.bucket.name}")
     private String bucketName;
-//    @Autowired
+    @Autowired
     private AmazonS3 s3client;
 
     public String uploadFile(MultipartFile file) {
@@ -32,15 +33,10 @@ public class AmazonS3Service {
         return "File uploaded:" + fileName;
     }
 
-    public byte[] downloadFile(String fileName) {
+    public byte[] downloadFile(String fileName) throws IOException {
         S3Object s3Object = s3client.getObject(bucketName, fileName);
         S3ObjectInputStream inputStream = s3Object.getObjectContent();
-        try {
-            return IOUtils.toByteArray(inputStream);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
+        return IOUtils.toByteArray(inputStream);
     }
 
     public String deleteFile(String fileName) {
