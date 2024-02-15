@@ -4,6 +4,7 @@ import com.peakosoft.giftlistj7.model.dto.CharityRequest;
 import com.peakosoft.giftlistj7.model.dto.CharityResponse;
 import com.peakosoft.giftlistj7.service.CharityService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/api/charity")
 @Tag(name = "Charity controller", description = "charity")
+@SecurityRequirement(name="Authorization")
 public class CharityController {
     public final CharityService charityService;
 

@@ -6,11 +6,13 @@ import com.peakosoft.giftlistj7.model.dto.FriendResponse;
 import com.peakosoft.giftlistj7.model.dto.mapper.FriendMapper;
 import com.peakosoft.giftlistj7.model.entities.User;
 import com.peakosoft.giftlistj7.repository.FriendRepository;
+import com.peakosoft.giftlistj7.repository.NotificationRepository;
 import com.peakosoft.giftlistj7.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -21,6 +23,8 @@ public class FriendService {
     private final FriendRepository friendRepository;
     private final FriendMapper friendMapper;
     private final MailSenderService mailSenderService;
+    private final NotificationService notificationService;
+    private final NotificationRepository notificationRepository;
 
     public FriendResponse sendRequestToFriend(Long friendId, Principal principal) {
         User friend = userRepository.findById(friendId).orElseThrow(() -> new NotFoundException("Not found friend by id: " + friendId));
@@ -36,6 +40,8 @@ public class FriendService {
         }
         user.getRequestToFriends().add(friend);
         mailSenderService.sendToFriends(friend.getEmail(), "friend request", user.getName() + " " + user.getLastName() + " has sent you a friend request.");
+        friend.setNotification(notificationService.sendNotification(new ArrayList<>()));
+        notificationRepository.save(friend.getNotification());
         friendRepository.save(friend);
         userRepository.save(user);
         return friendMapper.mapToResponse(friend);
