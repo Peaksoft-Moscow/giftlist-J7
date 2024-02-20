@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Getter
@@ -29,4 +30,6 @@ public class Complaint {
     @JsonIgnore
     @ManyToOne(cascade = {CascadeType.ALL})
     private Gift gift;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "complaints")
+    private List<Notification> notification;
 }
