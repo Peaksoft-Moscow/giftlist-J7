@@ -7,7 +7,7 @@ import com.peakosoft.giftlistj7.model.dto.mapper.ComplaintMapper;
 import com.peakosoft.giftlistj7.model.entities.Complaint;
 import com.peakosoft.giftlistj7.model.entities.Gift;
 import com.peakosoft.giftlistj7.model.entities.User;
-import com.peakosoft.giftlistj7.repository.ComplaintRepository;
+import com.peakosoft.giftlistj7.repository.ComplaintsRepository;
 import com.peakosoft.giftlistj7.repository.UserRepository;
 import com.peakosoft.giftlistj7.repository.WishListRepository;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +20,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ComplaintService {
     private final UserRepository userRepository;
-    private final ComplaintRepository complaintRepository;
+    private final ComplaintsRepository complaintRepository;
     private final WishListRepository wishListRepository;
     private final ComplaintMapper complaintMapper;
     private final MailSenderService mailSenderService;

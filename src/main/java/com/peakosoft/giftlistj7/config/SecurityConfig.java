@@ -9,7 +9,6 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -62,10 +61,14 @@ public class SecurityConfig {
                             .requestMatchers("/api/wish_lists/**").hasAnyAuthority("ADMIN","USER")
                             .requestMatchers("/api/friends/**").hasAnyAuthority("ADMIN","USER")
                             .requestMatchers("/api/charity/**").hasAnyAuthority("ADMIN","USER")
+                            .requestMatchers("/swagger-ui/**",
+                                    "/swagger-resources/*," +
+                                            "/v3/api-docs/**").permitAll()
+                            .requestMatchers("/api/complaints/save").hasAnyAuthority("ADMIN","USER")
+                            .requestMatchers("/api/complaints/find-all", "/api/complaints/find-by-id", "/api/complaints/delete").hasAuthority("ADMIN")
+                            .requestMatchers("/api/notifications/**").hasAnyAuthority("ADMIN","USER")
                             .anyRequest().authenticated();
                 })
-                .oauth2Client(Customizer.withDefaults())
-                .formLogin(Customizer.withDefaults())
                 .oauth2Login(withDefaults())
                 .formLogin(withDefaults())
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
