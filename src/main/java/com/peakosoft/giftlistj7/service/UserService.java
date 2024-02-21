@@ -2,6 +2,11 @@ package com.peakosoft.giftlistj7.service;
 
 import com.peakosoft.giftlistj7.config.jwt.JwtUtil;
 import com.peakosoft.giftlistj7.model.dto.*;
+import com.peakosoft.giftlistj7.model.dto.*;
+import com.peakosoft.giftlistj7.model.dto.AuthRequest;
+import com.peakosoft.giftlistj7.model.dto.AuthResponse;
+import com.peakosoft.giftlistj7.model.dto.LoginRequest;
+import com.peakosoft.giftlistj7.model.dto.LoginResponse;
 import com.peakosoft.giftlistj7.model.dto.mapper.LoginMapper;
 import com.peakosoft.giftlistj7.model.dto.mapper.UserMapper;
 import com.peakosoft.giftlistj7.model.entities.User;
@@ -103,13 +108,13 @@ public class UserService {
         return loginMapper.mapToResponse(jwt, user.getRole().toString());
     }
 
-    public Map<String, Object> saveWithGoogle(OAuth2AuthenticationToken oAuth2AuthenticationToken) throws IllegalAccessException {
+    public Map<String,Object> saveWithGoogle(OAuth2AuthenticationToken oAuth2AuthenticationToken) throws IllegalAccessException{
         OAuth2AuthenticatedPrincipal principal = oAuth2AuthenticationToken.getPrincipal();
-        if (oAuth2AuthenticationToken == null) {
+        if(oAuth2AuthenticationToken == null) {
             throw new IllegalAccessException("The token must be not null");
         }
-        Map<String, Object> json = principal.getAttributes();
-        User user = new User();
+        Map<String,Object> json = principal.getAttributes();
+        User user =new User();
         user.setName((String) json.get("given_name"));
         user.setLastName((String) json.get("family_name"));
         user.setEmail((String) json.get("email"));
@@ -146,13 +151,11 @@ public class UserService {
 
     public boolean changePassword(String code, String email, String password, String confirmPassword) {
         User user = userRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("not found"));
-        System.out.println(code == user.getActivationCode());
-
         if (!user.getActivationCode().equals(code)) {
             return false;
         }
         if (!password.equals(confirmPassword)) {
-            throw new RuntimeException("Passwords do not match");
+          throw new RuntimeException("Passwords do not match");
         }
         if (password.length() < 6 || !password.matches(".*[A-Z].*")) {
             throw new RuntimeException("Пароль должен иметь длину не менее 6 символов и содержать хотя бы одну заглавную букву");
