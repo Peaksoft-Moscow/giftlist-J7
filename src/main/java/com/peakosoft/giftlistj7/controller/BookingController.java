@@ -1,7 +1,10 @@
 package com.peakosoft.giftlistj7.controller;
 
+import com.peakosoft.giftlistj7.model.dto.BookingResponse;
+import com.peakosoft.giftlistj7.model.dto.HolidayResponse;
 import com.peakosoft.giftlistj7.model.entities.Booking;
 import com.peakosoft.giftlistj7.service.BookingService;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,5 +35,9 @@ public class BookingController {
     public List<Booking> getAllBooking() {
         return bookingService.getAllBooking();
     }
-
+    @GetMapping("/search")
+    @Operation(summary = "search booking by their  names")
+    public List<Booking> searchHolidayByName(@RequestParam(name = "text",required = false)String text){
+        return bookingService.searchBookingGiftByName(text);
+    }
 }

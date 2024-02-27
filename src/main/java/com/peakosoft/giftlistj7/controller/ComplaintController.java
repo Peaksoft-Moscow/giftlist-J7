@@ -2,7 +2,9 @@ package com.peakosoft.giftlistj7.controller;
 
 import com.peakosoft.giftlistj7.model.dto.ComplaintRequest;
 import com.peakosoft.giftlistj7.model.dto.ComplaintResponse;
+import com.peakosoft.giftlistj7.model.dto.HolidayResponse;
 import com.peakosoft.giftlistj7.service.ComplaintService;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,5 +32,10 @@ public class ComplaintController {
     @DeleteMapping("/{id}")
     public String delete(@PathVariable Long id) {
         return complaintService.deleteById(id);
+    }
+    @GetMapping("/search")
+    @Operation(summary = "search complaints by their  names")
+    public List<ComplaintResponse> searchComplaintByName(@RequestParam(name = "text",required = false)String text){
+        return complaintService.searchComplaintByName(text);
     }
 }

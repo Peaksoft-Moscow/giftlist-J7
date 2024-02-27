@@ -1,9 +1,12 @@
 package com.peakosoft.giftlistj7.service;
 
 import com.peakosoft.giftlistj7.exception.EntityNotFoundException;
+import com.peakosoft.giftlistj7.exception.NotFoundException;
 import com.peakosoft.giftlistj7.model.dto.HolidayRequest;
 import com.peakosoft.giftlistj7.model.dto.HolidayResponse;
+import com.peakosoft.giftlistj7.model.dto.WishListResponse;
 import com.peakosoft.giftlistj7.model.dto.mapper.HolidayMapper;
+import com.peakosoft.giftlistj7.model.entities.Gift;
 import com.peakosoft.giftlistj7.model.entities.Holiday;
 import com.peakosoft.giftlistj7.model.entities.User;
 import com.peakosoft.giftlistj7.repository.HolidayRepository;
@@ -85,5 +88,12 @@ public class HolidayService {
             holidayRepository.delete(holiday);
         }
 
+    }
+    public List<HolidayResponse> searchHolidayByName(String text){
+        List<Holiday> holidays = holidayRepository.searchHolidayByName(text);
+        if (holidays.isEmpty()) {
+            throw new NotFoundException("No users found with the holiday name: " + text);
+        }
+        return holidays.stream().map(holidayMapper::mapToResponse).toList();
     }
 }

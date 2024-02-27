@@ -1,6 +1,7 @@
 package com.peakosoft.giftlistj7.service;
 
 import com.peakosoft.giftlistj7.config.jwt.JwtUtil;
+import com.peakosoft.giftlistj7.exception.NotFoundException;
 import com.peakosoft.giftlistj7.model.dto.*;
 import com.peakosoft.giftlistj7.model.dto.*;
 import com.peakosoft.giftlistj7.model.dto.AuthRequest;
@@ -165,4 +166,11 @@ public class UserService {
         userRepository.save(user);
         return true;
     }
+    public List<User> searchUserByName(String text){
+            List<User> users = userRepository.searchUserByName(text);
+            if (users.isEmpty()) {
+                throw new NotFoundException("Users with name containing '" + text + "' not found");
+            }
+            return users;
+        }
 }

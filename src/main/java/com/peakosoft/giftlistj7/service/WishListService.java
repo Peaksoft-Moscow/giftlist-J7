@@ -1,5 +1,6 @@
 package com.peakosoft.giftlistj7.service;
 
+import com.peakosoft.giftlistj7.exception.NotFoundException;
 import com.peakosoft.giftlistj7.model.dto.mapper.WishListMapper;
 import com.peakosoft.giftlistj7.model.dto.WishListRequest;
 import com.peakosoft.giftlistj7.model.dto.WishListResponse;
@@ -71,5 +72,13 @@ public class WishListService {
         if (Objects.equals(user.getEmail(), gift.getUser().getEmail())) {
             wishListRepository.delete(gift);
         }
+    }
+
+    public List<WishListResponse> searchGiftByName(String text){
+        List<Gift> gift = wishListRepository.searchGiftByName(text);
+        if (gift.isEmpty()) {
+            throw new NotFoundException("No users found with the gift name: " + text);
+        }
+        return gift.stream().map(wishListMapper::mapToResponse).toList();
     }
 }

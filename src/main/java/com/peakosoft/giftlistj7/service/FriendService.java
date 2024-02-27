@@ -109,4 +109,11 @@ public class FriendService {
         User friend = friendRepository.findFriendById(friendId, user.getId());
         return friendMapper.mapToInfoResponse(friend);
     }
+    public List<FriendResponse> searchFriendByName(String text, Long userId){
+        List<FriendResponse> friends = friendRepository.searchFriendByName(text,userId);
+        if (friends.isEmpty()) {
+            throw new NotFoundException("Friend with name containing '" + text + "' not found");
+        }
+        return friends;
+    }
 }

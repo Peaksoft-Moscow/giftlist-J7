@@ -1,8 +1,12 @@
 package com.peakosoft.giftlistj7.service;
 
 
+import com.peakosoft.giftlistj7.exception.NotFoundException;
+import com.peakosoft.giftlistj7.model.dto.BookingResponse;
+import com.peakosoft.giftlistj7.model.dto.HolidayResponse;
 import com.peakosoft.giftlistj7.model.entities.Booking;
 import com.peakosoft.giftlistj7.model.entities.Gift;
+import com.peakosoft.giftlistj7.model.entities.Holiday;
 import com.peakosoft.giftlistj7.model.entities.User;
 import com.peakosoft.giftlistj7.model.enums.BookingStatus;
 import com.peakosoft.giftlistj7.repository.*;
@@ -92,5 +96,11 @@ public class BookingService {
     private User getPrincipalEmail() {
         return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
-
+    public List<Booking> searchBookingGiftByName(String text){
+        List<Booking> bookings = bookingRepository.searchBookingGiftByName(text);
+        if (bookings.isEmpty()){
+            throw new NotFoundException("No booking found with the name: "+text);
+        }
+        return bookings;
+    }
 }
