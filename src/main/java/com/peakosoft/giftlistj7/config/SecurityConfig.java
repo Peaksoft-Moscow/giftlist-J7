@@ -66,11 +66,12 @@ public class SecurityConfig {
                             .requestMatchers("/api/complaints/save").hasAnyAuthority("ADMIN", "USER")
                             .requestMatchers("/api/complaints/find-all", "/api/complaints/find-by-id", "/api/complaints/delete").hasAuthority("ADMIN")
                             .requestMatchers("/api/amazons3/**").hasAnyAuthority("ADMIN", "USER")
-                            .requestMatchers("/api/notifications/**").hasAnyAuthority("ADMIN","USER")
+                            .requestMatchers("/api/notifications/**").hasAnyAuthority("ADMIN", "USER")
+                            .requestMatchers("/api/admin/**").hasAnyAuthority("ADMIN")
                             .anyRequest().authenticated();
                 })
                 .oauth2Login(withDefaults())
-                .formLogin(withDefaults())
+//                .formLogin(withDefaults())
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
