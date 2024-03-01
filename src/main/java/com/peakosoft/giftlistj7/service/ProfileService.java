@@ -1,13 +1,9 @@
 package com.peakosoft.giftlistj7.service;
 
 import com.peakosoft.giftlistj7.exception.EntityNotFoundException;
-import com.peakosoft.giftlistj7.model.dto.HolidayRequest;
-import com.peakosoft.giftlistj7.model.dto.HolidayResponse;
 import com.peakosoft.giftlistj7.model.dto.ProfileRequest;
 import com.peakosoft.giftlistj7.model.dto.ProfileResponse;
 import com.peakosoft.giftlistj7.model.dto.mapper.ProfileMapper;
-import com.peakosoft.giftlistj7.model.entities.Gift;
-import com.peakosoft.giftlistj7.model.entities.Holiday;
 import com.peakosoft.giftlistj7.model.entities.User;
 import com.peakosoft.giftlistj7.model.enums.Country;
 import com.peakosoft.giftlistj7.repository.ProfileRepository;
@@ -16,7 +12,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
-import java.time.LocalDate;
 import java.util.Objects;
 
 @Service
@@ -31,23 +26,10 @@ public class ProfileService {
                 .orElseThrow(() -> new RuntimeException("User not found by id:" + id));
         return profileMapper.mapToResponse(user);
     }
-//    public HolidayResponse update(Long id, HolidayRequest request, Principal principal) {
-//        Holiday holiday = holidayRepository.findById(id)
-//                .orElseThrow(() -> new EntityNotFoundException("not found by id" + id));
-//        User user = userRepository.findByEmail(principal.getName())
-//                .orElseThrow(() -> new EntityNotFoundException("not found by email" + principal.getName()));
-//        if (user.getId() == holiday.getUser().getId()) {
-//            holiday.setName(request.getName());
-//            holiday.setDescription(request.getDescription());
-//            holiday.setImage(request.getImage());
-//            holiday.setCreateDate(LocalDate.now());
-//            holidayRepository.save(holiday);
-//        }
-//        return holidayMapper.mapToResponse(holiday);
-//    }
-    public ProfileResponse update(Long userId, ProfileRequest request,Principal principal) {
-        User oldUser = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found by id:" + userId));
+
+    public ProfileResponse update(ProfileRequest request,Principal principal) {
+        User oldUser = userRepository.findByEmail(principal.getName())
+                .orElseThrow(() -> new RuntimeException("User not found by id:" + principal.getName()));
         User user1 = userRepository.findByEmail(principal.getName())
                         .orElseThrow(()-> new RuntimeException("User not found by email"+principal.getName()));
         if(Objects.equals(user1.getEmail(),oldUser.getEmail())) {
