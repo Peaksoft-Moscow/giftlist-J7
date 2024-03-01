@@ -3,7 +3,9 @@ package com.peakosoft.giftlistj7.controller;
 
 import com.peakosoft.giftlistj7.model.dto.HolidayRequest;
 import com.peakosoft.giftlistj7.model.dto.HolidayResponse;
+import com.peakosoft.giftlistj7.model.dto.WishListResponse;
 import com.peakosoft.giftlistj7.service.HolidayService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -48,5 +50,10 @@ public class HolidayController {
     public String delete(@PathVariable("id") Long id, Principal principal) {
         holidayService.removeById(id, principal);
         return "Holiday with id" + id + "successfully deleted";
+    }
+    @GetMapping("/search")
+    @Operation(summary = "search holidays by their  names")
+    public List<HolidayResponse> searchHolidayByName(@RequestParam(name = "text",required = false)String text){
+        return holidayService.searchHolidayByName(text);
     }
 }

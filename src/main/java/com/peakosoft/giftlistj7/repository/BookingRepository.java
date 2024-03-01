@@ -1,6 +1,7 @@
 package com.peakosoft.giftlistj7.repository;
 
 import com.peakosoft.giftlistj7.model.entities.Booking;
+import com.peakosoft.giftlistj7.model.entities.Holiday;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -19,10 +20,8 @@ public interface BookingRepository extends JpaRepository<Booking,Long> {
 
     @Query("select b from Booking b where b.user.id = :id")
     List<Booking> findBookingByUserId(@Param("id") Long id);
-
-
-
-
+    @Query("select booking from Booking booking where upper(booking.gift.name) like concat('%',:text,'%')")
+    List<Booking> searchBookingGiftByName(@Param("text") String text);
 
 }
 

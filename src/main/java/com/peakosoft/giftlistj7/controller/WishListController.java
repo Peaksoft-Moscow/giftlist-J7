@@ -2,7 +2,9 @@ package com.peakosoft.giftlistj7.controller;
 
 import com.peakosoft.giftlistj7.model.dto.WishListRequest;
 import com.peakosoft.giftlistj7.model.dto.WishListResponse;
+import com.peakosoft.giftlistj7.model.entities.User;
 import com.peakosoft.giftlistj7.service.WishListService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -39,5 +41,10 @@ public class WishListController {
     public String delete(@PathVariable("id") Long id, Principal principal) {
         wishListService.delete(id, principal);
         return "Gift with id: " + id + " successfully deleted";
+    }
+    @GetMapping("/search")
+    @Operation(summary = "search gifts by their  names")
+    public List<WishListResponse> searchGiftByName(@RequestParam(name = "text",required = false)String text){
+        return wishListService.searchGiftByName(text);
     }
 }

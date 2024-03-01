@@ -17,4 +17,5 @@ public class WishListResponse {
     private String myHoliday;
     private LocalDate dateOfHoliday;
     private BookingStatus bookingStatus;
+    private LocalDate addDate;
 }

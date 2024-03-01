@@ -1,12 +1,11 @@
 package com.peakosoft.giftlistj7.service;
 
+import com.peakosoft.giftlistj7.exception.NotFoundException;
 import com.peakosoft.giftlistj7.model.dto.CharityRequest;
 import com.peakosoft.giftlistj7.model.dto.CharityResponse;
+import com.peakosoft.giftlistj7.model.dto.HolidayResponse;
 import com.peakosoft.giftlistj7.model.dto.mapper.CharityMapper;
-import com.peakosoft.giftlistj7.model.entities.Category;
-import com.peakosoft.giftlistj7.model.entities.Gift;
-import com.peakosoft.giftlistj7.model.entities.SubCategory;
-import com.peakosoft.giftlistj7.model.entities.User;
+import com.peakosoft.giftlistj7.model.entities.*;
 import com.peakosoft.giftlistj7.model.enums.BookingStatus;
 import com.peakosoft.giftlistj7.repository.*;
 import lombok.RequiredArgsConstructor;
@@ -68,5 +67,13 @@ public class CharityService {
         if (user2.getEmail() == gift.getUser().getEmail()) {
             charityRepository.delete(gift);
         }
+    }
+
+    public List<CharityResponse> searchCharity(String status, String category, String subCategory, String country) {
+        List<Gift> charities = charityRepository.searchCharityByName(status, category, subCategory, country);
+        if (charities.isEmpty()) {
+            throw new NotFoundException("No charities found matching the search criteria");
+        }
+        return charities.stream().map(charityMapper::mapToResponse).toList();
     }
 }

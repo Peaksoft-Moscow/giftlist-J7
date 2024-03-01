@@ -3,9 +3,11 @@ package com.peakosoft.giftlistj7.service;
 import com.peakosoft.giftlistj7.exception.NotFoundException;
 import com.peakosoft.giftlistj7.model.dto.ComplaintRequest;
 import com.peakosoft.giftlistj7.model.dto.ComplaintResponse;
+import com.peakosoft.giftlistj7.model.dto.HolidayResponse;
 import com.peakosoft.giftlistj7.model.dto.mapper.ComplaintMapper;
 import com.peakosoft.giftlistj7.model.entities.Complaint;
 import com.peakosoft.giftlistj7.model.entities.Gift;
+import com.peakosoft.giftlistj7.model.entities.Holiday;
 import com.peakosoft.giftlistj7.model.entities.User;
 import com.peakosoft.giftlistj7.repository.ComplaintsRepository;
 import com.peakosoft.giftlistj7.repository.UserRepository;
@@ -51,4 +53,12 @@ public class ComplaintService {
         complaintRepository.delete(complaint);
         return "The complaint was successfully removed!";
     }
+    public List<ComplaintResponse> searchComplaintByName(String text){
+        List<Complaint> complaints = complaintRepository.searchComplaintByName(text);
+        if (complaints.isEmpty()) {
+            throw new NotFoundException("No users found with the holiday name: " + text);
+        }
+        return complaints.stream().map(complaintMapper::mapToResponse).toList();
+    }
+
 }

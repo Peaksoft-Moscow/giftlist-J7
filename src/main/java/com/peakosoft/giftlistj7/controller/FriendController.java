@@ -2,7 +2,9 @@ package com.peakosoft.giftlistj7.controller;
 
 import com.peakosoft.giftlistj7.model.dto.FriendInfoResponse;
 import com.peakosoft.giftlistj7.model.dto.FriendResponse;
+import com.peakosoft.giftlistj7.model.entities.User;
 import com.peakosoft.giftlistj7.service.FriendService;
+import com.peakosoft.giftlistj7.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -20,6 +22,7 @@ import java.util.List;
 @SecurityRequirement(name="Authorization")
 public class FriendController {
     private final FriendService friendService;
+    private final UserService userService;
 
     @PostMapping("/send-request/{id}")
     @Operation(summary = "send requests to friends")
@@ -58,5 +61,15 @@ public class FriendController {
     @Operation(summary = "find friend by id")
     public FriendInfoResponse findById(@PathVariable("id") Long friendId, Principal principal){
         return friendService.findById(friendId, principal);}
-
+    @GetMapping("/search-user")
+    @Operation(summary = "search users by their  names")
+    public List<User> searchUserByName(@RequestParam(name = "text",required = false)String text){
+        return userService.searchUserByName(text);
+    }
+    @GetMapping("/search-friend")
+    @Operation(summary = "search friends by their  names")
+    public List<FriendResponse> searchFriendByName(@RequestParam(name = "text",required = false)String text,
+                                                   @RequestParam(name = "userId",required = false) Long userId){
+        return friendService.searchFriendByName(text,userId);
+    }
 }

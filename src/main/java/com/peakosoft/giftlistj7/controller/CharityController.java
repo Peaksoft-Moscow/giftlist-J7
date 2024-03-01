@@ -2,6 +2,7 @@ package com.peakosoft.giftlistj7.controller;
 
 import com.peakosoft.giftlistj7.model.dto.CharityRequest;
 import com.peakosoft.giftlistj7.model.dto.CharityResponse;
+import com.peakosoft.giftlistj7.model.dto.HolidayResponse;
 import com.peakosoft.giftlistj7.service.CharityService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -44,5 +45,13 @@ public class CharityController {
     public String delete(@PathVariable("id") Long id, Principal principal) {
         charityService.delete(id, principal);
         return "Gift with id: " + id + " successfully deleted";
+    }
+    @GetMapping("/search")
+    @Operation(summary = "search charity by their  names")
+    public List<CharityResponse> searchCharity(@RequestParam(name = "status",required = false)String status,
+                                               @RequestParam(name = "category", required = false) String category,
+                                               @RequestParam(name = "subCategory", required = false) String subCategory,
+                                               @RequestParam(name = "country", required = false) String country){
+        return charityService.searchCharity(status, category, subCategory, country);
     }
 }
