@@ -59,6 +59,7 @@ public class SecurityConfig {
                             .requestMatchers("/api/wish_lists/**").hasAnyAuthority("ADMIN", "USER")
                             .requestMatchers("/api/friends/**").hasAnyAuthority("ADMIN", "USER")
                             .requestMatchers("/api/charity/**").hasAnyAuthority("ADMIN", "USER")
+                            .requestMatchers("/api/profile/**").hasAnyAuthority("ADMIN", "USER")
                             .requestMatchers("/swagger-ui/**",
                                     "/swagger-resources/*," +
                                             "/v3/api-docs/**").permitAll()
