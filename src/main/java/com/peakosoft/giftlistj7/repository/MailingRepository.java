@@ -12,11 +12,4 @@ import java.util.List;
 @Repository
 public interface MailingRepository extends JpaRepository<Mailing,Long> {
 
-=======
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
-
-@Repository
-public interface MailingRepository extends JpaRepository<Mailing,Long> {
->>>>>>> ca6d3ece3ef480d6a22e8d637bfa1cacbb7112c0
 }
