@@ -28,7 +28,7 @@ public class MailingService {
         Mailing mailing = mailingMapper.mapToEntity(mailRequest);
         List<User> users = userRepository.findAllBySubscribe();
         for (User user : users) {
-            mailSenderService.sendMessageToUsers(user.getEmail(), mailRequest.getTheme(), mailRequest.getText());
+            mailSenderService.sendToFriends(user.getEmail(), mailRequest.getTheme(), mailRequest.getText());
         }
         mailingRepository.save(mailing);
         return mailingMapper.mapToResponse(mailing);
