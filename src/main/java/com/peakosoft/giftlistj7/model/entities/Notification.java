@@ -1,5 +1,6 @@
 package com.peakosoft.giftlistj7.model.entities;
 
+import com.peakosoft.giftlistj7.model.enums.NotificationStatus;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,13 +18,32 @@ public class Notification {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String giftName;
+    private NotificationStatus notificationStatus;
     private String image;
+    private boolean isRead = false;
+    @Column(name = "create_date")
     private LocalDate createDate;
+    private String subject;
+    private String message;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<User> receivers;
 
-    @ManyToMany(cascade = CascadeType.ALL,mappedBy = "notifications")
-    private List<User> users;
+    @ManyToOne(cascade = CascadeType.ALL)
+    private User user;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "gift_id")
     private Gift gift;
+
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "wishList_id")
+    private Gift wishList;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "complaints_id")
+    private Complaint complaints;
+
+
 }

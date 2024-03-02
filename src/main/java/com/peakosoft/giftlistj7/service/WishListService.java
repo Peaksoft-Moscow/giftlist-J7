@@ -8,12 +8,14 @@ import com.peakosoft.giftlistj7.model.entities.Holiday;
 import com.peakosoft.giftlistj7.model.entities.User;
 import com.peakosoft.giftlistj7.model.enums.BookingStatus;
 import com.peakosoft.giftlistj7.repository.HolidayRepository;
+import com.peakosoft.giftlistj7.repository.NotificationRepository;
 import com.peakosoft.giftlistj7.repository.UserRepository;
 import com.peakosoft.giftlistj7.repository.WishListRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -24,11 +26,15 @@ public class WishListService {
     private final WishListMapper wishListMapper;
     private final HolidayRepository holidayRepository;
     private final UserRepository userRepository;
+    private final NotificationService notificationService;
+    private final NotificationRepository notificationRepository;
 
     public WishListResponse save(WishListRequest wishListRequest, Principal principal) {
         User user = userRepository.findByEmail(principal.getName()).orElseThrow(() -> new RuntimeException("Not found user with email: " + principal.getName()));
         Holiday holiday = holidayRepository.findByName(wishListRequest.getHolidayName()).orElseThrow(() -> new RuntimeException("Holiday not found by name: " + wishListRequest.getHolidayName()));
         Gift gift = wishListMapper.mapToEntity(wishListRequest);
+        user.setNotification(notificationService.sendNotification(new ArrayList<>()));
+        notificationRepository.save(user.getNotification());
         gift.setHoliday(holiday);
         gift.setUser(user);
         wishListRepository.save(gift);

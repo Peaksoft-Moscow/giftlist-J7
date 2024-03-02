@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class UserMapper {
+public class    UserMapper {
     private final JwtUtil jwtUtil;
     private final UserRepository userRepository;
 

@@ -6,7 +6,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -16,6 +15,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Query("select user from User user where user.name=:name")
     Optional<User> findByName(@Param("name") String name);
+
+    User findByActivationCode(String code);
+
 
     @Query("select user from User user where user.subscribe=true")
     List<User> findAllBySubscribe();

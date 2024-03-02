@@ -16,7 +16,7 @@ import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("api/auth")
+@RequestMapping("/api/auth")
 public class AuthController {
     private final UserService userService;
 
@@ -46,7 +46,7 @@ public class AuthController {
         if (isActivation) {
             return "User successfully changed";
         }
-        return "User not activated!";
+        return "User not changed!";
     }
 
 }

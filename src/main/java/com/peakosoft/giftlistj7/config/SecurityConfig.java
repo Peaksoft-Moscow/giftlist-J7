@@ -5,7 +5,6 @@ import com.peakosoft.giftlistj7.service.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -60,13 +59,13 @@ public class SecurityConfig {
                             .requestMatchers("/api/wish_lists/**").hasAnyAuthority("ADMIN","USER")
                             .requestMatchers("/api/friends/**").hasAnyAuthority("ADMIN","USER")
                             .requestMatchers("/api/charity/**").hasAnyAuthority("ADMIN","USER")
-                            .requestMatchers("/api/mailings/**").hasAuthority("ADMIN")
-
                             .requestMatchers("/swagger-ui/**",
                                     "/swagger-resources/*," +
                                             "/v3/api-docs/**").permitAll()
-                            .requestMatchers("/api/complaints/save").hasAnyAuthority("ADMIN","USER")
+                            .requestMatchers("/api/complaints/save").hasAnyAuthority("ADMIN", "USER")
                             .requestMatchers("/api/complaints/find-all", "/api/complaints/find-by-id", "/api/complaints/delete").hasAuthority("ADMIN")
+                            .requestMatchers("/api/amazons3/**").hasAnyAuthority("ADMIN", "USER")
+                            .requestMatchers("/api/notifications/**").hasAnyAuthority("ADMIN","USER")
                             .anyRequest().authenticated();
                 })
                 .oauth2Login(withDefaults())
